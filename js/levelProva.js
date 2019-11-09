@@ -16,8 +16,8 @@ SuperBomberman.levelProva = {
     },
     preload:function()
     {
-        this.load.spritesheet('tomatoe','src/Enemies/World_1/Helicopter/helicopter.png', 16, 24);
-        this.load.spritesheet('wall', 'src/Levels/Pace_town_destroyable.png', 16, 16);
+        this.load.spritesheet('tomatoe','assets/Enemies/World_1/Helicopter/helicopter.png', 16, 24);
+        this.load.spritesheet('wall', 'assets/Levels/Pace_town_destroyable.png', 16, 16);
     },
     create:function()
     {

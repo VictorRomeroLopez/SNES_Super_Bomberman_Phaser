@@ -5,6 +5,8 @@ SuperBomberman.level1 = {
     init:function()
     {
         console.log("init")
+        this.scale.pageAlignHorizontally = true;
+        this.scale.pageAlignVertically = true;
     },
     
     preload:function()

@@ -19,7 +19,6 @@ SuperBomberman.level1 = {
         this.load.image('destroyables', "assets/levels/Pace_town_destroyable.png");
         this.load.tilemap('level1','assets/Tiled/level1.json', null, Phaser.Tilemap.TILED_JSON);
         }
-        //---end region---//
         
     },
     
@@ -45,7 +44,6 @@ SuperBomberman.level1 = {
         this.interiorWalls.scale    = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
         this.floor.scale            = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
         }
-        //---end region---//
         
     },
     

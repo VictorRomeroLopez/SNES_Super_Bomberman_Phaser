@@ -3,7 +3,9 @@
  <tileset firstgid="1" name="buildings" tilewidth="16" tileheight="16" tilecount="15" columns="5">
   <image source="../Levels/Pace_town.png" width="80" height="48"/>
  </tileset>
- <tileset firstgid="16" source="destroyables.tsx"/>
+ <tileset firstgid="16" name="destroyables" tilewidth="16" tileheight="16" tilecount="12" columns="4">
+  <image source="../Levels/Pace_town_destroyable.png" width="64" height="48"/>
+ </tileset>
  <layer id="3" name="Exterior_Walls" width="17" height="13">
   <data encoding="csv">
 1,2,4,4,4,4,4,4,4,4,4,4,4,4,4,2147483650,2147483649,

@@ -8,5 +8,5 @@ var gameOptions = {
 
 SuperBomberman.game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.AUTO, null, this, false, false);
 
-SuperBomberman.game.state.add('main', SuperBomberman.mainMenu);
+SuperBomberman.game.state.add('main', SuperBomberman.levelProva);
 SuperBomberman.game.state.start('main');

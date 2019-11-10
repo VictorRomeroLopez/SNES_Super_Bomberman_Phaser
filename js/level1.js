@@ -11,20 +11,33 @@ SuperBomberman.level1 = {
     
     preload:function()
     {
-        console.log("preload")
+        console.log("preload");
+        
+        //---region FOLDERS_SPRITES---//
+        {
+            var levelsFolder = "assets/Levels/";
+            var bombermanFolder = "assets/Bomberman/";
+            var bombsFolder = bombermanFolder + "Bombs/";
+        }
         
         //---region LOAD_TILESET_IMAGES---//
         {
-        this.load.image('buildings', "assets/levels/Pace_town.png");
-        this.load.image('destroyables', "assets/levels/Pace_town_destroyable.png");
-        this.load.tilemap('level1','assets/Tiled/level1.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.image('buildings', levelsFolder + "Pace_town.png");
+            this.load.image('destroyables', levelsFolder + "Pace_town_destroyable.png");
+            this.load.tilemap('level1','assets/Tiled/level1.json', null, Phaser.Tilemap.TILED_JSON);
+        }
+        
+        //---region LOAD_SPRITES_BOMBS---//
+        {
+            this.load.spritesheet('blue_bomb', bombsFolder + "blue_bomb.png",16,16);
+            this.load.spritesheet('explosions', bombsFolder + "Explosions.png",16,16);
         }
         
     },
     
     create:function()
     {
-        console.log("create")
+        console.log("create");
         
         //---region ADD_IMAGES_TO_TILEMAP---//
         {
@@ -45,10 +58,12 @@ SuperBomberman.level1 = {
         this.floor.scale            = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
         }
         
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 6, 7);
     },
     
     update:function()
     {
-        console.log("update")
+        
+        console.log(Phaser.Timer.MILLISESOND);
     }
 }

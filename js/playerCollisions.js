@@ -8,7 +8,8 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
             this.animations.add('walkRight', [12,13,14], 7, true);
 	    this.animations.add('death',[18,19,20,21,22,23],7,true);
 	this.anchor.setTo(.5);
-    	this.speed = 250;
+	this.scale.setTo(.5);
+    	this.speed = 30;
     	this.direction = 1;
 	this.frame = 7;
     	_game.add.existing(this);

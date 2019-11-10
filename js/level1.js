@@ -44,20 +44,18 @@ SuperBomberman.level1 = {
         this.interiorWalls  = this.map.createLayer('Interior_Walls')
         this.floor          = this.map.createLayer('Floor')
         
-        //Escalat de les diferents layers del map
-        //this.exteriorWalls.scale    = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
-       // this.interiorWalls.scale    = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
-        //this.floor.scale            = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
         
-	this.map.setCollisionBetween(1,15,true,'Exterior_Walls');
-	this.map.setCollisionBetween(1,15,true,'Interior_Walls');
+	this.map.setCollisionBetween(1,8,true,'Exterior_Walls');
+	this.map.setCollisionBetween(11,13,true,'Exterior_Walls');
+	this.map.setCollisionBetween(1,8,true,'Interior_Walls');
+	this.map.setCollisionBetween(11,13,true,'Interior_Walls');
 
 	//Creem Player
 	this.player = new SuperBomberman.player_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this);
 	this.game.physics.arcade.enable(this.player);
 
-	//Escalem Player
-	//this.player.scale = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
+
+	
 	}
         
     },

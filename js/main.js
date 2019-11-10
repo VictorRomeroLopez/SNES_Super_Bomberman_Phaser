@@ -1,12 +1,12 @@
-var SuperBomberman = SuperBomberman || {};
+﻿var SuperBomberman = SuperBomberman || {};
 
 var gameScale = 4
 
 var gameOptions = {
     //Add generic variables
     gameScale:this.gameScale,
-    gameWidth:17*16*this.gameScale,
-    gameHeight:13*16*this.gameScale
+    gameWidth:17*16,
+    gameHeight:13*16
 };
 
 SuperBomberman.game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.AUTO, null, this, false, false);

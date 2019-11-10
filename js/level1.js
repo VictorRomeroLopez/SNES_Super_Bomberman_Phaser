@@ -19,7 +19,11 @@ SuperBomberman.level1 = {
         this.load.image('destroyables', "assets/levels/Pace_town_destroyable.png");
         this.load.tilemap('level1','assets/Tiled/level1.json', null, Phaser.Tilemap.TILED_JSON);
         }
-        
+
+	//---region LOAD_SPRITESHEET_IMAGES---//
+        {
+	this.load.spritesheet('bomberman','assets/Bomberman/white_bomberman.png', 16, 25);
+	}
     },
     
     create:function()
@@ -43,7 +47,13 @@ SuperBomberman.level1 = {
         this.exteriorWalls.scale    = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
         this.interiorWalls.scale    = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
         this.floor.scale            = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
-        }
+        
+	//Creem Player
+	this.player = new SuperBomberman.player_setup(this.game, gameOptions.gameWidth/2, 		gameOptions.gameHeight/2, 1, this);
+	
+	//Escalem Player
+	this.player.scale = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
+	}
         
     },
     

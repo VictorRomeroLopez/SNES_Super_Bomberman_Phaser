@@ -7,6 +7,7 @@ SuperBomberman.level1 = {
         console.log("init")
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
+        this.game.physics.startSystem(Phaser.Physics.ARCADE);
     },
     
     preload:function()
@@ -32,7 +33,11 @@ SuperBomberman.level1 = {
             this.load.spritesheet('blue_bomb', bombsFolder + "blue_bomb.png",16,16);
             this.load.spritesheet('explosions', bombsFolder + "Explosions.png",16,16);
         }
-        
+
+        //---region LOAD_SPRITESHEET_IMAGES---//
+        {
+	       this.load.spritesheet('bomberman','assets/Bomberman/white_bomberman.png', 16, 24);
+        }
     },
     
     create:function()
@@ -52,18 +57,28 @@ SuperBomberman.level1 = {
         this.interiorWalls  = this.map.createLayer('Interior_Walls')
         this.floor          = this.map.createLayer('Floor')
         
-        //Escalat de les diferents layers del map
-        this.exteriorWalls.scale    = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
-        this.interiorWalls.scale    = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
-        this.floor.scale            = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
-        }
         
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 6, 7);
+	this.map.setCollisionBetween(1,8,true,'Exterior_Walls');
+	this.map.setCollisionBetween(11,13,true,'Exterior_Walls');
+	this.map.setCollisionBetween(1,8,true,'Interior_Walls');
+	this.map.setCollisionBetween(11,13,true,'Interior_Walls');
+
+	//Creem Player
+	this.player = new SuperBomberman.player_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this);
+	this.game.physics.arcade.enable(this.player);
+
+
+	
+	}
+        
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 6, 4);
     },
     
     update:function()
     {
-        
         console.log(Phaser.Timer.MILLISESOND);
+        console.log("update")
+        this.physics.arcade.collide(this.player, this.exteriorWalls);
+    	this.physics.arcade.collide(this.player, this.interiorWalls);
     }
 }

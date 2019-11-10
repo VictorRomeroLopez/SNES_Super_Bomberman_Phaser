@@ -7,6 +7,7 @@ SuperBomberman.level1 = {
         console.log("init")
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
+	this.game.physics.startSystem(Phaser.Physics.ARCADE);
     },
     
     preload:function()
@@ -48,9 +49,13 @@ SuperBomberman.level1 = {
         this.interiorWalls.scale    = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
         this.floor.scale            = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
         
+	this.map.setCollisionBetween(1,15,true,'Exterior_Walls');
+	this.map.setCollisionBetween(1,15,true,'Interior_Walls');
+
 	//Creem Player
 	this.player = new SuperBomberman.player_setup(this.game, gameOptions.gameWidth/2, 		gameOptions.gameHeight/2, 1, this);
-	
+	this.game.physics.arcade.enable(this.player);
+
 	//Escalem Player
 	this.player.scale = new PIXI.Point(gameOptions.gameScale,gameOptions.gameScale);
 	}
@@ -60,5 +65,7 @@ SuperBomberman.level1 = {
     update:function()
     {
         console.log("update")
+	this.physics.arcade.collide(this.player, this.exteriorWalls);
+    	this.physics.arcade.collide(this.player, this.interiorWalls);
     }
 }

@@ -4,17 +4,19 @@ SuperBomberman.enemy_prefab = function(_game, _x, _y, _type, _level)
 {
     if(_type == 1)
         {
-            Phaser.Sprite.call(this, _game, _x, _y, 'tomatoe');
+            Phaser.Sprite.call(this, _game, _x*gameOptions.gameScale*16, _y*gameOptions.gameScale*16, 'tomatoe');
             this.animations.add('walkLeft', [0,1,2,3], 10, true);
             this.animations.add('walkDown', [4,5,6,7], 10, true);
             this.animations.add('walkUp', [8,9,10,11], 10, true);
             this.animations.play('walkLeft');
         }
     this.anchor.setTo(.5);
-    this.speed = 30;
+    this.scale.setTo(gameOptions.gameScale);
+    this.speed = 50;
     this.goingY = false;
     this.direction = -1;
     this.initialPos = _x;
+    
     _game.add.existing(this);
     _game.physics.arcade.enable(this);
     this.level = _level;
@@ -28,9 +30,12 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
     
     this.level.physics.arcade.collide(this, this.level.wall);
     this.level.physics.arcade.collide(this, this.level.wall2);
+    this.game.physics.arcade.collide(this,this.level.exteriorWalls);
+    this.game.physics.arcade.collide(this,this.level.interiorWalls);
     
     
-    if(this.body.touching.left || this.body.touching.right) 
+    
+    if(this.body.touching.left || this.body.touching.right || this.body.blocked.left || this.body.blocked.right) 
         {
             console.log('blocked');
             if(Phaser.Math.between(1, 10) >= 8)
@@ -41,11 +46,11 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
             else
                 {
                     this.direction *=-1;
-                    this.scale.x = -this.direction;
+                    this.scale.x *= -this.direction;
                     this.body.velocity.x = this.speed*  this.direction;
                 }
         }
-    else if(this.body.touching.up || this.body.touching.down) 
+    else if(this.body.touching.up || this.body.touching.down|| this.body.blocked.up || this.body.blocked.down) 
         {
             console.log('blocked');
             if(Phaser.Math.between(1, 10) >= 8)

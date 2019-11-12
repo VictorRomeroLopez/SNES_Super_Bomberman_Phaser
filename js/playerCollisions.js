@@ -1,5 +1,10 @@
 var SuperBomberman = SuperBomberman || {};
 
+function OnCollision(a)
+{
+	this.player.collision = a;
+}
+
 SuperBomberman.playerCol_setup = function(_game, _x, _y, _type, _level, _player)
 {
 	Phaser.Sprite.call(this, _game, _x, _y, 'bomberman');
@@ -24,13 +29,19 @@ SuperBomberman.playerCol_setup.prototype.constructor = SuperBomberman.player_set
 
 SuperBomberman.playerCol_setup.prototype.update = function()
 {
+	
 	if(this.body.blocked.left || this.body.blocked.up || this.body.blocked.down || this.body.blocked.right )
-		this.player.OnCollision(true);
-
+	{
+		this.player.collision = true;
+		console.log("si collisiona")
+	}
 	else if(this.body.touching.left || this.body.touching.up || this.body.touching.down || this.body.touching.right)
-		this.player.OnCollision(true);
-
-	else this.player.OnCollision(false);
+	{
+		this.player.collision = true;
+		console.log("si collisiona")
+	}
+	else
+		this.player.collision = false;
 
 	//INPUTS
  	if (cursors.up.isDown)

@@ -1,12 +1,13 @@
 var SuperBomberman = SuperBomberman || {};
 
-SuperBomberman.explosionManager = function(_game, _x, _y, _power){
+SuperBomberman.explosionManager = function(_game, _x, _y, _power, _level){
     this.game = _game
     this.posRawX = _x
     this.posRawY = _y
     this.posx = _x * 16 - 8
     this.posy = _y * 16 - 8
     this.power = _power
+    this.level = _level;
     
     this.generateExplosionUP = true;
     this.generateExplosionDOWN = true;
@@ -62,7 +63,7 @@ SuperBomberman.explosionManager.prototype.generateExplosion = function(_newDirec
                 }
                 else
                 {
-                    new SuperBomberman.explosionPrefab(this.game, this.posx, this.posy - this.offset, _idExplosion)
+                    new SuperBomberman.explosionPrefab(this.game, this.posx, this.posy - this.offset, _idExplosion, this.level)
                 }
             }
             break;
@@ -76,7 +77,7 @@ SuperBomberman.explosionManager.prototype.generateExplosion = function(_newDirec
                 }
                 else
                 {
-                    new SuperBomberman.explosionPrefab(this.game, this.posx, this.posy + this.offset, _idExplosion)
+                    new SuperBomberman.explosionPrefab(this.game, this.posx, this.posy + this.offset, _idExplosion, this.level)
                 }
             }
             break;
@@ -91,7 +92,7 @@ SuperBomberman.explosionManager.prototype.generateExplosion = function(_newDirec
                 }
                 else
                 {
-                    new SuperBomberman.explosionPrefab(this.game, this.posx - this.offset, this.posy, _idExplosion)
+                    new SuperBomberman.explosionPrefab(this.game, this.posx - this.offset, this.posy, _idExplosion, this.level)
                 }
             }
             break;
@@ -105,12 +106,12 @@ SuperBomberman.explosionManager.prototype.generateExplosion = function(_newDirec
                 }
                 else
                 {
-                    new SuperBomberman.explosionPrefab(this.game, this.posx + this.offset, this.posy, _idExplosion)
+                    new SuperBomberman.explosionPrefab(this.game, this.posx + this.offset, this.posy, _idExplosion, this.level)
                 }
             }
             break;
         case 'center':
-            new SuperBomberman.explosionPrefab(this.game, this.posx, this.posy, _idExplosion)
+            new SuperBomberman.explosionPrefab(this.game, this.posx, this.posy, _idExplosion, this.level)
             break;
     }
     

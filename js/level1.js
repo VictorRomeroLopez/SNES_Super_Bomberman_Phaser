@@ -38,6 +38,8 @@ SuperBomberman.level1 = {
         {
 	       this.load.spritesheet('bomberman','assets/Bomberman/white_bomberman.png', 16, 24);
         }
+        
+        this.load.spritesheet('tomatoe','assets/Enemies/World_1/Helicopter/helicopter.png', 16, 24);
     },
     
     create:function()
@@ -67,19 +69,21 @@ SuperBomberman.level1 = {
             this.game.physics.arcade.enable(this.player);
         }
         
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 4, 10, 7);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 5, 10, 7);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 6, 10, 7);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 10, 7);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 8, 10, 7);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 9, 10, 7);
+        this.enemyTomatoe = new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this);
         
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 4, 8, 7);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 5, 8, 7);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 6, 8, 7);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 8, 7);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 8, 8, 7);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 9, 8, 7);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 4, 10, 7, this);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 5, 10, 7, this);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 6, 10, 7, this);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 10, 7, this);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 8, 10, 7, this);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 9, 10, 7, this);
+        
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 4, 8, 7, this);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 5, 8, 7, this);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 6, 8, 7, this);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 8, 7, this);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 8, 8, 7, this);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 9, 8, 7, this);
         
         this.printLayoutNumbers()
     },

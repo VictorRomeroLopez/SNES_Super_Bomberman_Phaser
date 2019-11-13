@@ -2,20 +2,23 @@ var SuperBomberman = SuperBomberman || {};
 
 SuperBomberman.enemy_prefab = function(_game, _x, _y, _type, _level)
 {
+    this.posx = (_x * 16 - 8) * gameOptions.gameScale;
+    this.posy = (_y * 16 - 8) * gameOptions.gameScale;
+    
     if(_type == 1)
         {
-            Phaser.Sprite.call(this, _game, _x/**gameOptions.gameScale*16*/, _y/**gameOptions.gameScale*16*/, 'tomatoe');
+            Phaser.Sprite.call(this, _game, this.posx, this.posy, 'tomatoe');
             this.animations.add('walkLeft', [0,1,2,3], 10, true);
             this.animations.add('walkDown', [4,5,6,7], 10, true);
             this.animations.add('walkUp', [8,9,10,11], 10, true);
             this.animations.play('walkLeft');
+            this.health = 1;
         }
     this.anchor.setTo(.5);
-    //this.scale.setTo(gameOptions.gameScale);
+    this.scale.setTo(gameOptions.gameScale);
     this.speed = 30;
     this.goingY = false;
     this.direction = -1;
-    this.initialPos = _x;
     
     _game.add.existing(this);
     _game.physics.arcade.enable(this);
@@ -28,8 +31,6 @@ SuperBomberman.enemy_prefab.prototype.constructor = SuperBomberman.enemy_prefab;
 
 SuperBomberman.enemy_prefab.prototype.update = function(){
     
-    this.level.physics.arcade.collide(this, this.level.wall);
-    this.level.physics.arcade.collide(this, this.level.wall2);
     this.game.physics.arcade.collide(this,this.level.exteriorWalls);
     this.game.physics.arcade.collide(this,this.level.interiorWalls);
     

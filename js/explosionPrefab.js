@@ -1,8 +1,11 @@
 var SuperBomberman = SuperBomberman || {};
 
-SuperBomberman.explosionPrefab = function(_game, _x, _y, _idExplosion){
+SuperBomberman.explosionPrefab = function(_game, _x, _y, _idExplosion ,_level){
     this.framerateAnimations = 10;
     Phaser.Sprite.call(this, _game, _x, _y, 'explosions')
+    
+    this.level = _level;
+    this.game = _game;
     
     this.animations.add('left_bound', [0,1,2,3,4,3,2,1,0], this.framerateAnimations, false)
     this.animations.add('top_bound', [7,8,9,10,11,10,9,8,7], this.framerateAnimations, false)
@@ -39,7 +42,19 @@ SuperBomberman.explosionPrefab = function(_game, _x, _y, _idExplosion){
     this.scale.setTo(gameOptions.gameScale)
     this.anchor.setTo(.5)
     _game.add.existing(this)
+    _game.physics.arcade.enable(this);
 }
 
 SuperBomberman.explosionPrefab.prototype = Object.create(Phaser.Sprite.prototype);
 SuperBomberman.explosionPrefab.prototype.constructor = SuperBomberman.explosionPrefab;
+
+SuperBomberman.explosionPrefab.prototype.update = function()
+{
+    this.game.physics.arcade.collide(this, this.level.enemyTomatoe, this.enemyCollision);
+    
+};
+SuperBomberman.explosionPrefab.prototype.enemyCollision = function(_bomb, _enemy)
+{
+    _enemy.health--;
+    if(_enemy.health <=0) _enemy.kill();
+}

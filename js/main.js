@@ -1,6 +1,6 @@
 ﻿var SuperBomberman = SuperBomberman || {};
 
-var gameScale = 4
+var gameScale = 1
 
 var gameOptions = {
     //Add generic variables

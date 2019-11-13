@@ -73,7 +73,7 @@ SuperBomberman.level1 = {
             this.map.setCollisionBetween(11,13,true,'Interior_Walls');
 
             //Creem Player
-        }
+        
         
         this.enemyTomatoe = new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this);
         

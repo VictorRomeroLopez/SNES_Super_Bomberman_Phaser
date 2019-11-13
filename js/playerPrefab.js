@@ -12,10 +12,10 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     	this.direction = 1;
 	this.collision = false;
 	this.frame = 7;
-    	_game.add.existing(this);
-    	_game.physics.arcade.enable(this);
+    _game.physics.arcade.enable(this);
 	this.level = _level;
 	cursors = _game.input.keyboard.createCursorKeys();
+    _game.add.existing(this);
 }
 
 SuperBomberman.player_setup.prototype = Object.create(Phaser.Sprite.prototype);

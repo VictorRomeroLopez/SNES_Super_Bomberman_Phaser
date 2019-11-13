@@ -50,8 +50,6 @@ SuperBomberman.level1 = {
         {
             this.map = this.game.add.tilemap('level1')
 
-	//Creem Player
-	this.player = new SuperBomberman.player_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this);
             //agreguem els spritesheets al map
             this.map.addTilesetImage('buildings')
             this.map.addTilesetImage('destroyables')
@@ -61,9 +59,11 @@ SuperBomberman.level1 = {
             this.interiorWalls  = this.map.createLayer('Interior_Walls')
             this.floor          = this.map.createLayer('Floor')
 
+
+	//Creem Player
+	this.player = new SuperBomberman.player_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this);
 	this.playerCol = new SuperBomberman.playerCol_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this, this.player);
 	this.game.physics.arcade.enable(this.playerCol);
-
 
 	
 	}

@@ -46,39 +46,65 @@ SuperBomberman.level1 = {
         
         //---region ADD_IMAGES_TO_TILEMAP---//
         {
-        this.map = this.game.add.tilemap('level1')
-        
-        //agreguem els spritesheets al map
-        this.map.addTilesetImage('buildings')
-        this.map.addTilesetImage('destroyables')
-        
-        //creem les layers al map
-        this.exteriorWalls  = this.map.createLayer('Exterior_Walls')
-        this.interiorWalls  = this.map.createLayer('Interior_Walls')
-        this.floor          = this.map.createLayer('Floor')
-        
-        
-	this.map.setCollisionBetween(1,8,true,'Exterior_Walls');
-	this.map.setCollisionBetween(11,13,true,'Exterior_Walls');
-	this.map.setCollisionBetween(1,8,true,'Interior_Walls');
-	this.map.setCollisionBetween(11,13,true,'Interior_Walls');
+            this.map = this.game.add.tilemap('level1')
 
-	//Creem Player
-	this.player = new SuperBomberman.player_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this);
-	this.game.physics.arcade.enable(this.player);
+            //agreguem els spritesheets al map
+            this.map.addTilesetImage('buildings')
+            this.map.addTilesetImage('destroyables')
 
+            //creem les layers al map
+            this.exteriorWalls  = this.map.createLayer('Exterior_Walls')
+            this.interiorWalls  = this.map.createLayer('Interior_Walls')
+            this.floor          = this.map.createLayer('Floor')
 
-	
-	}
+            this.map.setCollisionBetween(1,8,true,'Exterior_Walls');
+            this.map.setCollisionBetween(11,13,true,'Exterior_Walls');
+            this.map.setCollisionBetween(1,8,true,'Interior_Walls');
+            this.map.setCollisionBetween(11,13,true,'Interior_Walls');
+
+            //Creem Player
+            this.player = new SuperBomberman.player_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this);
+            this.game.physics.arcade.enable(this.player);
+        }
         
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 6, 4);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 4, 10, 7);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 5, 10, 7);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 6, 10, 7);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 10, 7);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 8, 10, 7);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 9, 10, 7);
+        
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 4, 8, 7);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 5, 8, 7);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 6, 8, 7);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 8, 7);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 8, 8, 7);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 9, 8, 7);
+        
+        this.printLayoutNumbers()
     },
     
     update:function()
     {
-        console.log(Phaser.Timer.MILLISESOND);
         console.log("update")
         this.physics.arcade.collide(this.player, this.exteriorWalls);
     	this.physics.arcade.collide(this.player, this.interiorWalls);
+    },
+    
+    printLayoutNumbers:function(){
+        if(printLayoutNumbers){
+            for(var i = 1; i < 12; i++)
+                for(var j = 1; j < 14; j++)
+                {
+                    this.text = this.game.add.text(26+16*j,11+16*i, layoutMap[(i - 1) * 13 + ( j - 1 )], {font: "bold 10px Arial"});
+                    this.text.anchor.setTo(.5)
+                }
+            for(var i = 1; i < 12; i++)
+                for(var j = 1; j < 14; j++)
+                {
+                    this.text = this.game.add.text(24+16*j,10+16*i, layoutMap[(i - 1) * 13 + ( j - 1 )], {font: "bold 10px Arial", fill: "#fff"});
+                    this.text.anchor.setTo(.5)
+                }
+        }
     }
 }

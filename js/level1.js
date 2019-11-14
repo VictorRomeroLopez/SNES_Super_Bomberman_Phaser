@@ -64,7 +64,6 @@ SuperBomberman.level1 = {
 	this.player = new SuperBomberman.player_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this);
 	this.playerCol = new SuperBomberman.playerCol_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this, this.player);
 	this.game.physics.arcade.enable(this.playerCol);
-
 	
 	}
             this.map.setCollisionBetween(1,8,true,'Exterior_Walls');
@@ -77,7 +76,7 @@ SuperBomberman.level1 = {
         
         this.enemyTomatoe = new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this);
         
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 4, 10, 7, this);
+        /*
         this.bomb = new SuperBomberman.bombPrefab(this.game, 5, 10, 7, this);
         this.bomb = new SuperBomberman.bombPrefab(this.game, 6, 10, 7, this);
         this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 10, 7, this);
@@ -91,7 +90,7 @@ SuperBomberman.level1 = {
         this.bomb = new SuperBomberman.bombPrefab(this.game, 8, 8, 7, this);
         this.bomb = new SuperBomberman.bombPrefab(this.game, 9, 8, 7, this);
         
-        this.printLayoutNumbers()
+        this.printLayoutNumbers()*/
     },
     
     update:function()

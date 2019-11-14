@@ -14,8 +14,12 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
 	this.frame = 7;
     _game.physics.arcade.enable(this);
 	this.level = _level;
+    this.bombs = 5;
+    this.game = _game;
 	cursors = _game.input.keyboard.createCursorKeys();
     _game.add.existing(this);
+    spaceK = _game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.power = 7;
 }
 
 SuperBomberman.player_setup.prototype = Object.create(Phaser.Sprite.prototype);
@@ -66,6 +70,13 @@ SuperBomberman.player_setup.prototype.update = function()
 			this.frame = 7;
 		}
 	}
+    if(spaceK.isDown) console.log("bomb")
+    if(spaceK.isDown && this.bombs > 0)
+    {
+        console.log("bomb")
+        this.bomb = new SuperBomberman.bombPrefab(this.game, (this.body.position.x + 16)/16 , (this.body.position.y + 24)/16 , this.power, this.level);
+    }   
+        
 
 }
 SuperBomberman.player_setup.prototype.onCollision = function(a)

@@ -59,45 +59,40 @@ SuperBomberman.level1 = {
             this.interiorWalls  = this.map.createLayer('Interior_Walls')
             this.floor          = this.map.createLayer('Floor')
 
-
-	//Creem Player
-	this.player = new SuperBomberman.player_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this);
-	this.playerCol = new SuperBomberman.playerCol_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this, this.player);
-	this.game.physics.arcade.enable(this.playerCol);
-
-	
-	}
+            //setejem les colisions entre les layers
             this.map.setCollisionBetween(1,8,true,'Exterior_Walls');
             this.map.setCollisionBetween(11,13,true,'Exterior_Walls');
-            this.map.setCollisionBetween(1,8,true,'Interior_Walls');
-            this.map.setCollisionBetween(11,13,true,'Interior_Walls');
-
-            //Creem Player
+	   }
         
+        //--region CREATE_PLAYER--//
+        {
+            this.player = new SuperBomberman.player_setup(this.game, gameOptions.gameWidth/6, gameOptions.gameHeight/6, 1, this);
+            this.playerCol = new SuperBomberman.playerCol_setup(this.game, gameOptions.gameWidth/6, gameOptions.gameHeight/6, 1, this, this.player);
+            this.game.physics.arcade.enable(this.playerCol);
+        }
         
         this.enemyTomatoe = new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this);
         
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 4, 10, 7, this);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 5, 10, 7, this);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 6, 10, 7, this);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 10, 7, this);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 8, 10, 7, this);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 9, 10, 7, this);
-        
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 4, 8, 7, this);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 5, 8, 7, this);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 6, 8, 7, this);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 7, 8, 7, this);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 8, 8, 7, this);
-        this.bomb = new SuperBomberman.bombPrefab(this.game, 9, 8, 7, this);
+        this.bomb = new SuperBomberman.bombPrefab(this.game, 6, 4, 7, this);
         
         this.printLayoutNumbers()
     },
     
     update:function()
     {
-        console.log("update")
-	this.physics.arcade.collide(this.playerCol, this.exteriorWalls);
+        this.physics.arcade.collide(this.playerCol, this.exteriorWalls);
     	this.physics.arcade.collide(this.playerCol, this.interiorWalls);
+    },
+    
+    printLayoutNumbers:function(){
+        if(printLayoutNumbers){
+            for(var i = 0; i < 11; i++){
+                for(var j = 0; j < 13; j++){
+                    this.text = this.game.add.text( 16 * j + 16 * 3, 16 * i + 16 * 2, layoutMap[(i) * 13 + (j)], {font: "bold 10px Arial", fill: "#f0f"})
+                    this.text.anchor.setTo(1)
+                }
+            }
+        }    
     }
+    
 }

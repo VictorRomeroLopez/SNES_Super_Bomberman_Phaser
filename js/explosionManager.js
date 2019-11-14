@@ -2,8 +2,8 @@ var SuperBomberman = SuperBomberman || {};
 
 SuperBomberman.explosionManager = function(_game, _x, _y, _power, _level){
     this.game = _game
-    this.posRawX = _x
-    this.posRawY = _y
+    this.posRawX = _x - gameOptions.gameOffsetLeft
+    this.posRawY = _y - gameOptions.gameOffsetTop
     this.posx = _x * 16 - 8
     this.posy = _y * 16 - 8
     this.power = _power
@@ -50,14 +50,14 @@ SuperBomberman.explosionManager.prototype.instantiateExplosions = function(){
 
 SuperBomberman.explosionManager.prototype.generateExplosion = function(_newDirectionExplosion, _idExplosion, _iterator){
     
-    this.offset = (16 * (_iterator + 1)) * gameOptions.gameScale;
+    this.offset = (16 * (_iterator + 1));
     
     switch(_newDirectionExplosion){
         case 'up':
             if(this.generateExplosionUP)
             {
-                if(layoutMap[(this.posRawY - _iterator - 3) * 13 + (this.posRawX - 2) - 1] != 0 || 
-                    (this.posRawY - _iterator - 3) < 0)
+                if(layoutMap[(this.posRawY - _iterator - 1) * 13 + (this.posRawX)] != 0 || 
+                    (this.posRawY - _iterator) < 1)
                 {
                     this.generateExplosionUP = false;
                 }
@@ -70,8 +70,8 @@ SuperBomberman.explosionManager.prototype.generateExplosion = function(_newDirec
         case 'down':
             if(this.generateExplosionDOWN)
             {
-                if(layoutMap[(this.posRawY + _iterator - 3) * 13 + (this.posRawX - 2) - 1] != 0 || 
-                    (this.posRawY + _iterator - 3) > 8)
+                if(layoutMap[(this.posRawY + _iterator - 1) * 13 + (this.posRawX)] != 0 || 
+                    (this.posRawY + _iterator) > 9)
                 {
                     this.generateExplosionDOWN = false;
                 }
@@ -85,10 +85,10 @@ SuperBomberman.explosionManager.prototype.generateExplosion = function(_newDirec
             
             if(this.generateExplosionLEFT)
             {
-                if(layoutMap[(this.posRawY - 2) * 13 + (this.posRawX - _iterator - 3) - 1] != 0 ||
-                  (this.posRawX - _iterator - 3) <= 0)
+                if(layoutMap[(this.posRawY) * 13 + (this.posRawX - _iterator - 1)] != 0 ||
+                  (this.posRawX - _iterator) < 1)
                 {
-                   this.generateExplosionLEFT = false;
+                    this.generateExplosionLEFT = false;
                 }
                 else
                 {
@@ -99,8 +99,8 @@ SuperBomberman.explosionManager.prototype.generateExplosion = function(_newDirec
         case 'right':
             if(this.generateExplosionRIGHT)
             {
-                if(layoutMap[(this.posRawY - 2) * 13 + (this.posRawX + _iterator - 3) - 1] != 0 || 
-                  (this.posRawX + _iterator - 3) > 11)
+                if(layoutMap[(this.posRawY) * 13 + (this.posRawX + _iterator - 1)] != 0 || 
+                  (this.posRawX + _iterator) > 11)
                 {
                    this.generateExplosionRIGHT = false;
                 }

@@ -1,13 +1,14 @@
 ﻿var SuperBomberman = SuperBomberman || {};
 
-var gameScale = 1
-
 var gameOptions = {
+    
     //Add generic variables
-    gameScale:this.gameScale,
+    gameOffsetLeft:3,
+    gameOffsetTop:2,
     gameWidth:17*16,
     gameHeight:13*16
 };
+
 //--LAYOUT_NUMBERS--//
 {
     //si volem que es puguin veure els numeros posem aquesta variable a true
@@ -15,15 +16,15 @@ var gameOptions = {
 
     var layoutMap = [];
     for(var i = 0; i < 11; i++){
-    for(var j = 0; j < 13; j++){
-        if(i%2 == 0)
-            layoutMap.push(0);
-        else if(j % 2 == 0)
-            layoutMap.push(0);
-        else 
-            layoutMap.push(1)
+        for(var j = 0; j < 13; j++){
+            if(i%2 == 0)
+                layoutMap.push(0)
+            else if(j % 2 == 0)
+                layoutMap.push(0)
+            else 
+                layoutMap.push(1)
+        }
     }
-}
 }
 
 SuperBomberman.game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.AUTO, null, this, false, false);

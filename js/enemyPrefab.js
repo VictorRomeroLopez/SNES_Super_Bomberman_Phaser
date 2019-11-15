@@ -2,8 +2,8 @@ var SuperBomberman = SuperBomberman || {};
 
 SuperBomberman.enemy_prefab = function(_game, _x, _y, _type, _level)
 {
-    this.posx = (_x * 16 - 8) * gameOptions.gameScale;
-    this.posy = (_y * 16 - 8) * gameOptions.gameScale;
+    this.posx = (_x * 16 - 8);
+    this.posy = (_y * 16 - 8);
     
     if(_type == 1)
         {
@@ -15,7 +15,6 @@ SuperBomberman.enemy_prefab = function(_game, _x, _y, _type, _level)
             this.health = 1;
         }
     this.anchor.setTo(.5);
-    this.scale.setTo(gameOptions.gameScale);
     this.speed = 30;
     this.goingY = false;
     this.direction = -1;

@@ -86,14 +86,14 @@ SuperBomberman.player_setup.prototype.update = function()
 	
         if(spaceK.isDown && this.bombs > 0 && spaceK.downDuration(1))
         {
-            this.bomb = new SuperBomberman.bombPrefab(this.game, (this.body.position.x + 14)/16 , (this.body.position.y + 14)/16 , this.power, this.level);
+            this.bomb = new SuperBomberman.bombPrefab(this.game, (this.body.position.x - 34)/16 , (this.body.position.y - 24)/16 , this.power, this.level);
         }         
 }
 
-SuperBomberman.explosionPrefab.prototype.enemyCollision = function(_player, _enemy)
+SuperBomberman.player_setup.prototype.enemyCollision = function(_player, _enemy)
 {
     console.log("dead")
-    player.health--;
-    player.body.position.x = this.initialPosX;
-    player.body.position.y = this.initialPosY;
+    _player.health--;
+    _player.body.position.x = 35;
+    _player.body.position.y = 25;
 }

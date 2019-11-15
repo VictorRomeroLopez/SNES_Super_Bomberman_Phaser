@@ -39,7 +39,6 @@ SuperBomberman.explosionPrefab = function(_game, _x, _y, _idExplosion ,_level){
             break
     }
     
-    this.scale.setTo(gameOptions.gameScale)
     this.anchor.setTo(.5)
     _game.add.existing(this)
     _game.physics.arcade.enable(this);

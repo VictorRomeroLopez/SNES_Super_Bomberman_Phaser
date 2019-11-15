@@ -62,8 +62,7 @@ SuperBomberman.level1 = {
 
 	//Creem Player
 	this.player = new SuperBomberman.player_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this);
-	this.playerCol = new SuperBomberman.playerCol_setup(this.game, gameOptions.gameWidth/6, 		gameOptions.gameHeight/6, 1, this, this.player);
-	this.game.physics.arcade.enable(this.playerCol);
+	this.game.physics.arcade.enable(this.player);
 	
 	}
             this.map.setCollisionBetween(1,8,true,'Exterior_Walls');
@@ -95,8 +94,9 @@ SuperBomberman.level1 = {
     
     update:function()
     {
+        //this.game.debug.body(this.player);
         console.log("update")
-	this.physics.arcade.collide(this.playerCol, this.exteriorWalls);
-    	this.physics.arcade.collide(this.playerCol, this.interiorWalls);
+	    this.physics.arcade.collide(this.player, this.exteriorWalls);
+    	this.physics.arcade.collide(this.player, this.interiorWalls);
     }
 }

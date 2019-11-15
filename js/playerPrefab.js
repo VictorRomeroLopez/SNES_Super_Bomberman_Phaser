@@ -27,11 +27,9 @@ SuperBomberman.player_setup.prototype.constructor = SuperBomberman.player_setup;
 
 SuperBomberman.player_setup.prototype.update = function()
 {
-	
 
+    this.body.setSize(10,12,3,12);
 	//INPUTS
-	if(this.collision)
-	{
  		if (cursors.up.isDown)
     		{
 			this.direction = -1;
@@ -69,17 +67,11 @@ SuperBomberman.player_setup.prototype.update = function()
 			this.body.velocity.y = 0;
 			this.frame = 7;
 		}
-	}
-    if(spaceK.isDown) console.log("bomb")
-    if(spaceK.isDown && this.bombs > 0)
+	
+    if(spaceK.isDown && this.bombs > 0 && spaceK.downDuration(1))
     {
         console.log("bomb")
         this.bomb = new SuperBomberman.bombPrefab(this.game, (this.body.position.x + 16)/16 , (this.body.position.y + 24)/16 , this.power, this.level);
     }   
-        
-
-}
-SuperBomberman.player_setup.prototype.onCollision = function(a)
-{
-	this.collision = a;
+       
 }

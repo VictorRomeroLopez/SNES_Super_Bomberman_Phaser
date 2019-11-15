@@ -94,7 +94,7 @@ SuperBomberman.level1 = {
     
     update:function()
     {
-        //this.game.debug.body(this.player);
+        this.game.debug.body(this.player);
         console.log("update")
 	    this.physics.arcade.collide(this.player, this.exteriorWalls);
     	this.physics.arcade.collide(this.player, this.interiorWalls);

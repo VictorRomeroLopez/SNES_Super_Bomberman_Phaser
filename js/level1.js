@@ -73,7 +73,7 @@ SuperBomberman.level1 = {
         
         this.enemyTomatoe = new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this);
         
-        //this.bomb = new SuperBomberman.bombPrefab(this.game, 6, 4, 7, this);
+        //this.bomb = new SuperBomberman.bombPrefab(this.game, 2, 2, 7, this);
         
         //this.printLayoutNumbers()
     },

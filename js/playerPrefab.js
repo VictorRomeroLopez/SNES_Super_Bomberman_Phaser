@@ -86,7 +86,7 @@ SuperBomberman.player_setup.prototype.update = function()
 	
         if(spaceK.isDown && this.bombs > 0 && spaceK.downDuration(1))
         {
-            this.bomb = new SuperBomberman.bombPrefab(this.game, (this.body.position.x - 34)/16 , (this.body.position.y - 24)/16 , this.power, this.level);
+            this.bomb = new SuperBomberman.bombPrefab(this.game, Math.trunc(this.body.position.x /16)-2, Math.trunc(this.body.position.y /16)-1, this.power, this.level);
         }         
 }
 

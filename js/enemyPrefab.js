@@ -21,6 +21,7 @@ SuperBomberman.enemy_prefab = function(_game, _x, _y, _type, _level)
     
     _game.add.existing(this);
     _game.physics.arcade.enable(this);
+    if(_type == 1) this.body.setSize(16,16,0,10);
     this.level = _level;
 };
 

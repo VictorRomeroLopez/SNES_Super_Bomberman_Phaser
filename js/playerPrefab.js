@@ -32,6 +32,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     //GAME
     _game.physics.arcade.enable(this);
     _game.add.existing(this);
+    this.body.setSize(10,10,3,13);
 }
 
 SuperBomberman.player_setup.prototype = Object.create(Phaser.Sprite.prototype);
@@ -43,7 +44,7 @@ SuperBomberman.player_setup.prototype.update = function()
     this.game.physics.arcade.collide(this,this.level.exteriorWalls);
     this.game.physics.arcade.collide(this,this.level.interiorWalls);
     this.game.physics.arcade.collide(this, this.level.enemyTomatoe, this.enemyCollision);
-    this.body.setSize(10,10,3,13);
+    
 
 	//INPUTS , ANIMATIONS & MOVEMENT
  		if (cursors.up.isDown)

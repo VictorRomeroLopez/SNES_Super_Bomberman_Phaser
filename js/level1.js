@@ -81,6 +81,7 @@ SuperBomberman.level1 = {
     update:function()
     {
         this.game.debug.body(this.player);
+        this.game.debug.body(this.enemyTomatoe);
     },
 
     printLayoutNumbers:function()

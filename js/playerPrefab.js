@@ -45,7 +45,7 @@ SuperBomberman.player_setup.prototype.update = function()
     //COLLISIONS
     this.game.physics.arcade.collide(this,this.level.exteriorWalls);
     this.game.physics.arcade.collide(this,this.level.interiorWalls);
-    this.game.physics.arcade.collide(this, this.level.enemyTomatoe, this.enemyCollision);
+    this.game.physics.arcade.overlap(this, this.level.enemies, this.enemyCollision, null, this.level);
     
 	//INPUTS , ANIMATIONS & MOVEMENT
     if (cursors.up.isDown)

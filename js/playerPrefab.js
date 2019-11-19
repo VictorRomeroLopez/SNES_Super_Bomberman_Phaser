@@ -23,6 +23,8 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.health = 5;
     this.initialPosX = _x;
     this.initialPosY = _y;
+    this.bombsGroup = _level.add.group()
+    this.bombsGroup.enableBody = true
     
     
     //INPUTS
@@ -45,50 +47,69 @@ SuperBomberman.player_setup.prototype.update = function()
     this.game.physics.arcade.collide(this,this.level.interiorWalls);
     this.game.physics.arcade.collide(this, this.level.enemyTomatoe, this.enemyCollision);
     
-
 	//INPUTS , ANIMATIONS & MOVEMENT
- 		if (cursors.up.isDown)
-    		{
-			this.direction = -1;
-			this.body.velocity.x = 0;
-        		this.animations.play('walkUp');
-			this.body.velocity.y = this.speed*  this.direction;
-		
-    		}
-    		else if (cursors.down.isDown)
-    		{
-			this.direction = 1;
-			this.body.velocity.x = 0;
-      	 		this.animations.play('walkDown');
-			this.body.velocity.y = this.speed*  this.direction;
-    		}	
-		else if (cursors.left.isDown)
-    		{
-			if(this.scale.x > 0) this.scale.x *= -1;
-			this.direction = -1;
-			this.body.velocity.y = 0;
-       			this.animations.play('walkRight');
-			this.body.velocity.x = this.speed*  this.direction;
-    		} 
-		else if (cursors.right.isDown)
-    		{
-			if(this.scale.x < 0) this.scale.x *= -1;
-			this.direction = 1;
-			this.body.velocity.y = 0;
-       			this.animations.play('walkRight');
-			this.body.velocity.x = this.speed*  this.direction;
-    		}
-		else
-		{
-			this.body.velocity.x = 0;
-			this.body.velocity.y = 0;
-			this.frame = 7;
-		}
-	
-        if(spaceK.isDown && this.bombs > 0 && spaceK.downDuration(1))
-        {
-            this.bomb = new SuperBomberman.bombPrefab(this.game, Math.trunc(this.body.position.x /16)-2, Math.trunc(this.body.position.y /16)-1, this.power, this.level);
-        }         
+    if (cursors.up.isDown)
+    {
+        this.direction = -1;
+        this.body.velocity.x = 0;
+        this.animations.play('walkUp');
+        this.body.velocity.y = this.speed*  this.direction;
+    }
+    else if (cursors.down.isDown)
+    {
+        this.direction = 1;
+        this.body.velocity.x = 0;
+        this.animations.play('walkDown');
+        this.body.velocity.y = this.speed*  this.direction;
+    }	
+    else if (cursors.left.isDown)
+    {
+        if(this.scale.x > 0) this.scale.x *= -1;
+        this.direction = -1;
+        this.body.velocity.y = 0;
+        this.animations.play('walkRight');
+        this.body.velocity.x = this.speed*  this.direction;
+    } 
+    else if (cursors.right.isDown)
+    {
+        if(this.scale.x < 0) this.scale.x *= -1;
+        this.direction = 1;
+        this.body.velocity.y = 0;
+        this.animations.play('walkRight');
+        this.body.velocity.x = this.speed*  this.direction;
+    }
+    else
+    {
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0;
+        this.frame = 7;
+    }
+
+    if(spaceK.isDown && this.bombs > 0 && spaceK.downDuration(1))
+    {
+        this.DropBomb();
+    }         
+}
+
+SuperBomberman.player_setup.prototype.DropBomb = function()
+{
+    var recicleBomb = this.bombsGroup.getFirstExists(false)
+    
+    var positionBombX = Math.trunc(this.body.position.x /16)-2
+    var positionBombY = Math.trunc(this.body.position.y /16)-1
+    
+    if(!recicleBomb){
+        console.log('bomba creada')
+        recicleBomb = new SuperBomberman.bombPrefab(this.game, positionBombX, positionBombY, this.power, this.level)
+        this.bombsGroup.add(recicleBomb)
+    }else{
+        console.log('bomba recilcada')
+        var positionXworld = positionBombX * 16 + gameOptions.gameOffsetLeft * 16 - 8
+        var positionYworld = positionBombY * 16 + gameOptions.gameOffsetTop * 16 - 8
+        
+        recicleBomb.reset(positionXworld, positionYworld)
+        recicleBomb.UpdateBomb(positionBombX + gameOptions.gameOffsetLeft, positionBombY + gameOptions.gameOffsetTop, this.power);
+    }
 }
 
 SuperBomberman.player_setup.prototype.enemyCollision = function(_player, _enemy)

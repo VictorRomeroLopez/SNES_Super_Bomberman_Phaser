@@ -9,6 +9,8 @@ SuperBomberman.bombPrefab = function(_game, _x, _y, _power, _level){
     this.posx = (this.posRawX * 16 - 8);
     this.posy = (this.posRawY * 16 - 8);
     
+    this.hasExploded = false;
+    
     this.power = _power;
     this.game = _game;
     this.level = _level;
@@ -21,14 +23,25 @@ SuperBomberman.bombPrefab = function(_game, _x, _y, _power, _level){
     this.anchor.setTo(0.5);
     
     this.game.add.existing(this);
-    
-    this.game.time.events.add(Phaser.Timer.SECOND * this.timeBombToExplode, this.explodeBomb, this);
+    this.timerEvent = this.game.time.events.add(Phaser.Timer.SECOND * this.timeBombToExplode, this.explodeBomb, this);
 }
 
 SuperBomberman.bombPrefab.prototype = Object.create(Phaser.Sprite.prototype);
 SuperBomberman.bombPrefab.prototype.constructor = SuperBomberman.bombPrefab;
 
+SuperBomberman.bombPrefab.prototype.UpdateBomb = function(newPosX, newPosY, newPower){
+    this.posRawX = newPosX;
+    this.posRawY = newPosY;
+    this.power = newPower;
+    this.hasExploded = false;
+    
+    this.game.time.events.add(Phaser.Timer.SECOND * this.timeBombToExplode, this.explodeBomb, this);
+}
+
 SuperBomberman.bombPrefab.prototype.explodeBomb = function(){
-    new SuperBomberman.explosionManager(this.game, this.posRawX, this.posRawY, this.power, this.level)
-    this.kill();
+    if(!this.hasExploded){
+        this.hasExploded = true;
+        new SuperBomberman.explosionManager(this.game, this.posRawX, this.posRawY, this.power, this.level)
+        this.kill();
+    }
 }

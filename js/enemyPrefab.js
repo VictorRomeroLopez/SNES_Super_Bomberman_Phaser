@@ -53,13 +53,11 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
         {
             if(Phaser.Math.between(1, 10) >= 8)
                 {
-                    console.log('blocked20X');
                     this.goingY = true;
                     this.body.velocity.y = this.speed*  this.direction;
                 }
             else
                 {
-                    console.log('blocked80X');
                     this.direction *=-1;
                     if(this.direction == -1) this.scale.x = 1;
                     else this.scale.x = -1;
@@ -70,7 +68,7 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
         {
             if(Phaser.Math.between(1, 10) >= 8)
                 {
-                    console.log('blocked20Y');
+                    //console.log('blocked20Y');
                     this.goingY = false;
                     if(this.direction == -1) this.scale.x = 1;
                     else this.scale.x = -1;
@@ -78,7 +76,7 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
                 }
             else
                 {
-                    console.log('blocked80Y');
+                    //console.log('blocked80Y');
                     this.direction *=-1;
                     this.body.velocity.y = this.speed*  this.direction;
                 }

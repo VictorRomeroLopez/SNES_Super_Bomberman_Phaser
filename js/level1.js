@@ -36,10 +36,12 @@ SuperBomberman.level1 = {
 
         //---region LOAD_SPRITESHEET_IMAGES---//
         {
-	       this.load.spritesheet('bomberman','assets/Bomberman/white_bomberman.png', 16, 24);
+	       this.load.spritesheet('bomberman','assets/Bomberman/white_bomberman.png', 16, 25);
         }
         
         this.load.spritesheet('tomatoe','assets/Enemies/World_1/Helicopter/helicopter.png', 16, 24);
+        this.load.spritesheet('nuez', 'assets/Enemies/World_1/Bunny/bunny.png', 16, 24);
+        this.load.spritesheet('ufo', 'assets/Enemies/World_1/UFO/UFO.png', 16, 24);
     },
     
     create:function()
@@ -71,7 +73,20 @@ SuperBomberman.level1 = {
             this.player = new SuperBomberman.player_setup(this.game, 40, 25, 1, this);
         }
         
-        this.enemyTomatoe = new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this);
+        
+        this.enemies = this.add.group();
+        this.enemies.enableBody = true;
+        this.game.physics.arcade.enable(this.enemies);
+        //this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+        this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this));
+        this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 6, 6, 2, this));
+        this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 3, 3, 3, this));
+        for(var i =0; i<this.enemies.length;i++)
+            {
+                this.enemies.getChildAt(i).body.setSize(16,16,0,10);
+                console.log(this.enemies.getChildAt(i).health);
+            }
+        
         
         //this.bomb = new SuperBomberman.bombPrefab(this.game, 2, 2, 7, this);
         
@@ -80,8 +95,13 @@ SuperBomberman.level1 = {
     
     update:function()
     {
+        this.game.physics.arcade.collide(this.enemies);
         this.game.debug.body(this.player);
-        this.game.debug.body(this.enemyTomatoe);
+        for(var i=0;i<this.enemies.length;i++)
+            {
+                this.game.debug.body(this.enemies.getChildAt(i));
+            }
+        
     },
 
     printLayoutNumbers:function()

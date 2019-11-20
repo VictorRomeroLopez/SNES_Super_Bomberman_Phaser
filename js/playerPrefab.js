@@ -114,7 +114,6 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
 
 SuperBomberman.player_setup.prototype.enemyCollision = function(_player, _enemy)
 {
-    console.log("dead")
     _player.health--;
     _player.body.position.x = 35;
     _player.body.position.y = 25;

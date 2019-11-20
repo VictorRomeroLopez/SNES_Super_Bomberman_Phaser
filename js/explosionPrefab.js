@@ -38,6 +38,7 @@ SuperBomberman.explosionPrefab = function(_game, _x, _y, _idExplosion ,_level){
             this.animations.play('vertical_explosion', this.framerateAnimations, false, true)
             break
     }
+    this.animations.currentAnim.onComplete.add(this.enemyInvulnerability, this);
     
     this.anchor.setTo(.5)
     _game.add.existing(this)
@@ -50,16 +51,29 @@ SuperBomberman.explosionPrefab.prototype.constructor = SuperBomberman.explosionP
 SuperBomberman.explosionPrefab.prototype.update = function()
 {
     this.game.physics.arcade.collide(this, this.level.enemies, this.enemyCollision);
-    this.game.physics.arcade.collide(this, this.level.player.bombsGroup, this.bombCollision);
-    
+    this.game.physics.arcade.collide(this, this.level.player.bombsGroup, this.bombCollision);    
 };
 
 SuperBomberman.explosionPrefab.prototype.enemyCollision = function(_explosion, _enemy)
 {
-    _enemy.health--;
+    if(!_enemy.invulnerability) _enemy.health--;
+    
     if(_enemy.health <=0) _enemy.kill();
+    else
+        {
+            _enemy.invulnerability = true;
+        }
 }
 
 SuperBomberman.explosionPrefab.prototype.bombCollision = function(_explosion, _bomb){
     _bomb.explodeBomb();
+}
+
+SuperBomberman.explosionPrefab.prototype.enemyInvulnerability = function()
+{
+    console.log("completed");
+    for(var i =0; i<this.level.enemies.length;i++)
+        {
+            if(this.level.enemies.getChildAt(i).invulnerability) this.level.enemies.getChildAt(i).invulnerability = false;
+        }
 }

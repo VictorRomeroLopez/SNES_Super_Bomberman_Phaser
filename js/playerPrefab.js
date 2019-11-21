@@ -89,6 +89,7 @@ SuperBomberman.player_setup.prototype.update = function()
     if(spaceK.isDown && this.bombs > 0 && spaceK.downDuration(1))
     {
         this.DropBomb();
+        this.bombs--;
     }         
 }
 

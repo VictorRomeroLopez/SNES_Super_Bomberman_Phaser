@@ -6,7 +6,8 @@ var gameOptions = {
     gameOffsetLeft:3,
     gameOffsetTop:2,
     gameWidth:17*16,
-    gameHeight:13*16
+    gameHeight:13*16,
+    numDestroyableWalls:10
 };
 
 //--LAYOUT_NUMBERS--//

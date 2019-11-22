@@ -105,7 +105,7 @@ SuperBomberman.level1 = {
             {
                 this.game.debug.body(this.enemies.getChildAt(i));
             }
-        
+        console.log(this.player.bombs)
     },
 
     printLayoutNumbers:function()

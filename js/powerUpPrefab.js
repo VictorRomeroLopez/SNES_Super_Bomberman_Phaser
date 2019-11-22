@@ -5,7 +5,6 @@ SuperBomberman.powerUp_prefab = function(_game, _x, _y, _type, _level)
     this.posx = (_x * 16 - 8);
     this.posy = (_y * 16 - 8);
     this.type = _type;
-   
     if(this.type == 1)
     {
         Phaser.Sprite.call(this, _game, this.posx, this.posy, 'bombPU');
@@ -38,24 +37,35 @@ SuperBomberman.powerUp_prefab.prototype.constructor = SuperBomberman.powerUp_pre
 
 SuperBomberman.powerUp_prefab.prototype.update = function()
 {    
-    console.log("updating");
-
-    this.game.physics.arcade.overlap(this, this.level.player, this.pickUpPowerUp, null, this.level);  
-}
-
-SuperBomberman.powerUp_prefab.prototype.pickUpPowerUp = function(_powerUp, _player)
-{
-    if(_powerUp.type == 1)
+    if(this.type == 1)
     {
-         _player.bombs++;
+         this.game.physics.arcade.collide(this, this.level.player, this.pickUpPowerUpBomb); 
     }
-    else if(_powerUp.type == 2)
+    else if(this.type == 2)
     {
-         _player.speed+=50;
+         this.game.physics.arcade.collide(this, this.level.player, this.pickUpPowerUpSpeed); 
     }
     else
     {
-        _player.power++;
+        this.game.physics.arcade.collide(this, this.level.player, this.pickUpPowerUpPower); 
     }
+     
+}
+
+SuperBomberman.powerUp_prefab.prototype.pickUpPowerUpBomb = function(_powerUp, _player)
+{
+    _player.bombs++;
+    _powerUp.kill();
+}
+
+SuperBomberman.powerUp_prefab.prototype.pickUpPowerUpSpeed = function(_powerUp, _player)
+{
+    _player.speed +=15;
+    _powerUp.kill();
+}
+
+SuperBomberman.powerUp_prefab.prototype.pickUpPowerUpPower = function(_powerUp, _player)
+{
+    _player.power++;
     _powerUp.kill();
 }

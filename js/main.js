@@ -1,5 +1,9 @@
 ﻿var SuperBomberman = SuperBomberman || {};
 
+var gameTags = {
+    destroyableWalls:2
+};
+
 var gameOptions = {
     
     //Add generic variables
@@ -7,7 +11,7 @@ var gameOptions = {
     gameOffsetTop:2,
     gameWidth:17*16,
     gameHeight:13*16,
-    numDestroyableWalls:10
+    numDestroyableWalls:50
 };
 
 //--LAYOUT_NUMBERS--//

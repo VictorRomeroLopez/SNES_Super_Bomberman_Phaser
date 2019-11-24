@@ -88,7 +88,7 @@ SuperBomberman.level1 = {
             console.log(this.enemies.getChildAt(i).health);
         }
         
-        this.printLayoutNumbers()
+        //this.printLayoutNumbers()
     },
     
     update:function()
@@ -130,10 +130,16 @@ SuperBomberman.level1 = {
             }while(this.CheckValueExistsOnArray(forbiddenPositions, generatedNumber) || layoutMap[generatedNumber] != 0)
             layoutMap[generatedNumber] = 2
         }
-        //ToDo: ara que tenim els números generats a les seves posicións, només cal que els pintem al grid
-        //tindrem que treballar amb moduls ja que el nombre generat és l'ID al layout
-        //després tindrém que mirar com posarém les ombres
-        this.destroyable = new SuperBomberman.destroyableWall(this.game, initialPosX, initialPosY, true);
+        
+        for(var i = 0; i < layoutMap.length; i++){
+            if(layoutMap[i] == gameTags.destroyableWalls){
+                if(layoutMap[i-13] == 1 || i < 13)
+                    new SuperBomberman.destroyableWall(this.game, initialPosX + ((i % 13) * 16), initialPosY + (Math.trunc((i/13)) * 16), true, false, this);
+                else
+                    new SuperBomberman.destroyableWall(this.game, initialPosX + ((i % 13) * 16), initialPosY + (Math.trunc((i/13)) * 16), false, false, this);
+                console.log(2);
+            }
+        }
         
     },
     

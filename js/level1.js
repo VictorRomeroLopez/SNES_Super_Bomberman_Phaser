@@ -73,9 +73,7 @@ SuperBomberman.level1 = {
         {
             this.player = new SuperBomberman.player_setup(this.game, 40, 25, 1, this);
         }
-        this.pu = new SuperBomberman.powerUp_prefab(this.game, 5,3, 1, this);
-        this.pu1 = new SuperBomberman.powerUp_prefab(this.game, 5,2, 2, this);
-        this.pu2 = new SuperBomberman.powerUp_prefab(this.game, 6,2, 3, this);
+        
         
         
         this.enemies = this.add.group();
@@ -90,7 +88,9 @@ SuperBomberman.level1 = {
                 this.enemies.getChildAt(i).body.setSize(16,16,0,10);
                 //console.log(this.enemies.getChildAt(i).health);
             }
-        
+        this.pu = new SuperBomberman.powerUp_prefab(this.game, 5,3, 1, this);
+        this.pu1 = new SuperBomberman.powerUp_prefab(this.game, 5,2, 2, this);
+        this.pu2 = new SuperBomberman.powerUp_prefab(this.game, 6,2, 3, this);
         
         //this.bomb = new SuperBomberman.bombPrefab(this.game, 2, 2, 7, this);
         
@@ -105,7 +105,6 @@ SuperBomberman.level1 = {
             {
                 this.game.debug.body(this.enemies.getChildAt(i));
             }
-        console.log(this.player.bombs)
     },
 
     printLayoutNumbers:function()

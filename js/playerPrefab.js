@@ -119,3 +119,19 @@ SuperBomberman.player_setup.prototype.enemyCollision = function(_player, _enemy)
     _player.body.position.x = 35;
     _player.body.position.y = 25;
 }
+
+SuperBomberman.player_setup.prototype.manageUpgrades = function(type)
+{
+    if(type == 1)
+    {
+        this.bombs++;    
+    }
+    else if(type == 2)
+    {
+        this.speed +=15;   
+    }
+    else
+    {
+        this.power++;    
+    }
+}

@@ -11,7 +11,7 @@ var gameOptions = {
     gameOffsetTop:2,
     gameWidth:17*16,
     gameHeight:13*16,
-    numDestroyableWalls:50
+    numDestroyableWalls:40
 };
 
 //--LAYOUT_NUMBERS--//

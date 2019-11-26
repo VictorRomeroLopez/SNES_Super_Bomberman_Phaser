@@ -3,6 +3,7 @@ var SuperBomberman = SuperBomberman || {};
 SuperBomberman.destroyableWall = function(_game, _x, _y, upperShadow = false, shadowSprite = false){
     if(!shadowSprite){
         Phaser.Sprite.call(this, _game, _x, _y, 'destroyables')
+        this.animations.add('explode', [16,15,14,13,12,13,14,15,16], 10, false)
         switch(Math.trunc(Math.random() * 4)){
             case 0:
                 this.animations.add('idle', [0,1,2,3],10,true)
@@ -36,3 +37,13 @@ SuperBomberman.destroyableWall = function(_game, _x, _y, upperShadow = false, sh
 
 SuperBomberman.destroyableWall.prototype = Object.create(Phaser.Sprite.prototype);
 SuperBomberman.destroyableWall.prototype.constructor = SuperBomberman.destroyableWall;
+
+SuperBomberman.destroyableWall.prototype.ExplodeDestroyableWall = function()
+{
+    this.animations.play('explode')
+    this.animations.currentAnim.onComplete.add(this.DestroyThis, this);
+}
+
+SuperBomberman.destroyableWall.prototype.DestroyThis = function(){
+    this.kill();
+}

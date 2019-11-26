@@ -47,7 +47,6 @@ SuperBomberman.level1 = {
     create:function()
     {
         console.log("create");
-        
         //---region ADD_IMAGES_TO_TILEMAP---//
         {
             this.map = this.game.add.tilemap('level1')
@@ -67,7 +66,43 @@ SuperBomberman.level1 = {
             this.map.setCollisionBetween(11,13,true,'Interior_Walls');
         }
         
-        this.GenerateDestroyableWalls();
+        //--region DESTROYABLE_WALLS--//
+        {
+            this.destroyableWallsGroup = this.add.group();
+            this.destroyableWallsGroup.enableBody = true;
+
+            var initialPosX = 32
+            var initialPosY = 16
+            var forbiddenPositions = [0,1,13]
+            var destroyablePositions = []
+
+            for(var i = 0; i < gameOptions.numDestroyableWalls; i++){
+                var generatedNumber;
+                do{
+                    generatedNumber = Math.trunc((Math.random() * layoutMap.length))
+                }while(this.CheckValueExistsOnArray(forbiddenPositions, generatedNumber) || layoutMap[generatedNumber] != 0)
+                layoutMap[generatedNumber] = 2
+            }
+
+            //_level.destroyableWallsGroup.add(new SuperBomberman.destroyableWall(_level.game, 16, 16, true, false, _level));
+
+            for(var i = 0; i < layoutMap.length; i++)
+            {
+                if(layoutMap[i] == gameTags.destroyableWalls)
+                {
+                    if(layoutMap[i-13] == 1 || i < 13)
+                    {
+                        this.destroyableWallsGroup.add(new SuperBomberman.destroyableWall(this.game, initialPosX + ((i % 13) * 16), initialPosY + (Math.trunc((i/13)) * 16), true, false, this));
+                    }
+                    else
+                    {
+                        this.destroyableWallsGroup.add(new SuperBomberman.destroyableWall(this.game, initialPosX + ((i % 13) * 16), initialPosY + (Math.trunc((i/13)) * 16), false, false, this));
+                    }
+                }
+            }
+        }
+        
+        //this.GenerateDestroyableWalls(this);
         
         //--region CREATE_PLAYER--//
         {
@@ -88,6 +123,8 @@ SuperBomberman.level1 = {
             console.log(this.enemies.getChildAt(i).health);
         }
         
+        
+        //this.destroyableWallsGroup.add(new SuperBomberman.destroyableWall(this.game,16, 16, true, false, this));
         //this.printLayoutNumbers()
     },
     
@@ -117,7 +154,8 @@ SuperBomberman.level1 = {
         }    
     },
     
-    GenerateDestroyableWalls:function(){
+    //--DEPRECATED--//
+    GenerateDestroyableWalls:function(_level){
         var initialPosX = 32
         var initialPosY = 16
         var forbiddenPositions = [0,1,13]
@@ -131,13 +169,20 @@ SuperBomberman.level1 = {
             layoutMap[generatedNumber] = 2
         }
         
-        for(var i = 0; i < layoutMap.length; i++){
-            if(layoutMap[i] == gameTags.destroyableWalls){
+        //_level.destroyableWallsGroup.add(new SuperBomberman.destroyableWall(_level.game, 16, 16, true, false, _level));
+        
+        for(var i = 0; i < layoutMap.length; i++)
+        {
+            if(layoutMap[i] == gameTags.destroyableWalls)
+            {
                 if(layoutMap[i-13] == 1 || i < 13)
-                    new SuperBomberman.destroyableWall(this.game, initialPosX + ((i % 13) * 16), initialPosY + (Math.trunc((i/13)) * 16), true, false, this);
+                {
+                    new SuperBomberman.destroyableWall(_level.game, initialPosX + ((i % 13) * 16), initialPosY + (Math.trunc((i/13)) * 16), true, false, _level);
+                }
                 else
-                    new SuperBomberman.destroyableWall(this.game, initialPosX + ((i % 13) * 16), initialPosY + (Math.trunc((i/13)) * 16), false, false, this);
-                console.log(2);
+                {
+                    new SuperBomberman.destroyableWall(_level.game, initialPosX + ((i % 13) * 16), initialPosY + (Math.trunc((i/13)) * 16), false, false, _level);
+                }
             }
         }
         

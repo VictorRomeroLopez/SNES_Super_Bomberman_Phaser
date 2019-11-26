@@ -34,7 +34,7 @@ SuperBomberman.enemy_prefab = function(_game, _x, _y, _type, _level)
     this.speed = 30;
     this.goingY = false;
     this.direction = -1;
-    
+    this.invulnerability = false;
     this.level = _level;
 };
 
@@ -68,7 +68,6 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
         {
             if(Phaser.Math.between(1, 10) >= 8)
                 {
-                    //console.log('blocked20Y');
                     this.goingY = false;
                     if(this.direction == -1) this.scale.x = 1;
                     else this.scale.x = -1;
@@ -76,7 +75,6 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
                 }
             else
                 {
-                    //console.log('blocked80Y');
                     this.direction *=-1;
                     this.body.velocity.y = this.speed*  this.direction;
                 }

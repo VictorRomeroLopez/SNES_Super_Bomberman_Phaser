@@ -37,6 +37,7 @@ SuperBomberman.level1 = {
         //---region LOAD_SPRITESHEET_IMAGES---//
         {
 	       this.load.spritesheet('bomberman','assets/Bomberman/white_bomberman.png', 16, 25);
+	       this.load.spritesheet('bombPU','assets/Powerups/Powerups.png', 16, 16);
         }
         
         this.load.spritesheet('tomatoe','assets/Enemies/World_1/Helicopter/helicopter.png', 16, 24);
@@ -74,6 +75,7 @@ SuperBomberman.level1 = {
         }
         
         
+        
         this.enemies = this.add.group();
         this.enemies.enableBody = true;
         this.game.physics.arcade.enable(this.enemies);
@@ -84,9 +86,11 @@ SuperBomberman.level1 = {
         for(var i =0; i<this.enemies.length;i++)
             {
                 this.enemies.getChildAt(i).body.setSize(16,16,0,10);
-                console.log(this.enemies.getChildAt(i).health);
+                //console.log(this.enemies.getChildAt(i).health);
             }
-        
+        this.pu = new SuperBomberman.powerUp_prefab(this.game, 5,3, 1, this);
+        this.pu1 = new SuperBomberman.powerUp_prefab(this.game, 5,2, 2, this);
+        this.pu2 = new SuperBomberman.powerUp_prefab(this.game, 6,2, 3, this);
         
         //this.bomb = new SuperBomberman.bombPrefab(this.game, 2, 2, 7, this);
         
@@ -101,7 +105,6 @@ SuperBomberman.level1 = {
             {
                 this.game.debug.body(this.enemies.getChildAt(i));
             }
-        
     },
 
     printLayoutNumbers:function()

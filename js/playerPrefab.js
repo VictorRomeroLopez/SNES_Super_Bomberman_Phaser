@@ -19,7 +19,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     //PLAYER VARIABLES
     this.level = _level;
     this.bombs = 5;
-    this.power = 7;
+    this.power = 2;
     this.health = 5;
     this.initialPosX = _x;
     this.initialPosY = _y;
@@ -43,9 +43,9 @@ SuperBomberman.player_setup.prototype.constructor = SuperBomberman.player_setup;
 SuperBomberman.player_setup.prototype.update = function()
 {
     //COLLISIONS
-    this.game.physics.arcade.collide(this,this.level.exteriorWalls);
-    this.game.physics.arcade.collide(this,this.level.interiorWalls);
+    this.game.physics.arcade.collide(this,this.level.exteriorWalls);  this.game.physics.arcade.collide(this,this.level.interiorWalls);
     this.game.physics.arcade.overlap(this, this.level.enemies, this.enemyCollision, null, this.level);
+    this.game.physics.arcade.overlap(this, this.level.explosion, this.enemyCollision, null, this.level);
     
 	//INPUTS , ANIMATIONS & MOVEMENT
     if (cursors.up.isDown)
@@ -88,6 +88,7 @@ SuperBomberman.player_setup.prototype.update = function()
     if(spaceK.isDown && this.bombs > 0 && spaceK.downDuration(1))
     {
         this.DropBomb();
+        this.bombs--;
     }         
 }
 
@@ -117,4 +118,20 @@ SuperBomberman.player_setup.prototype.enemyCollision = function(_player, _enemy)
     _player.health--;
     _player.body.position.x = 35;
     _player.body.position.y = 25;
+}
+
+SuperBomberman.player_setup.prototype.manageUpgrades = function(type)
+{
+    if(type == 1)
+    {
+        this.bombs++;    
+    }
+    else if(type == 2)
+    {
+        this.speed +=15;   
+    }
+    else
+    {
+        this.power++;    
+    }
 }

@@ -51,7 +51,9 @@ SuperBomberman.explosionPrefab.prototype.constructor = SuperBomberman.explosionP
 SuperBomberman.explosionPrefab.prototype.update = function()
 {
     this.game.physics.arcade.collide(this, this.level.enemies, this.enemyCollision);
-    this.game.physics.arcade.collide(this, this.level.player.bombsGroup, this.bombCollision);    
+    this.game.physics.arcade.collide(this, this.level.player, this.playerCollision);
+    this.game.physics.arcade.collide(this, this.level.player.bombsGroup, this.bombCollision);
+    
 };
 
 SuperBomberman.explosionPrefab.prototype.enemyCollision = function(_explosion, _enemy)
@@ -67,6 +69,12 @@ SuperBomberman.explosionPrefab.prototype.enemyCollision = function(_explosion, _
 
 SuperBomberman.explosionPrefab.prototype.bombCollision = function(_explosion, _bomb){
     _bomb.explodeBomb();
+}
+
+SuperBomberman.explosionPrefab.prototype.playerCollision = function(_explosion, _player){
+    _player.health--;
+    _player.body.position.x = 35;
+    _player.body.position.y = 25;
 }
 
 SuperBomberman.explosionPrefab.prototype.enemyInvulnerability = function()

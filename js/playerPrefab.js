@@ -18,14 +18,14 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
 
     //PLAYER VARIABLES
     this.level = _level;
-    this.bombs = 5;
-    this.power = 2;
+    this.maxBombs = 1;
+    this.bombs = 0;
+    this.power = 1;
     this.health = 5;
     this.initialPosX = _x;
     this.initialPosY = _y;
     this.bombsGroup = _level.add.group()
     this.bombsGroup.enableBody = true
-    
     
     //INPUTS
     spaceK = _game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -85,10 +85,10 @@ SuperBomberman.player_setup.prototype.update = function()
         this.frame = 7;
     }
 
-    if(spaceK.isDown && this.bombs > 0 && spaceK.downDuration(1))
+    if(spaceK.isDown && this.bombs < this.maxBombs && spaceK.downDuration(1))
     {
         this.DropBomb();
-        this.bombs--;
+        this.bombs++;
     }         
 }
 
@@ -99,12 +99,13 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
     var positionBombX = Math.trunc(this.body.position.x /16)-2
     var positionBombY = Math.trunc(this.body.position.y /16)-1
     
-    if(!recicleBomb){
-        console.log('bomba creada')
+    if(!recicleBomb)
+    {
         recicleBomb = new SuperBomberman.bombPrefab(this.game, positionBombX, positionBombY, this.power, this.level)
         this.bombsGroup.add(recicleBomb)
-    }else{
-        console.log('bomba recilcada')
+    }
+    else
+    {
         var positionXworld = positionBombX * 16 + gameOptions.gameOffsetLeft * 16 - 8
         var positionYworld = positionBombY * 16 + gameOptions.gameOffsetTop * 16 - 8
         
@@ -122,16 +123,15 @@ SuperBomberman.player_setup.prototype.enemyCollision = function(_player, _enemy)
 
 SuperBomberman.player_setup.prototype.manageUpgrades = function(type)
 {
-    if(type == 1)
-    {
-        this.bombs++;    
-    }
-    else if(type == 2)
-    {
-        this.speed +=15;   
-    }
-    else
-    {
-        this.power++;    
+    switch(type){
+        case gameUpgrades.bomb:
+            this.maxBombs++;
+            break;
+        case gameUpgrades.speed:
+            this.speed += 15;
+            break;
+        case gameUpgrades.power:
+            this.power++;
+            break;
     }
 }

@@ -42,6 +42,7 @@ SuperBomberman.bombPrefab.prototype.explodeBomb = function(){
     if(!this.hasExploded){
         this.hasExploded = true;
         new SuperBomberman.explosionManager(this.game, this.posRawX, this.posRawY, this.power, this.level)
+        SuperBomberman.level1.player.bombs--;
         this.kill();
     }
 }

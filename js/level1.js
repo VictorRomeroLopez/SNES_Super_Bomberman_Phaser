@@ -48,7 +48,6 @@ SuperBomberman.level1 = {
     create:function()
     {
         console.log("create");
-        
         //---region ADD_IMAGES_TO_TILEMAP---//
         {
             this.map = this.game.add.tilemap('level1')
@@ -72,44 +71,9 @@ SuperBomberman.level1 = {
         {
             this.destroyableWallsGroup = this.add.group();
             this.destroyableWallsGroup.enableBody = true;
-
-            var initialPosX = 32
-            var initialPosY = 16
-            var forbiddenPositions = [0,1,13]
-            var destroyablePositions = []
-
-            for(var i = 0; i < gameOptions.numDestroyableWalls; i++){
-                var generatedNumber;
-                do{
-                    generatedNumber = Math.trunc((Math.random() * layoutMap.length))
-                }while(this.CheckValueExistsOnArray(forbiddenPositions, generatedNumber) || layoutMap[generatedNumber] != 0)
-                layoutMap[generatedNumber] = 2
-            }
-
-            for(var i = 0; i < layoutMap.length; i++)
-            {
-                if(layoutMap[i] == gameTags.destroyableWalls)
-                {
-                    if(layoutMap[i-13] == 1 || i < 13)
-                    {
-                        this.destroyableWallsGroup.add(
-                            new SuperBomberman.destroyableWall(
-                                initialPosX + ((i % 13) * 16), 
-                                initialPosY + (Math.trunc((i/13)) * 16), 
-                                true, 
-                                false));
-                    }
-                    else
-                    {
-                        this.destroyableWallsGroup.add(
-                            new SuperBomberman.destroyableWall(
-                                initialPosX + ((i % 13) * 16), 
-                                initialPosY + (Math.trunc((i/13)) * 16), 
-                                false, 
-                                false));
-                    }
-                }
-            }
+            
+            //Randomize destroyable walls positions and instantaite them
+            DestroyableWallsGenerator.prototype.InstantiateDestroyableWalls()            
         }
         
         //--region CREATE_PLAYER--//
@@ -132,8 +96,9 @@ SuperBomberman.level1 = {
                 this.enemies.getChildAt(i).body.setSize(16,16,0,10);
             }
         }
-                
-        //this.printLayoutNumbers()
+        
+        this.goalPosition = new Phaser.Point(0,0);
+        Utils.prototype.PrintLayoutNumbers()
     },
     
     update:function()
@@ -141,65 +106,10 @@ SuperBomberman.level1 = {
         this.game.physics.arcade.collide(this.enemies);
         this.game.debug.body(this.player);
         for(var i=0;i<this.enemies.length;i++)
-            {
-                this.game.debug.body(this.enemies.getChildAt(i));
-            }
+        {
+            this.game.debug.body(this.enemies.getChildAt(i));
+        }
     },
 
-    printLayoutNumbers:function()
-    {
-        if(printLayoutNumbers)
-        {
-            for(var i = 0; i < 11; i++)
-            {
-                for(var j = 0; j < 13; j++)
-                {
-                    this.text = this.game.add.text( 16 * j + 16 * 3, 16 * i + 16 * 2, layoutMap[(i) * 13 + (j)], {font: "bold 10px Arial", fill: "#f0f"})
-                    this.text.anchor.setTo(1)
-                }
-            }
-        }    
-    },
     
-    //--DEPRECATED--//
-    GenerateDestroyableWalls:function(_level){
-        var initialPosX = 32
-        var initialPosY = 16
-        var forbiddenPositions = [0,1,13]
-        var destroyablePositions = []
-        
-        for(var i = 0; i < gameOptions.numDestroyableWalls; i++){
-            var generatedNumber;
-            do{
-                generatedNumber = Math.trunc((Math.random() * layoutMap.length))
-            }while(this.CheckValueExistsOnArray(forbiddenPositions, generatedNumber) || layoutMap[generatedNumber] != 0)
-            layoutMap[generatedNumber] = 2
-        }
-        
-        //_level.destroyableWallsGroup.add(new SuperBomberman.destroyableWall(_level.game, 16, 16, true, false, _level));
-        
-        for(var i = 0; i < layoutMap.length; i++)
-        {
-            if(layoutMap[i] == gameTags.destroyableWalls)
-            {
-                if(layoutMap[i-13] == 1 || i < 13)
-                {
-                    new SuperBomberman.destroyableWall(_level.game, initialPosX + ((i % 13) * 16), initialPosY + (Math.trunc((i/13)) * 16), true, false, _level);
-                }
-                else
-                {
-                    new SuperBomberman.destroyableWall(_level.game, initialPosX + ((i % 13) * 16), initialPosY + (Math.trunc((i/13)) * 16), false, false, _level);
-                }
-            }
-        }
-        
-    },
-    
-    CheckValueExistsOnArray : function(arrayToCheck, valueToCheck){
-        for(var i = 0; i < arrayToCheck.length; i++){
-            if(arrayToCheck[i] == valueToCheck)
-                return true;
-        }
-        return false;
-    }
 }

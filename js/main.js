@@ -7,7 +7,8 @@ var gameTags = {
 var gameUpgrades = {
     bomb: 0,
     power:1,
-    speed:2
+    speed:2,
+    goal:3
 }
 
 var gameOptions = {
@@ -18,13 +19,13 @@ var gameOptions = {
     gameWidth:17*16,
     gameHeight:13*16,
     numDestroyableWalls:40,
-    UpgradesDropChance:20
+    UpgradesDropChance:100
 };
 
 //--LAYOUT_NUMBERS--//
 {
     //si volem que es puguin veure els numeros posem aquesta variable a true
-    var printLayoutNumbers = true;
+    var printLayoutNumbers = false;
 
     var layoutMap = [];
     for(var i = 0; i < 11; i++){

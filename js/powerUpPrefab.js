@@ -12,7 +12,10 @@ SuperBomberman.powerUpPrefab = function(_game, _x, _y, _type)
     this.setAnimationPowerUp();
     
 	this.anchor.setTo(.5);
-    _game.physics.arcade.enable(this);
+    
+    if(this.kind != gameUpgrades.goal)
+        _game.physics.arcade.enable(this);
+    
     _game.add.existing(this);
 };
 
@@ -27,8 +30,10 @@ SuperBomberman.powerUpPrefab.prototype.update = function()
 
 SuperBomberman.powerUpPrefab.prototype.powerUpPickup = function(_powerUp, _player)
 {  
-    _player.manageUpgrades(_powerUp.kind);
-    _powerUp.kill();
+    if(_powerUp.kind != gameUpgrades.goal){
+        _player.manageUpgrades(_powerUp.kind);
+        _powerUp.kill(); 
+    }
 }
 
 SuperBomberman.powerUpPrefab.prototype.setAnimationPowerUp = function(){
@@ -42,6 +47,9 @@ SuperBomberman.powerUpPrefab.prototype.setAnimationPowerUp = function(){
             break;
         case gameUpgrades.speed:
             this.animations.add('animation', [17,25], 10, true);
+            break;
+        case gameUpgrades.goal:
+            this.animations.add('animation', [21,29], 10, true);
             break;
     }
     this.animations.play('animation')

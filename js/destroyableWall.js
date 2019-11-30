@@ -50,7 +50,7 @@ SuperBomberman.destroyableWall.prototype.ExplodeDestroyableWall = function()
 
 SuperBomberman.destroyableWall.prototype.DestroyThis = function(){
     if((Math.random()*100)<= gameOptions.UpgradesDropChance){
-        new SuperBomberman.powerUpPrefab(SuperBomberman.game, Math.trunc(this.posX/16) + 1, Math.trunc(this.posY/16) + 1, SuperBomberman.generateRandomNumber(3));
+        new SuperBomberman.powerUpPrefab(SuperBomberman.game, Math.trunc(this.posX/16) + 1, Math.trunc(this.posY/16) + 1, SuperBomberman.generateRandomNumber(4));
     }
     this.kill();
 }

@@ -4,6 +4,12 @@ var gameTags = {
     destroyableWalls:2
 };
 
+var gameUpgrades = {
+    bomb: 0,
+    power:1,
+    speed:2
+}
+
 var gameOptions = {
     
     //Add generic variables
@@ -11,7 +17,8 @@ var gameOptions = {
     gameOffsetTop:2,
     gameWidth:17*16,
     gameHeight:13*16,
-    numDestroyableWalls:40
+    numDestroyableWalls:40,
+    UpgradesDropChance:20
 };
 
 //--LAYOUT_NUMBERS--//
@@ -48,3 +55,7 @@ var scenes = ['main'/*0*/,
 
 //Aquesta es la escena amb la que inicia el joc
 SuperBomberman.game.state.start(scenes[1]);
+
+SuperBomberman.generateRandomNumber = function(maxNumber){
+    return Math.trunc(Math.random() * maxNumber);
+}

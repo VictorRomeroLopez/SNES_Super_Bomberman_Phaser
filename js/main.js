@@ -1,7 +1,10 @@
 ﻿var SuperBomberman = SuperBomberman || {};
 
-var gameTags = {
-    destroyableWalls:2
+var layoutTags = {
+    immovableWall:1,
+    emptyDestroyableWall:2,
+    upgradeDestroyableWall:3,
+    goalDestroyableWall:4
 };
 
 var gameUpgrades = {
@@ -12,20 +15,20 @@ var gameUpgrades = {
 }
 
 var gameOptions = {
-    
     //Add generic variables
     gameOffsetLeft:3,
     gameOffsetTop:2,
     gameWidth:17*16,
     gameHeight:13*16,
     numDestroyableWalls:40,
-    UpgradesDropChance:100
+    minNumUpgrades:3,
+    maxNumUpgrades:10
 };
 
 //--LAYOUT_NUMBERS--//
 {
     //si volem que es puguin veure els numeros posem aquesta variable a true
-    var printLayoutNumbers = false;
+    var printLayoutNumbers = true;
 
     var layoutMap = [];
     for(var i = 0; i < 11; i++){

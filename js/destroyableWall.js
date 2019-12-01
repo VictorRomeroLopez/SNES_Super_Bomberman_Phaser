@@ -1,8 +1,10 @@
 var SuperBomberman = SuperBomberman || {};
 
-SuperBomberman.destroyableWall = function(_x, _y, upperShadow = false, shadowSprite = false){
+SuperBomberman.destroyableWall = function(_x, _y, _hasUpgrade = false, _hasGoal = false, upperShadow = false, shadowSprite = false){
     this.posX = _x;
     this.posY = _y;
+    this.hasGoal = _hasGoal;
+    this.hasUpgrade = _hasUpgrade;
     
     if(!shadowSprite){
         Phaser.Sprite.call(this, SuperBomberman.game, _x, _y, 'destroyables')
@@ -49,8 +51,12 @@ SuperBomberman.destroyableWall.prototype.ExplodeDestroyableWall = function()
 }
 
 SuperBomberman.destroyableWall.prototype.DestroyThis = function(){
-    if((Math.random()*100)<= gameOptions.UpgradesDropChance){
-        new SuperBomberman.powerUpPrefab(SuperBomberman.game, Math.trunc(this.posX/16) + 1, Math.trunc(this.posY/16) + 1, SuperBomberman.generateRandomNumber(4));
-    }
+    console.log("Has upgrade: " + this.hasUpgrade + " has goal: " + this.hasGoal);
+    if(this.hasUpgrade)
+        new SuperBomberman.powerUpPrefab(SuperBomberman.game, Math.trunc(this.posX/16) + 1, Math.trunc(this.posY/16) + 1, SuperBomberman.generateRandomNumber(3));
+    
+    if(this.hasGoal)
+        new SuperBomberman.powerUpPrefab(SuperBomberman.game, Math.trunc(this.posX/16) + 1, Math.trunc(this.posY/16) + 1, 3);
+    
     this.kill();
 }

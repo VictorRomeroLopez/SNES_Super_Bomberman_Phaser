@@ -97,7 +97,7 @@ SuperBomberman.player_setup.prototype.CheckGoNextLevel = function(){
     /*console.log(
         Math.sqrt(
         (Math.pow(this.body.position.x - SuperBomberman.level1.goalPosition.x,2)) + (Math.pow(this.body.position.y - SuperBomberman.level1.goalPosition.y,2)))*/
-    console.log(Math.sqrt(Math.pow((this.body.position.x - SuperBomberman.level1.goalPosition.x),2) + Math.pow((this.body.position.y - SuperBomberman.level1.goalPosition.y),2)))
+    //console.log(Math.sqrt(Math.pow((this.body.position.x - SuperBomberman.level1.goalPosition.x),2) + Math.pow((this.body.position.y - SuperBomberman.level1.goalPosition.y),2)))
     //if((this.body.position))
 }
 

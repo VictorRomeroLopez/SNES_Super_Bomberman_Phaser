@@ -37,5 +37,9 @@ Utils.prototype = {
             }
         }
         return true;
+    },
+    
+    GenerateRandomNumbersBetween : function(_minValue, _maxValue){
+        return Math.trunc((Math.random() * (_maxValue - _minValue + 1))) + _minValue
     }
 }

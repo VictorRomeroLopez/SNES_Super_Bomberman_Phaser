@@ -48,7 +48,7 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
     
         this.game.physics.arcade.collide(this,this.level.exteriorWalls);
         this.game.physics.arcade.collide(this,this.level.interiorWalls);
-
+        this.game.physics.arcade.collide(this, this.level.destroyableWallsGroup);
 
 
         if(this.body.touching.left || this.body.touching.right || this.body.blocked.left || this.body.blocked.right) 

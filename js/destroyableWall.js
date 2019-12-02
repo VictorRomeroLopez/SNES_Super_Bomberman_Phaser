@@ -38,6 +38,9 @@ SuperBomberman.destroyableWall = function(_x, _y, _hasUpgrade = false, _hasGoal 
         Phaser.Sprite.call(this, SuperBomberman.game, _x, _y, 'destroyables', 8)
     }
     
+    SuperBomberman.game.physics.arcade.enable(this);
+    this.body.immovable = true;
+    
     SuperBomberman.game.add.existing(this)
 }
 

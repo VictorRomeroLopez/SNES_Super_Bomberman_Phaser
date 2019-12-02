@@ -12,7 +12,7 @@ SuperBomberman.mainMenu =
         create:function()
         {
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-//            this.scale.pageAlignHorizontally = true;
+            this.scale.pageAlignHorizontally = true;
             this.bg1 =this.game.add.tileSprite(0,0,256,224,'bg1');
             
             this.button = this.game.add.button(this.game.world.centerX,this.game.world.centerY + 60,'btnSTRT',this.iniciaJuego,this);

@@ -17,7 +17,7 @@ var gameUpgrades = {
 var gameOptions = {
     //Add generic variables
     gameOffsetLeft:3,
-    gameOffsetTop:2,
+    gameOffsetTop:4,
     gameWidth:17*16,
     gameHeight:13*16,
     numDestroyableWalls:40,
@@ -58,7 +58,7 @@ var scenes = ['main'/*0*/,
              ]
 
 //Aquesta es la escena amb la que inicia el joc
-SuperBomberman.game.state.start(scenes[0]);
+SuperBomberman.game.state.start(scenes[1]);
 
 SuperBomberman.generateRandomNumber = function(maxNumber){
     return Math.trunc(Math.random() * maxNumber);

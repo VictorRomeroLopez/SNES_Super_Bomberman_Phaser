@@ -149,7 +149,6 @@ SuperBomberman.level1 = {
    },
     update:function()
     {
-        console.log("HOLA");
         if(this.gameOverBool && !this.gameOverCalled) {
             this.gameOverPrefab = new SuperBomberman.game_over(this.game, gameOptions.gameWidth/2, gameOptions.gameHeight - gameOptions.gameHeight/3, this);
             

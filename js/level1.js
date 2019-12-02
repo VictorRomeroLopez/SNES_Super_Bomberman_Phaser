@@ -12,7 +12,8 @@ SuperBomberman.level1 = {
         this.hudeTimerInitX = -82;
         this.hudeTimerInitY = -66;
         this.currentTime = this.game.time.time;
-        this.timerCounter =-1;
+        this.timerCounter =12;
+        
     },
     
     preload:function()
@@ -180,6 +181,10 @@ SuperBomberman.level1 = {
     },
     updateHUDTimer:function()
     {
+        if(this.timerCounter >=29) this.gameOverBool = true;
+        
+        if(this.timerCounter == 13) this.timerCounter = 15;
+        
         this.timerCounter++;
         this.graphics.beginFill(0x000000);
         this.graphics.drawRect(this.hudeTimerInitX + this.timerCounter * 8,this.hudeTimerInitY, 4, 3);

@@ -2,6 +2,8 @@ var SuperBomberman = SuperBomberman || {};
 
 SuperBomberman.game_over = function(_game, _x, _y, _level)
 {
+    this.bg = _game.add.tileSprite(0,0,gameOptions.gameWidth,gameOptions.gameHeight + 40,'backgroundGO');
+    
     this.posX = _x; 
     this.posY = _y;
     this.level = _level;
@@ -20,6 +22,7 @@ SuperBomberman.game_over = function(_game, _x, _y, _level)
     this.arrow = _game.add.image(_x - 55, _y + 10, 'arrowGO');
     this.arrow.anchor.setTo(.5);
     
+    
     cursors = _game.input.keyboard.createCursorKeys();
     enterK = _game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     this.leftPos = true;
@@ -31,6 +34,9 @@ SuperBomberman.game_over.prototype = Object.create(Phaser.Sprite.prototype);
 SuperBomberman.game_over.prototype.constructor = SuperBomberman.game_over;
 
 SuperBomberman.game_over.prototype.update = function(){
+    
+    this.bg.tilePosition.x+=1;
+    this.bg.tilePosition.y+=1;
     
     if (cursors.left.isDown )
         {

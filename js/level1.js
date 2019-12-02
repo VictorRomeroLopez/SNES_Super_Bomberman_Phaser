@@ -65,6 +65,7 @@ SuperBomberman.level1 = {
         this.load.image('noGO', '/assets/HUD/no.png');
         this.load.image('continueGO', '/assets/HUD/continue_questionmark.png');
         this.load.image('arrowGO', '/assets/HUD/arrow.png');
+        this.load.image('backgroundGO', '/assets/HUD/tile_background.png');
         }
     },
     

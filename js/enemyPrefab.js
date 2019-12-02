@@ -43,65 +43,71 @@ SuperBomberman.enemy_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 SuperBomberman.enemy_prefab.prototype.constructor = SuperBomberman.enemy_prefab;
 
 SuperBomberman.enemy_prefab.prototype.update = function(){
+    if(!this.level.gameOverBool)
+    {
     
-    this.game.physics.arcade.collide(this,this.level.exteriorWalls);
-    this.game.physics.arcade.collide(this,this.level.interiorWalls);
-    
-    
-    
-    if(this.body.touching.left || this.body.touching.right || this.body.blocked.left || this.body.blocked.right) 
-        {
-            if(Phaser.Math.between(1, 10) >= 8)
-                {
-                    this.goingY = true;
-                    this.body.velocity.y = this.speed*  this.direction;
-                }
-            else
-                {
-                    this.direction *=-1;
-                    if(this.direction == -1) this.scale.x = 1;
-                    else this.scale.x = -1;
-                    this.body.velocity.x = this.speed*  this.direction;
-                }
-        }
-    else if(this.body.touching.up || this.body.touching.down || this.body.blocked.up || this.body.blocked.down) 
-        {
-            if(Phaser.Math.between(1, 10) >= 8)
-                {
-                    this.goingY = false;
-                    if(this.direction == -1) this.scale.x = 1;
-                    else this.scale.x = -1;
-                    this.body.velocity.x = this.speed*  this.direction;
-                }
-            else
-                {
-                    this.direction *=-1;
-                    this.body.velocity.y = this.speed*  this.direction;
-                }
-        }
-    
-    if(!this.goingY)
-        {
-            this.body.velocity.x = this.speed*  this.direction;
-            this.body.velocity.y = 0;
-        }
-    else
-        {
-            this.body.velocity.x = 0;
-            this.body.velocity.y = this.speed*  this.direction;
-        }
-    
-    if(this.body.velocity.x !=0) 
-        {
-            this.animations.play('walkLeft');
-        }
-    else if(this.body.velocity.y <0)
-        {
-            this.animations.play('walkUp');
-        }
-    else if(this.body.velocity.y >0 )
-        {
-            this.animations.play('walkDown');
-        }
-    
+        this.game.physics.arcade.collide(this,this.level.exteriorWalls);
+        this.game.physics.arcade.collide(this,this.level.interiorWalls);
+
+
+
+        if(this.body.touching.left || this.body.touching.right || this.body.blocked.left || this.body.blocked.right) 
+            {
+                if(Phaser.Math.between(1, 10) >= 8)
+                    {
+                        this.goingY = true;
+                        this.body.velocity.y = this.speed*  this.direction;
+                    }
+                else
+                    {
+                        this.direction *=-1;
+                        if(this.direction == -1) this.scale.x = 1;
+                        else this.scale.x = -1;
+                        this.body.velocity.x = this.speed*  this.direction;
+                    }
+            }
+        else if(this.body.touching.up || this.body.touching.down || this.body.blocked.up || this.body.blocked.down) 
+            {
+                if(Phaser.Math.between(1, 10) >= 8)
+                    {
+                        this.goingY = false;
+                        if(this.direction == -1) this.scale.x = 1;
+                        else this.scale.x = -1;
+                        this.body.velocity.x = this.speed*  this.direction;
+                    }
+                else
+                    {
+                        this.direction *=-1;
+                        this.body.velocity.y = this.speed*  this.direction;
+                    }
+            }
+
+        if(!this.goingY)
+            {
+                this.body.velocity.x = this.speed*  this.direction;
+                this.body.velocity.y = 0;
+            }
+        else
+            {
+                this.body.velocity.x = 0;
+                this.body.velocity.y = this.speed*  this.direction;
+            }
+
+        if(this.body.velocity.x !=0) 
+            {
+                this.animations.play('walkLeft');
+            }
+        else if(this.body.velocity.y <0)
+            {
+                this.animations.play('walkUp');
+            }
+        else if(this.body.velocity.y >0 )
+            {
+                this.animations.play('walkDown');
+            }
+    }
+    else{
+        this.body.velocity.x =0;
+        this.body.velocity.y = 0;
+    }
 };

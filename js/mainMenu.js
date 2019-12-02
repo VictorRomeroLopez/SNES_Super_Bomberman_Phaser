@@ -4,6 +4,7 @@ SuperBomberman.mainMenu =
     {
         preload:function()
         {
+            console.log("MAINMENU");
             var ruta = 'assets/';
             this.load.image('bg1',ruta+'MainMenuNoButtons.png');
             this.load.image('btnSTRT',ruta+'ButtonStart.png');

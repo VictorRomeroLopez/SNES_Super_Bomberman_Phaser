@@ -36,6 +36,7 @@ SuperBomberman.enemy_prefab = function(_game, _x, _y, _type, _level)
     this.direction = -1;
     this.invulnerability = false;
     this.level = _level;
+    this.hudClock = this.game.add.sprite(this.posx, this.posy -50,'hudClock');
 };
 
 SuperBomberman.enemy_prefab.prototype = Object.create(Phaser.Sprite.prototype);

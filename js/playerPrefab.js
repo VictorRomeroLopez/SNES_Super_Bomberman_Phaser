@@ -25,6 +25,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.initialPosY = _y;
     this.bombsGroup = _level.add.group()
     this.bombsGroup.enableBody = true
+    this.score = 23856;
     
     
     //INPUTS
@@ -88,7 +89,8 @@ SuperBomberman.player_setup.prototype.update = function()
     if(spaceK.isDown && this.bombs > 0 && spaceK.downDuration(1))
     {
         this.DropBomb();
-    }         
+    }
+    this.level.hpNumber = this.health;
 }
 
 SuperBomberman.player_setup.prototype.DropBomb = function()

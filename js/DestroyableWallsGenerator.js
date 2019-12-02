@@ -39,7 +39,7 @@ DestroyableWallsGenerator.prototype = {
     InstantiateDestroyableWalls : function(){
 
         var initialPosX = 32
-        var initialPosY = 16
+        var initialPosY = 16 * 3
         
         this.GenerateRandomPositions();
         
@@ -54,17 +54,14 @@ DestroyableWallsGenerator.prototype = {
                 {
                     switch(layoutMap[i]){
                         case layoutTags.emptyDestroyableWall:
-                            console.log("empty")
                             SuperBomberman.level1.destroyableWallsGroup.add( new SuperBomberman.destroyableWall(posX, posY, false, false, true, false));
                             break;
                             
                         case layoutTags.goalDestroyableWall:
-                            console.log("goal")
                             SuperBomberman.level1.destroyableWallsGroup.add( new SuperBomberman.destroyableWall(posX, posY, false, true, true, false));
                             break;
                             
                         case layoutTags.upgradeDestroyableWall:
-                            console.log("upgrade")
                             SuperBomberman.level1.destroyableWallsGroup.add( new SuperBomberman.destroyableWall( posX, posY, true, false, true, false));
                             break;
                     }
@@ -73,17 +70,14 @@ DestroyableWallsGenerator.prototype = {
                 {
                     switch(layoutMap[i]){
                         case layoutTags.emptyDestroyableWall:
-                            console.log("empty")
                             SuperBomberman.level1.destroyableWallsGroup.add( new SuperBomberman.destroyableWall( posX, posY, false, false, false, false));
                             break;
                             
                         case layoutTags.goalDestroyableWall:
-                            console.log("goal")
                             SuperBomberman.level1.destroyableWallsGroup.add( new SuperBomberman.destroyableWall( posX, posY, false, true, false, false));
                             break;
                             
                         case layoutTags.upgradeDestroyableWall:
-                            console.log("upgrade")
                             SuperBomberman.level1.destroyableWallsGroup.add( new SuperBomberman.destroyableWall( posX, posY, true, false, false, false));
                             break;
                     }

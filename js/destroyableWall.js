@@ -51,7 +51,6 @@ SuperBomberman.destroyableWall.prototype.ExplodeDestroyableWall = function()
 }
 
 SuperBomberman.destroyableWall.prototype.DestroyThis = function(){
-    console.log("Has upgrade: " + this.hasUpgrade + " has goal: " + this.hasGoal);
     if(this.hasUpgrade)
         new SuperBomberman.powerUpPrefab(SuperBomberman.game, Math.trunc(this.posX/16) + 1, Math.trunc(this.posY/16) + 1, SuperBomberman.generateRandomNumber(3));
     

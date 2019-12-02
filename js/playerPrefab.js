@@ -8,7 +8,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.animations.add('walkDown', [6,7,8], 7, true);
     this.animations.add('walkRight', [12,13,14], 7, true);
 	this.animations.add('death',[18,19,20,21,22,23],7,true);
-	this.anchor.setTo(.5);
+	this.anchor.setTo(1/2, 16/25);
     
     //MOVEMENT
     this.speed = 50;
@@ -35,7 +35,9 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     //GAME
     _game.physics.arcade.enable(this);
     _game.add.existing(this);
+    
     this.body.setSize(10,10,3,13);
+    //this.body.setSize(16,16,0,9);
 }
 
 SuperBomberman.player_setup.prototype = Object.create(Phaser.Sprite.prototype);
@@ -117,7 +119,7 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
     var recicleBomb = this.bombsGroup.getFirstExists(false)
     
     var positionBombX = Math.trunc(this.body.position.x /16)-2
-    var positionBombY = Math.trunc(this.body.position.y /16)-1
+    var positionBombY = Math.trunc(this.body.position.y /16)-3
     
     if(!recicleBomb)
     {

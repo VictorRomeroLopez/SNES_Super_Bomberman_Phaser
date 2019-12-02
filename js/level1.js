@@ -102,7 +102,7 @@ SuperBomberman.level1 = {
         
         //--region CREATE_PLAYER--//
         {
-            this.player = new SuperBomberman.player_setup(this.game, 40, 25, 1, this);
+            this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*4-8, 1, this);
         }
         
         //--region ENEMIES--//
@@ -167,20 +167,6 @@ SuperBomberman.level1 = {
         }
     },
 
-    printLayoutNumbers:function()
-    {
-        if(printLayoutNumbers)
-        {
-            for(var i = 0; i < 11; i++)
-            {
-                for(var j = 0; j < 13; j++)
-                {
-                    this.text = this.game.add.text( 16 * j + 16 * 3, 16 * i + 16 * 2, layoutMap[(i) * 13 + (j)], {font: "bold 10px Arial", fill: "#f0f"})
-                    this.text.anchor.setTo(1)
-                }
-            }
-        }    
-    }, 
     updateHUDScore:function()
     {
         var score = this.player.score;

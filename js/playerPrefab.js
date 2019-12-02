@@ -21,7 +21,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.maxBombs = 1;
     this.bombs = 0;
     this.power = 1;
-    this.health = 5;
+    this.health = 0;
     this.initialPosX = _x;
     this.initialPosY = _y;
     this.bombsGroup = _level.add.group()
@@ -43,56 +43,64 @@ SuperBomberman.player_setup.prototype.constructor = SuperBomberman.player_setup;
 
 SuperBomberman.player_setup.prototype.update = function()
 {
-    //COLLISIONS
-    this.game.physics.arcade.collide(this,this.level.exteriorWalls);  this.game.physics.arcade.collide(this,this.level.interiorWalls);
-    this.game.physics.arcade.overlap(this, this.level.enemies, this.enemyCollision, null, this.level);
-    this.game.physics.arcade.overlap(this, this.level.explosion, this.enemyCollision, null, this.level);
-    this.CheckGoNextLevel();
-    
-	//INPUTS , ANIMATIONS & MOVEMENT
-    if (cursors.up.isDown)
+    if(this.health > 0)
     {
-        this.direction = -1;
-        this.body.velocity.x = 0;
-        this.animations.play('walkUp');
-        this.body.velocity.y = this.speed*  this.direction;
-    }
-    else if (cursors.down.isDown)
-    {
-        this.direction = 1;
-        this.body.velocity.x = 0;
-        this.animations.play('walkDown');
-        this.body.velocity.y = this.speed*  this.direction;
-    }	
-    else if (cursors.left.isDown)
-    {
-        if(this.scale.x > 0) this.scale.x *= -1;
-        this.direction = -1;
-        this.body.velocity.y = 0;
-        this.animations.play('walkRight');
-        this.body.velocity.x = this.speed*  this.direction;
-    } 
-    else if (cursors.right.isDown)
-    {
-        if(this.scale.x < 0) this.scale.x *= -1;
-        this.direction = 1;
-        this.body.velocity.y = 0;
-        this.animations.play('walkRight');
-        this.body.velocity.x = this.speed*  this.direction;
+        //COLLISIONS
+        this.game.physics.arcade.collide(this,this.level.exteriorWalls);  this.game.physics.arcade.collide(this,this.level.interiorWalls);
+        this.game.physics.arcade.overlap(this, this.level.enemies, this.enemyCollision, null, this.level);
+        this.game.physics.arcade.overlap(this, this.level.explosion, this.enemyCollision, null, this.level);
+        this.CheckGoNextLevel();
+
+        //INPUTS , ANIMATIONS & MOVEMENT
+        if (cursors.up.isDown)
+        {
+            this.direction = -1;
+            this.body.velocity.x = 0;
+            this.animations.play('walkUp');
+            this.body.velocity.y = this.speed*  this.direction;
+        }
+        else if (cursors.down.isDown)
+        {
+            this.direction = 1;
+            this.body.velocity.x = 0;
+            this.animations.play('walkDown');
+            this.body.velocity.y = this.speed*  this.direction;
+        }	
+        else if (cursors.left.isDown)
+        {
+            if(this.scale.x > 0) this.scale.x *= -1;
+            this.direction = -1;
+            this.body.velocity.y = 0;
+            this.animations.play('walkRight');
+            this.body.velocity.x = this.speed*  this.direction;
+        } 
+        else if (cursors.right.isDown)
+        {
+            if(this.scale.x < 0) this.scale.x *= -1;
+            this.direction = 1;
+            this.body.velocity.y = 0;
+            this.animations.play('walkRight');
+            this.body.velocity.x = this.speed*  this.direction;
+        }
+        else
+        {
+            this.body.velocity.x = 0;
+            this.body.velocity.y = 0;
+            this.frame = 7;
+        }
+
+        if(spaceK.isDown && this.bombs < this.maxBombs && spaceK.downDuration(1))
+        {
+            this.DropBomb();
+            this.bombs++;
+        }         
+        this.level.hpNumber.frame = this.health;
     }
     else
     {
-        this.body.velocity.x = 0;
-        this.body.velocity.y = 0;
-        this.frame = 7;
+        this.level.gameOverBool = true;
+        this.kill();
     }
-
-    if(spaceK.isDown && this.bombs < this.maxBombs && spaceK.downDuration(1))
-    {
-        this.DropBomb();
-        this.bombs++;
-    }         
-    this.level.hpNumber = this.health;
 }
 
 SuperBomberman.player_setup.prototype.CheckGoNextLevel = function(){
@@ -127,7 +135,7 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
 
 SuperBomberman.player_setup.prototype.enemyCollision = function(_player, _enemy)
 {
-    _player.health--;
+    _player.health--;  
     _player.body.position.x = 35;
     _player.body.position.y = 25;
 }

@@ -44,14 +44,28 @@ SuperBomberman.level1 = {
 	       this.load.spritesheet('bomberman','assets/Bomberman/white_bomberman.png', 16, 25);
 	       this.load.spritesheet('bombPU','assets/Powerups/Powerups.png', 16, 16);
         }
-        
+        //---region ENEMIES---//
+        {
         this.load.spritesheet('tomatoe','assets/Enemies/World_1/Helicopter/helicopter.png', 16, 24);
         this.load.spritesheet('nuez', 'assets/Enemies/World_1/Bunny/bunny.png', 16, 24);
         this.load.spritesheet('ufo', 'assets/Enemies/World_1/UFO/UFO.png', 16, 24);
+        }
         
+        //---region HUD---//
+        {
         this.load.image('hudBG', 'assets/HUD/background.png');
         this.load.spritesheet('hudClock', '/assets/HUD/clock.png', 15, 22);
         this.load.spritesheet('hudNumbers', '/assets/HUD/numbers.png', 8, 12);
+        }
+        
+        //---region GAME OVER---//
+        {
+        this.load.image('gameOver', '/assets/HUD/Game_over_screen.png');
+        this.load.image('yesGO', '/assets/HUD/yes.png');
+        this.load.image('noGO', '/assets/HUD/no.png');
+        this.load.image('continueGO', '/assets/HUD/continue_questionmark.png');
+        this.load.image('arrowGO', '/assets/HUD/arrow.png');
+        }
     },
     
     create:function()
@@ -98,11 +112,11 @@ SuperBomberman.level1 = {
             
             this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this));
             this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 6, 6, 2, this));
-            this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 3, 3, 3, this));
+            this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 3, 4, 3, this));
             
             for(var i =0; i<this.enemies.length;i++)
             {
-                this.enemies.getChildAt(i).body.setSize(16,16,0,10);
+                this.enemies.getChildAt(i).body.setSize(16,16,0,8);
             }
         this.hudBG = this.game.add.image(0,0,'hudBG');
         this.hudClock = this.game.add.sprite(gameOptions.gameWidth/2 -7 ,16,'hudClock');
@@ -127,10 +141,22 @@ SuperBomberman.level1 = {
         
         this.goalPosition = new Phaser.Point(0,0);
         Utils.prototype.PrintLayoutNumbers()
-    },
-    
+        }
+        
+        this.gameOverBool = false;
+        this.gameOverCalled = false;
+   },
     update:function()
     {
+        console.log("HOLA");
+        if(this.gameOverBool && !this.gameOverCalled) {
+            this.gameOverPrefab = new SuperBomberman.game_over(this.game, gameOptions.gameWidth/2, gameOptions.gameHeight - gameOptions.gameHeight/3, this);
+            
+            this.hudClock.animations.stop('tictac', this.hudClock.frame);
+            
+            this.gameOverCalled = true;
+        }
+        
         if(this.game.time.elapsedSecondsSince(this.currentTime) >=10) this.updateHUDTimer();
         
         this.game.physics.arcade.collide(this.enemies);
@@ -174,4 +200,4 @@ SuperBomberman.level1 = {
         this.graphics.endFill();
         this.currentTime = this.game.time.time;
     }
-   }
+}

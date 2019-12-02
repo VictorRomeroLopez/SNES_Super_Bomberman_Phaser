@@ -29,7 +29,7 @@ SuperBomberman.level1 = {
         //---region LOAD_TILESET_IMAGES---//
         {
             this.load.image('buildings', levelsFolder + "Pace_town.png");
-            this.load.image('destroyables', levelsFolder + "Pace_town_destroyable.png");
+            this.load.spritesheet('destroyables', levelsFolder + "Pace_town_destroyable.png",16,16);
             this.load.tilemap('level1','assets/Tiled/level1.json', null, Phaser.Tilemap.TILED_JSON);
         }
         
@@ -42,6 +42,7 @@ SuperBomberman.level1 = {
         //---region LOAD_SPRITESHEET_IMAGES---//
         {
 	       this.load.spritesheet('bomberman','assets/Bomberman/white_bomberman.png', 16, 25);
+	       this.load.spritesheet('bombPU','assets/Powerups/Powerups.png', 16, 16);
         }
         
         this.load.spritesheet('tomatoe','assets/Enemies/World_1/Helicopter/helicopter.png', 16, 24);
@@ -56,14 +57,12 @@ SuperBomberman.level1 = {
     create:function()
     {
         console.log("create");
-        
         //---region ADD_IMAGES_TO_TILEMAP---//
         {
             this.map = this.game.add.tilemap('level1')
             
             //agreguem els spritesheets al map
             this.map.addTilesetImage('buildings')
-            this.map.addTilesetImage('destroyables')
 
             //creem les layers al map
             this.exteriorWalls  = this.map.createLayer('Exterior_Walls')
@@ -75,25 +74,35 @@ SuperBomberman.level1 = {
             this.map.setCollisionBetween(11,13,true,'Exterior_Walls');
             this.map.setCollisionBetween(1,8,true,'Interior_Walls');
             this.map.setCollisionBetween(11,13,true,'Interior_Walls');
-	   }
+        }
+        
+        //--region DESTROYABLE_WALLS--//
+        {
+            this.destroyableWallsGroup = this.add.group();
+            this.destroyableWallsGroup.enableBody = true;
+            
+            //Randomize destroyable walls positions and instantaite them
+            DestroyableWallsGenerator.prototype.InstantiateDestroyableWalls()            
+        }
         
         //--region CREATE_PLAYER--//
         {
             this.player = new SuperBomberman.player_setup(this.game, 40, 25, 1, this);
         }
         
-        
-        this.enemies = this.add.group();
-        this.enemies.enableBody = true;
-        this.game.physics.arcade.enable(this.enemies);
-        //this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
-        this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this));
-        this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 6, 6, 2, this));
-        this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 3, 4, 3, this));
-        for(var i =0; i<this.enemies.length;i++)
+        //--region ENEMIES--//
+        {
+            this.enemies = this.add.group();
+            this.enemies.enableBody = true;
+            this.game.physics.arcade.enable(this.enemies);
+            
+            this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this));
+            this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 6, 6, 2, this));
+            this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 3, 3, 3, this));
+            
+            for(var i =0; i<this.enemies.length;i++)
             {
-                this.enemies.getChildAt(i).body.setSize(16,16,0,9);
-                console.log(this.enemies.getChildAt(i).health);
+                this.enemies.getChildAt(i).body.setSize(16,16,0,10);
             }
         this.hudBG = this.game.add.image(0,0,'hudBG');
         this.hudClock = this.game.add.sprite(gameOptions.gameWidth/2 -7 ,16,'hudClock');
@@ -116,6 +125,8 @@ SuperBomberman.level1 = {
         this.graphics = this.game.add.graphics(100, 100);
         
         
+        this.goalPosition = new Phaser.Point(0,0);
+        Utils.prototype.PrintLayoutNumbers()
     },
     
     update:function()
@@ -125,10 +136,9 @@ SuperBomberman.level1 = {
         this.game.physics.arcade.collide(this.enemies);
         this.game.debug.body(this.player);
         for(var i=0;i<this.enemies.length;i++)
-            {
-                this.game.debug.body(this.enemies.getChildAt(i));
-            }
-        
+        {
+            this.game.debug.body(this.enemies.getChildAt(i));
+        }
     },
 
     printLayoutNumbers:function()

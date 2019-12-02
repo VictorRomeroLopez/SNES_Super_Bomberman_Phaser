@@ -56,8 +56,13 @@ SuperBomberman.explosionManager.prototype.generateExplosion = function(_newDirec
         case 'up':
             if(this.generateExplosionUP)
             {
-                if(layoutMap[(this.posRawY - _iterator - 1) * 13 + (this.posRawX)] != 0 || 
-                    (this.posRawY - _iterator) < 1)
+                if(DestroyableWallsGenerator.prototype.IsDestroyableWall((this.posRawY - _iterator - 1) * 13 + (this.posRawX)))
+                {
+                    this.generateExplosionUP = false;
+                    new SuperBomberman.explosionPrefab(this.game, this.posx, this.posy - this.offset, _idExplosion, this.level)
+                    layoutMap[(this.posRawY - _iterator - 1) * 13 + (this.posRawX)] = 0
+                }
+                else if(layoutMap[(this.posRawY - _iterator - 1) * 13 + (this.posRawX)] != 0)
                 {
                     this.generateExplosionUP = false;
                 }
@@ -70,8 +75,13 @@ SuperBomberman.explosionManager.prototype.generateExplosion = function(_newDirec
         case 'down':
             if(this.generateExplosionDOWN)
             {
-                if(layoutMap[(this.posRawY + _iterator - 1) * 13 + (this.posRawX)] != 0 || 
-                    (this.posRawY + _iterator) > 9)
+                if(DestroyableWallsGenerator.prototype.IsDestroyableWall((this.posRawY + _iterator + 1) * 13 + (this.posRawX)))
+                {
+                    this.generateExplosionDOWN = false;
+                    new SuperBomberman.explosionPrefab(this.game, this.posx, this.posy + this.offset, _idExplosion, this.level)
+                    layoutMap[(this.posRawY + _iterator + 1) * 13 + (this.posRawX)] = 0
+                }
+                else if(layoutMap[(this.posRawY + _iterator + 1) * 13 + (this.posRawX)] != 0)
                 {
                     this.generateExplosionDOWN = false;
                 }
@@ -85,7 +95,13 @@ SuperBomberman.explosionManager.prototype.generateExplosion = function(_newDirec
             
             if(this.generateExplosionLEFT)
             {
-                if(layoutMap[(this.posRawY) * 13 + (this.posRawX - _iterator - 1)] != 0 ||
+                if(DestroyableWallsGenerator.prototype.IsDestroyableWall((this.posRawY) * 13 + (this.posRawX - _iterator - 1)))
+                {
+                    this.generateExplosionLEFT = false;
+                    new SuperBomberman.explosionPrefab(this.game, this.posx - this.offset, this.posy, _idExplosion, this.level)
+                    layoutMap[(this.posRawY) * 13 + (this.posRawX - _iterator - 1)] = 0;
+                }
+                else if(layoutMap[(this.posRawY) * 13 + (this.posRawX - _iterator - 1)] != 0 ||
                   (this.posRawX - _iterator) < 1)
                 {
                     this.generateExplosionLEFT = false;
@@ -99,10 +115,17 @@ SuperBomberman.explosionManager.prototype.generateExplosion = function(_newDirec
         case 'right':
             if(this.generateExplosionRIGHT)
             {
-                if(layoutMap[(this.posRawY) * 13 + (this.posRawX + _iterator - 1)] != 0 || 
-                  (this.posRawX + _iterator) > 11)
+                
+                if(DestroyableWallsGenerator.prototype.IsDestroyableWall((this.posRawY) * 13 + (this.posRawX + _iterator + 1)))
                 {
-                   this.generateExplosionRIGHT = false;
+                    this.generateExplosionRIGHT = false;
+                    new SuperBomberman.explosionPrefab(this.game, this.posx + this.offset, this.posy, _idExplosion, this.level)
+                    layoutMap[(this.posRawY) * 13 + (this.posRawX + _iterator + 1)] = 0
+                }
+                else if(layoutMap[(this.posRawY) * 13 + (this.posRawX + _iterator + 1)] != 0 || 
+                  this.posRawX + _iterator > 11)
+                {
+                    this.generateExplosionRIGHT = false;
                 }
                 else
                 {

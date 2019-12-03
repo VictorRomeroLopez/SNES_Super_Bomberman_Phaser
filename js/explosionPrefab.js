@@ -75,8 +75,8 @@ SuperBomberman.explosionPrefab.prototype.bombCollision = function(_explosion, _b
 SuperBomberman.explosionPrefab.prototype.playerCollision = function(_explosion, _player)
 {
     _player.health--;
-    _player.body.position.x = 35;
-    _player.body.position.y = 25;
+    _player.body.position.x = _player.initialPosX;
+    _player.body.position.y = _player.initialPosY;
 }
 
 SuperBomberman.explosionPrefab.prototype.destroyableCollisions = function(_explosion, _destroyable)

@@ -22,8 +22,8 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.bombs = 0;
     this.power = 1;
     this.health = 5;
-    this.initialPosX = _x;
-    this.initialPosY = _y;
+    this.initialPosX = _x-5;
+    this.initialPosY = _y-4;
     this.bombsGroup = _level.add.group()
     this.bombsGroup.enableBody = true
     this.score = 23856;
@@ -138,9 +138,9 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
 
 SuperBomberman.player_setup.prototype.enemyCollision = function(_player, _enemy)
 {
-    _player.health--;  
-    _player.body.position.x = 35;
-    _player.body.position.y = 25;
+    _player.health--;
+    _player.body.position.x = _player.initialPosX;
+    _player.body.position.y = _player.initialPosY;
 }
 
 SuperBomberman.player_setup.prototype.manageUpgrades = function(type)

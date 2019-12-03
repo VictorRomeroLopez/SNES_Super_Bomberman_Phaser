@@ -28,7 +28,7 @@ var gameOptions = {
 //--LAYOUT_NUMBERS--//
 {
     //si volem que es puguin veure els numeros posem aquesta variable a true
-    var printLayoutNumbers = true;
+    var printLayoutNumbers = false;
 
     var layoutMap = [];
     for(var i = 0; i < 11; i++){

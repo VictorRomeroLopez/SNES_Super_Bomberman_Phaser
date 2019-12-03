@@ -1,7 +1,7 @@
 var SuperBomberman = SuperBomberman || {};
 
 SuperBomberman.explosionPrefab = function(_game, _x, _y, _idExplosion ,_level){
-    this.framerateAnimations = 10;
+    this.framerateAnimations = 15;
     Phaser.Sprite.call(this, SuperBomberman.game, _x, _y, 'explosions')
     
     this.level = _level;

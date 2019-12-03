@@ -8,7 +8,7 @@ SuperBomberman.destroyableWall = function(_x, _y, _hasUpgrade = false, _hasGoal 
     
     if(!shadowSprite){
         Phaser.Sprite.call(this, SuperBomberman.game, _x, _y, 'destroyables')
-        this.animations.add('explode', [16,15,14,13,12,13,14,15,16], 10, false)
+        this.animations.add('explode', [12,13,14,15,16,17], 10, false)
         
         switch(Math.trunc(Math.random() * 4)){
             case 0:

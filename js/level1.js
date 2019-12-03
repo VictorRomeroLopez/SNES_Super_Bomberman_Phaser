@@ -114,7 +114,7 @@ SuperBomberman.level1 = {
             
             this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this));
             this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 6, 6, 2, this));
-            this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 3, 4, 3, this));
+            //this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 3, 4, 3, this));
             
             for(var i =0; i<this.enemies.length;i++)
             {
@@ -144,7 +144,7 @@ SuperBomberman.level1 = {
         this.goalPosition = new Phaser.Point(0,0);
         Utils.prototype.PrintLayoutNumbers()
         }
-        
+        this.powerUpsGroup = this.add.group();
         this.gameOverBool = false;
         this.gameOverCalled = false;
    },

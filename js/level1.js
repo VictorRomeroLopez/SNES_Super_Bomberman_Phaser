@@ -29,8 +29,17 @@ SuperBomberman.level1 = {
         
         //---region LOAD_TILESET_IMAGES---//
         {
-            this.load.image('buildings', levelsFolder + "Pace_town.png");
-            this.load.spritesheet('destroyables', levelsFolder + "Pace_town_destroyable.png",16,16);
+            var level = "";
+            switch(actualLevel){
+                case 1:
+                    level = "Pace_town"
+                    break;
+                case 2:
+                    level = "Green_village"
+                    break;
+            }
+            this.load.image('buildings', levelsFolder + level + ".png");
+            this.load.spritesheet('destroyables', levelsFolder + level + "_destroyable.png",16,16);
             this.load.tilemap('level1','assets/Tiled/level1.json', null, Phaser.Tilemap.TILED_JSON);
         }
         

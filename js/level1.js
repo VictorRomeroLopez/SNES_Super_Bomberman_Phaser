@@ -68,6 +68,7 @@ SuperBomberman.level1 = {
         this.load.image('arrowGO', '/assets/HUD/arrow.png');
         this.load.image('backgroundGO', '/assets/HUD/tile_background.png');
         }
+        this.load.audio('mainMenuMusic','/assets/Music/MainMenuMusic.mp3');
     },
     
     create:function()

@@ -17,7 +17,7 @@ SuperBomberman.bombPrefab = function(_game, _x, _y, _power, _level){
     
     Phaser.Sprite.call(this, _game, this.posx, this.posy, 'blue_bomb');
     
-    this.animations.add('idle', [0,1,2,1], 5, true);
+    this.animations.add('idle', [0,1,2,1], 7, true);
     this.animations.play('idle');
     
     this.anchor.setTo(0.5);

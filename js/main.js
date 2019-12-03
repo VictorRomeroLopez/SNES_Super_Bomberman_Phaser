@@ -28,7 +28,7 @@ var gameOptions = {
 //--LAYOUT_NUMBERS--//
 {
     //si volem que es puguin veure els numeros posem aquesta variable a true
-    var printLayoutNumbers = true;
+    var printLayoutNumbers = false;
 
     var layoutMap = [];
     for(var i = 0; i < 11; i++){
@@ -42,6 +42,8 @@ var gameOptions = {
         }
     }
 }
+
+var actualLevel = 2
 
 SuperBomberman.game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.AUTO, null, this, false, false);
 

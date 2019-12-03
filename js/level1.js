@@ -149,6 +149,8 @@ SuperBomberman.level1 = {
         
         this.goalPosition = new Phaser.Point(0,0);
         Utils.prototype.PrintLayoutNumbers()
+        
+        this.powerUpsGroup = this.add.group();
         this.gameOverBool = false;
         this.gameOverCalled = false;
    },

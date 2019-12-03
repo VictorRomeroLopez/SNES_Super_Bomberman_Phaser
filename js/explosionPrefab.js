@@ -5,7 +5,7 @@ SuperBomberman.explosionPrefab = function(_game, _x, _y, _idExplosion ,_level){
     Phaser.Sprite.call(this, SuperBomberman.game, _x, _y, 'explosions')
     
     this.level = _level;
-    
+    this.score
     this.animations.add('left_bound', [0,1,2,3,4,3,2,1,0], this.framerateAnimations, false)
     this.animations.add('top_bound', [7,8,9,10,11,10,9,8,7], this.framerateAnimations, false)
     this.animations.add('right_bound', [14,15,16,17,18,17,16,15,14], this.framerateAnimations, false)
@@ -62,8 +62,11 @@ SuperBomberman.explosionPrefab.prototype.enemyCollision = function(_explosion, _
     if(!_enemy.invulnerability) 
         _enemy.health--;
     
-    if(_enemy.health <=0) 
+    if(_enemy.health <=0) {
+        SuperBomberman.level1.player.score += _enemy.score;
+        console.log(_enemy.score);
         _enemy.kill();
+    }
     else
         _enemy.invulnerability = true;
 }

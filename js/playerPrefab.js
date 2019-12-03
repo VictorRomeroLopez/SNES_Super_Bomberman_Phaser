@@ -26,7 +26,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.initialPosY = _y;
     this.bombsGroup = _level.add.group()
     this.bombsGroup.enableBody = true
-    this.score = 23856;
+    this.score = 0;
     
     //INPUTS
     spaceK = _game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);

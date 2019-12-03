@@ -6,15 +6,17 @@ SuperBomberman.mainMenu =
         {
             console.log("MAINMENU");
             var ruta = 'assets/';
-            this.load.image('bg1',ruta+'MainMenuNoButtons.png');
+           this.load.audio('mainMenuMusic','/assets/Music/MainMenuMusic.mp3'); this.load.image('bg1',ruta+'MainMenuNoButtons.png');
             this.load.image('btnSTRT',ruta+'ButtonStart.png');
         },
         create:function()
         {
+            this.backgroundMusic = this.game.add.audio('mainMenuMusic');
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.scale.pageAlignHorizontally = true;
             this.bg1 =this.game.add.tileSprite(0,0,256,224,'bg1');
-            
+            this.backgroundMusic.play();
+            this.backgroundMusic.loop = (true);
             this.button = this.game.add.button(this.game.world.centerX,this.game.world.centerY + 60,'btnSTRT',this.iniciaJuego,this);
             this.button.anchor.setTo(.5);
             this.button.scale.setTo(1.5);

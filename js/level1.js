@@ -68,11 +68,15 @@ SuperBomberman.level1 = {
             this.load.image('arrowGO', '/assets/HUD/arrow.png');
             this.load.image('backgroundGO', '/assets/HUD/tile_background.png');
         }
-        this.load.audio('mainMenuMusic','/assets/Music/MainMenuMusic.mp3');
+        //---region AUDIO---//
+        {
+            this.load.audio('mainMenuMusic','/assets/Music/MainMenuMusic.mp3');
+        }
     },
     
     create:function()
     {
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         console.log("create");
         //---region ADD_IMAGES_TO_TILEMAP---//
         {

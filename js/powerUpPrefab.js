@@ -6,6 +6,7 @@ SuperBomberman.powerUpPrefab = function(_game, _x, _y, _type)
     this.posy = (_y * 16 - 8);
     this.kind = _type;
     this.game = _game;
+    this.score = 10;
     
     Phaser.Sprite.call(this, _game, this.posx, this.posy, 'bombPU');
     
@@ -32,6 +33,7 @@ SuperBomberman.powerUpPrefab.prototype.powerUpPickup = function(_powerUp, _playe
 {  
     if(_powerUp.kind != gameUpgrades.goal){
         _player.manageUpgrades(_powerUp.kind);
+        _player.score += _powerUp.score;
         _powerUp.kill(); 
     }
 }

@@ -13,6 +13,7 @@ SuperBomberman.enemy_prefab = function(_game, _x, _y, _type, _level)
             this.animations.add('walkUp', [8,9,10,11], 10, true);
             this.animations.play('walkLeft');
             this.health = 1;
+            this.score = 100;
         }
     else if(_type == 2)
         {
@@ -22,6 +23,7 @@ SuperBomberman.enemy_prefab = function(_game, _x, _y, _type, _level)
             this.animations.add('walkUp', [12,13,14,15,16,17,18,19,20], 10, true);
             this.animations.play('walkUp');
             this.health = 1;
+            this.score = 200;
         }
     else 
         {
@@ -29,6 +31,7 @@ SuperBomberman.enemy_prefab = function(_game, _x, _y, _type, _level)
             this.animations.add('walk', [0,1,2,3,4,5,5,4,3,2,1,0], 10, true);
             this.animations.play('walk')
             this.health = 2;
+            this.score = 400;
         }
     this.anchor.setTo(.5);
     this.speed = 30;

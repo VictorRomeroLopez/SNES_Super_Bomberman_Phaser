@@ -12,8 +12,7 @@ SuperBomberman.level1 = {
         this.hudeTimerInitX = -82;
         this.hudeTimerInitY = -66;
         this.currentTime = this.game.time.time;
-        this.timerCounter =12;
-        
+        this.timerCounter =-1;
     },
     
     preload:function()
@@ -29,8 +28,17 @@ SuperBomberman.level1 = {
         
         //---region LOAD_TILESET_IMAGES---//
         {
-            this.load.image('buildings', levelsFolder + "Pace_town.png");
-            this.load.spritesheet('destroyables', levelsFolder + "Pace_town_destroyable.png",16,16);
+            var level = "";
+            switch(actualLevel){
+                case 1:
+                    level = "Pace_town"
+                    break;
+                case 2:
+                    level = "Green_village"
+                    break;
+            }
+            this.load.image('buildings', levelsFolder + level + ".png");
+            this.load.spritesheet('destroyables', levelsFolder + level + "_destroyable.png",16,16);
             this.load.tilemap('level1','assets/Tiled/level1.json', null, Phaser.Tilemap.TILED_JSON);
         }
         
@@ -158,10 +166,43 @@ SuperBomberman.level1 = {
         this.powerUpsGroup = this.add.group();
         this.gameOverBool = false;
         this.gameOverCalled = false;
+        this.playerScore = this.player.score;
+        for(var i =0; i<5; i++)
+            console.log(localStorage.getItem("score"+i));
    },
     update:function()
     {
         if(this.gameOverBool && !this.gameOverCalled) {
+            var scoreSaved = false;
+            for(var i =0; i<5 && !scoreSaved; i++)
+                {
+                    var score = "score"+i;
+                    var rankScore = localStorage.getItem(score);
+                    if(rankScore != "null")
+                        {
+                            console.log("distinto a 0")
+                            
+                            if( rankScore < this.player.score) {
+                                for(var j = 4; j>i; j--)
+                                    {
+                                        localStorage.setItem("score"+j, localStorage.getItem("score"+(j-1)))
+                                    }
+                                localStorage.setItem(score, this.player.score);
+                                scoreSaved = true;
+                                console.log("score actual es mayor")
+                            }
+                            else
+                                console.log("score actual es menor")
+                        }
+                    else
+                        {
+                            console.log("igual a 0")
+                            localStorage.setItem(score, this.player.score);
+                            scoreSaved = true;
+                        }
+                    console.log(localStorage.getItem(score));
+                }
+            
             this.gameOverPrefab = new SuperBomberman.game_over(this.game, gameOptions.gameWidth/2, gameOptions.gameHeight - gameOptions.gameHeight/3, this);
             
             this.hudClock.animations.stop('tictac', this.hudClock.frame);
@@ -177,6 +218,8 @@ SuperBomberman.level1 = {
         {
             this.game.debug.body(this.enemies.getChildAt(i));
         }
+        
+        if(this.playerScore != this.player.score) this.updateHUDScore();
     },
 
     updateHUDScore:function()

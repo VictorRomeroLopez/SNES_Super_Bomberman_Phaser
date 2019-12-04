@@ -9,7 +9,10 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.animations.add('walkRight', [12,13,14], 7, true);
 	this.animations.add('death',[18,19,20,21,22,23],7,true);
 	this.anchor.setTo(1/2, 16/25);
+    //TIME
     this.time = 0;
+    this.timer = this.game.time.create(false);
+    this.timer.loop(250, this.ChangeTint, this, null)
     this.timeWhenKilled = 0;
     this.inmortal = false;
     //MOVEMENT
@@ -39,6 +42,8 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     _game.add.existing(this);
     
     this.body.setSize(10,10,3,13);
+    
+    this.timer.start();
     //this.body.setSize(16,16,0,9);
 }
 
@@ -47,11 +52,15 @@ SuperBomberman.player_setup.prototype.constructor = SuperBomberman.player_setup;
 
 SuperBomberman.player_setup.prototype.update = function()
 {
+
     this.time = this.game.time.totalElapsedSeconds();
-    if(this.time - this.timeWhenKilled > 2)
+    if(this.time - this.timeWhenKilled > 5)
     {
         this.inmortal = false;
+        this.tint = 0xffffff;
+        
     }
+    
     if(this.health > 0)
     {
         //COLLISIONS
@@ -122,6 +131,17 @@ SuperBomberman.player_setup.prototype.CheckGoNextLevel = function(){
     //if((this.body.position))
 }
 
+SuperBomberman.player_setup.prototype.ChangeTint = function()
+{
+    if(this.inmortal)
+        {
+    if(this.tint == 0xffffff)
+        this.tint = 0x9c9c9c;
+    else
+        this.tint = 0xffffff;
+        }
+}
+
 SuperBomberman.player_setup.prototype.DropBomb = function()
 {
     var recicleBomb = this.bombsGroup.getFirstExists(false)
@@ -146,10 +166,9 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
 
 SuperBomberman.player_setup.prototype.enemyCollision = function(_player, _enemy)
 {
-    _player.timeWhenKilled = _player.time;
-    console.log(_player.inmortal)
     if(!_player.inmortal)
     {
+        _player.timeWhenKilled = _player.time;
         _player.health--;
         _player.body.position.x = _player.initialPosX;
         _player.body.position.y = _player.initialPosY;

@@ -125,11 +125,9 @@ SuperBomberman.level1 = {
             this.enemies.enableBody = true;
             this.game.physics.arcade.enable(this.enemies);
             
-            this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this));
-            this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 6, 6, 2, this));
-            //this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 3, 4, 3, this));
-            
-            for(var i =0; i<this.enemies.length;i++)
+            EnemiesGenerator.prototype.InstantiateEnemies()
+                        
+            for(var i =0; i < this.enemies.length; i++)
             {
                 this.enemies.getChildAt(i).body.setSize(16,16,0,8);
             }

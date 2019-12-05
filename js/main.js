@@ -4,7 +4,8 @@ var layoutTags = {
     immovableWall:1,
     emptyDestroyableWall:2,
     upgradeDestroyableWall:3,
-    goalDestroyableWall:4
+    goalDestroyableWall:4,
+    enemie:5
 };
 
 var gameUpgrades = {
@@ -21,6 +22,7 @@ var gameOptions = {
     gameWidth:17*16,
     gameHeight:13*16,
     numDestroyableWalls:40,
+    numEnemies:5,
     minNumUpgrades:3,
     maxNumUpgrades:10
 };

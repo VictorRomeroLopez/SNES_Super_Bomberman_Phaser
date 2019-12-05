@@ -170,9 +170,11 @@ SuperBomberman.player_setup.prototype.enemyCollision = function(_player, _enemy)
     {
         _player.timeWhenKilled = _player.time;
         _player.health--;
-        _player.body.position.x = _player.initialPosX;
+        this.animatinDeath = _player.animations.play("death")
+        this.animatinDeath.onComplete.add(function(){_player.body.position.x = _player.initialPosX;
         _player.body.position.y = _player.initialPosY;
-        _player.inmortal = true;
+        _player.inmortal = true;})
+        
     }
 }
 
@@ -193,19 +195,4 @@ SuperBomberman.player_setup.prototype.manageUpgrades = function(type)
 
 SuperBomberman.player_setup.prototype.truncPlayerPos = function(_player, _wall)
 {
-{
-   /*if(_player.body.position.x != 0)
-    {
-        var positionPlayerY = Math.trunc((_player.position.y /16)-3)
-        var positionYworld = positionPlayerY * 16 + gameOptions.gameOffsetTop * 16
-        _player.body.position.y = positionYworld;
-        
-    }
-    else if(_player.body.velocity.y != 0)
-    {
-        var positionPlayerX = Math.trunc((_player.position.x /16)-2)
-        var positionXworld = positionPlayerX * 16 + gameOptions.gameOffsetLeft * 16
-        _player.body.position.x = positionXworld;
-    }*/
-}
 }

@@ -45,7 +45,7 @@ var gameOptions = {
     }
 }
 
-var actualLevel = 2
+var actualLevel = 3
 
 SuperBomberman.game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.AUTO, null, this, false, false);
 

@@ -124,7 +124,7 @@ SuperBomberman.player_setup.prototype.update = function()
 }
 
 SuperBomberman.player_setup.prototype.CheckGoNextLevel = function(){
-    if(Math.trunc(Math.sqrt(Math.pow((this.body.position.x - SuperBomberman.level1.goalPosition.x),2) + Math.pow((this.body.position.y - SuperBomberman.level1.goalPosition.y),2))) < 4){
+    if(Math.trunc(Math.sqrt(Math.pow((this.body.position.x - SuperBomberman.level1.goalPosition.x),2) + Math.pow((this.body.position.y - SuperBomberman.level1.goalPosition.y),2))) < 4 && Utils.prototype.CheckAllEnemiesDied()){
         console.log("Entra a la sortida");
     }
 }

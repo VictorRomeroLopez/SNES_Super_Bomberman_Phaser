@@ -70,6 +70,7 @@ SuperBomberman.destroyableWall.prototype.DestroyThis = function(){
     
     if(this.hasGoal){
         SuperBomberman.level1.powerUpsGroup.add(new SuperBomberman.powerUpPrefab(SuperBomberman.game, Math.trunc(this.posX/16) + 1, Math.trunc(this.posY/16) + 1, 3))
+        SuperBomberman.level1.goalPosition = new Phaser.Point(this.posX+3, this.posY+3)
     }
     
     this.kill();

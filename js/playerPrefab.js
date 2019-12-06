@@ -124,22 +124,20 @@ SuperBomberman.player_setup.prototype.update = function()
 }
 
 SuperBomberman.player_setup.prototype.CheckGoNextLevel = function(){
-    /*console.log(
-        Math.sqrt(
-        (Math.pow(this.body.position.x - SuperBomberman.level1.goalPosition.x,2)) + (Math.pow(this.body.position.y - SuperBomberman.level1.goalPosition.y,2)))*/
-    //console.log(Math.sqrt(Math.pow((this.body.position.x - SuperBomberman.level1.goalPosition.x),2) + Math.pow((this.body.position.y - SuperBomberman.level1.goalPosition.y),2)))
-    //if((this.body.position))
+    if(Math.trunc(Math.sqrt(Math.pow((this.body.position.x - SuperBomberman.level1.goalPosition.x),2) + Math.pow((this.body.position.y - SuperBomberman.level1.goalPosition.y),2))) < 4){
+        console.log("Entra a la sortida");
+    }
 }
 
 SuperBomberman.player_setup.prototype.ChangeTint = function()
 {
     if(this.inmortal)
-        {
-    if(this.tint == 0xffffff)
-        this.tint = 0x9c9c9c;
-    else
-        this.tint = 0xffffff;
-        }
+    {
+        if(this.tint == 0xffffff)
+            this.tint = 0x9c9c9c;
+        else
+            this.tint = 0xffffff;
+    }
 }
 
 SuperBomberman.player_setup.prototype.DropBomb = function()

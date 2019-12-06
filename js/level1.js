@@ -36,6 +36,9 @@ SuperBomberman.level1 = {
                 case 2:
                     level = "Green_village"
                     break;
+                case 3:
+                    level = "Ice_town"
+                    break;
             }
             this.load.image('buildings', levelsFolder + level + ".png");
             this.load.spritesheet('destroyables', levelsFolder + level + "_destroyable.png",16,16);

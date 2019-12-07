@@ -2,6 +2,10 @@ var SuperBomberman = SuperBomberman || {};
 
 SuperBomberman.mainMenu = 
     {
+        init:function()
+        {
+            this.gameStarted = false;
+        },
         preload:function()
         {
             var ruta = 'assets/';
@@ -27,7 +31,7 @@ SuperBomberman.mainMenu =
             this.rankingButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY + 80, 'btnRanking', this.showRanking, this);
             this.rankingButton.anchor.setTo(.5);
             this.rankingButton.scale.setTo(1.5);
-
+            
 
         },
         update:function()
@@ -36,6 +40,7 @@ SuperBomberman.mainMenu =
         },
         iniciaJuego:function()
         {
+            this.gameStarted = true;
             this.backgroundMusic.stop();
             this.startMusic.play();
             this.animacionStart =this.game.add.tween(this.button).to({y:this.game.world.centerY +80},2000,Phaser.Easing.Quadratic.Out,true);
@@ -44,7 +49,10 @@ SuperBomberman.mainMenu =
         },
         showRanking:function()
         {
-            this.backgroundMusic.stop();
-            SuperBomberman.game.state.start('rankingMenu');
+            if(!this.gameStarted)
+            {
+                this.backgroundMusic.stop();
+                SuperBomberman.game.state.start('rankingMenu');
+            }
         }
 };

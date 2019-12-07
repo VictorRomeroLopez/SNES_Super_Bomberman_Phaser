@@ -237,11 +237,8 @@ SuperBomberman.level1 = {
         if(this.game.time.elapsedSecondsSince(this.currentTime) >=10) this.updateHUDTimer();
         
         this.game.physics.arcade.collide(this.enemies);
-        this.game.debug.body(this.player);
-        for(var i=0;i<this.enemies.length;i++)
-        {
-            this.game.debug.body(this.enemies.getChildAt(i));
-        }
+        
+        
         
         if(this.playerScore != this.player.score) this.updateHUDScore();
     },

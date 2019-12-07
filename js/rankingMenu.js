@@ -12,6 +12,7 @@ SuperBomberman.rankingMenu =
     {
         this.load.spritesheet('numbers', '/assets/HUD/numbers.png', 8, 12);
         this.load.image('title', '/assets/HUD/rankingTitle.png');
+        this.load.image('back', '/assets/HUD/backButton.png');
     },
     create:function()
     {
@@ -24,6 +25,8 @@ SuperBomberman.rankingMenu =
         
         this.rankingPos = this.add.group();
         this.scores = this.add.group();
+        
+        this.backButton = this.game.add.button(gameOptions.gameWidth-65, 180, 'back', this.back, this);
         
         for(var i = 0; i<5; i++)
             {
@@ -47,6 +50,11 @@ SuperBomberman.rankingMenu =
                     }
             }
        
+    },
+    back:function()
+    {
+        SuperBomberman.game.state.start('main');
     }
+
 }
     

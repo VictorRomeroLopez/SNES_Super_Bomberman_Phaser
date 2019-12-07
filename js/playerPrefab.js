@@ -32,6 +32,8 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.bombsGroup = _level.add.group()
     this.bombsGroup.enableBody = true
     this.score = 0;
+    this.deathSound = _level.game.add.audio('playerDeath');
+    this.walkSound = _level.game.add.audio('walk');
     
     //INPUTS
     spaceK = _game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -52,7 +54,7 @@ SuperBomberman.player_setup.prototype.constructor = SuperBomberman.player_setup;
 
 SuperBomberman.player_setup.prototype.update = function()
 {
-
+    
     this.time = this.game.time.totalElapsedSeconds();
     if(this.time - this.timeWhenKilled > 5)
     {
@@ -166,6 +168,7 @@ SuperBomberman.player_setup.prototype.enemyCollision = function(_player, _enemy)
 {
     if(!_player.inmortal)
     {
+         _player.deathSound.play();
         _player.timeWhenKilled = _player.time;
         _player.health--;
         _player.body.position.x = _player.initialPosX;

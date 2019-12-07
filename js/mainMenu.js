@@ -6,7 +6,8 @@ SuperBomberman.mainMenu =
         {
             var ruta = 'assets/';
            this.load.audio('mainMenuMusic','/assets/Music/MainMenuMusic.mp3'); 
-            this.load.audio('start','/assets/Music/Start.mp3'); this.load.image('bg1',ruta+'MainMenuNoButtons.png');
+            this.load.audio('start','/assets/Music/ButtonStart.wav');
+            this.load.image('bg1',ruta+'MainMenuNoButtons.png');
             this.load.image('btnSTRT',ruta+'ButtonStart.png');
             
         },

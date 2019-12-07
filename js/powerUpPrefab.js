@@ -7,6 +7,7 @@ SuperBomberman.powerUpPrefab = function(_game, _x, _y, _type)
     this.kind = _type;
     this.game = _game;
     this.score = 10;
+    this.PUsound = SuperBomberman.level1.add.audio('powerUp');
     
     Phaser.Sprite.call(this, _game, this.posx, this.posy, 'bombPU');
     
@@ -34,6 +35,7 @@ SuperBomberman.powerUpPrefab.prototype.powerUpPickup = function(_powerUp, _playe
     if(_powerUp.kind != gameUpgrades.goal){
         _player.manageUpgrades(_powerUp.kind);
         _player.score += _powerUp.score;
+        _powerUp.PUsound.play();
         _powerUp.kill(); 
     }
 }

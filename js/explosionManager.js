@@ -8,6 +8,7 @@ SuperBomberman.explosionManager = function(_game, _x, _y, _power, _level){
     this.posy = _y * 16 - 8
     this.power = _power
     this.level = _level;
+    this.sound = _level.game.add.audio('explosion');
     
     this.generateExplosionUP = true;
     this.generateExplosionDOWN = true;
@@ -30,6 +31,8 @@ SuperBomberman.explosionManager.prototype = Object.create(Phaser.Sprite.prototyp
 SuperBomberman.explosionManager.prototype.constructor = SuperBomberman.explosionManager;
 
 SuperBomberman.explosionManager.prototype.instantiateExplosions = function(){
+    
+    this.sound.play();
     
     this.generateExplosion(this.explosionDirection.CENTER, 5, 0)
     

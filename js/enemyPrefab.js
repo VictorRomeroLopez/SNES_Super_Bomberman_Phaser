@@ -4,6 +4,7 @@ SuperBomberman.enemy_prefab = function(_x, _y, _type)
 {
     this.posx = (3 * 16 + _x * 16 - 8);
     this.posy = (4 * 16 + _y * 16 - 8);
+    this.deathSound = SuperBomberman.level1.game.add.audio('enemyDeath');
     
     if(_type == 1)
     {

@@ -43,7 +43,7 @@ var gameOptions = {
     }
 }
 
-var actualLevel = 2
+var actualLevel = 1
 
 SuperBomberman.game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.AUTO, null, this, false, false);
 
@@ -62,7 +62,7 @@ var scenes = ['main'/*0*/,
              ]
 
 //Aquesta es la escena amb la que inicia el joc
-SuperBomberman.game.state.start(scenes[1]);
+SuperBomberman.game.state.start(scenes[0]);
 
 SuperBomberman.generateRandomNumber = function(maxNumber){
     return Math.trunc(Math.random() * maxNumber);

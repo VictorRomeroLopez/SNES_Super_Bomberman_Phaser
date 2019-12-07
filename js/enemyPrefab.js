@@ -4,7 +4,7 @@ SuperBomberman.enemy_prefab = function(_game, _x, _y, _type, _level)
 {
     this.posx = (_x * 16 - 8);
     this.posy = (_y * 16 - 8);
-    
+    this.deathSound = _level.game.add.audio('enemyDeath');
     if(_type == 1)
         {
             Phaser.Sprite.call(this, _game, this.posx, this.posy, 'tomatoe');

@@ -178,7 +178,7 @@ SuperBomberman.player_setup.prototype.AnimationDeath = function(_player)
 {
     this.walkSound.stop()
     _player.playerded = false;
-    _player.reset(_player.initialPosX, _player.initialPosY)
+    _player.reset(_player.initialPosX, _player.initialPosY,_player.health)
 }
 
 

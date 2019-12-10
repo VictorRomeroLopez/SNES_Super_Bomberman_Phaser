@@ -9,6 +9,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.animations.add('walkRight', [12,13,14], 10, true);
 	var deathAnimation = this.animations.add('death',[18,19,20,21,22,23],10,false);
 	this.anchor.setTo(1/2, 16/25);
+    
     //TIME
     this.time = 0;
     this.timer = this.game.time.create(false);
@@ -33,7 +34,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.bombsGroup.enableBody = true
     this.score = 0;
     this.deathSound = _level.game.add.audio('playerDeath');
-    this.walkSound = _level.game.add.audio('walk');
+    this.walkSound = _level.game.add.audio('walk', 1, true);
     this.playerded = false;
     //INPUTS
     spaceK = _game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -75,6 +76,8 @@ SuperBomberman.player_setup.prototype.update = function()
         //INPUTS , ANIMATIONS & MOVEMENT
         if (cursors.up.isDown && !this.playerded)
         {
+            if(!this.walkSound.isPlaying)
+                this.walkSound.play();
             this.direction = -1;
             this.body.velocity.x = 0;
             this.animations.play('walkUp');
@@ -82,6 +85,8 @@ SuperBomberman.player_setup.prototype.update = function()
         }
         else if (cursors.down.isDown && !this.playerded)
         {
+            if(!this.walkSound.isPlaying)
+                this.walkSound.play();
             this.direction = 1;
             this.body.velocity.x = 0;
             this.animations.play('walkDown');
@@ -89,6 +94,8 @@ SuperBomberman.player_setup.prototype.update = function()
         }	
         else if (cursors.left.isDown && !this.playerded)
         {
+            if(!this.walkSound.isPlaying)
+                this.walkSound.play();
             if(this.scale.x > 0) this.scale.x *= -1;
             this.direction = -1;
             this.body.velocity.y = 0;
@@ -97,6 +104,8 @@ SuperBomberman.player_setup.prototype.update = function()
         } 
         else if (cursors.right.isDown && !this.playerded)
         {
+            if(!this.walkSound.isPlaying)
+                this.walkSound.play();
             if(this.scale.x < 0) this.scale.x *= -1;
             this.direction = 1;
             this.body.velocity.y = 0;
@@ -105,6 +114,7 @@ SuperBomberman.player_setup.prototype.update = function()
         }
         else if (!this.playerded)
         {
+            this.walkSound.stop()
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
             this.frame = 7;
@@ -166,6 +176,7 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
 
 SuperBomberman.player_setup.prototype.AnimationDeath = function(_player)
 {
+    this.walkSound.stop()
     _player.playerded = false;
     _player.reset(_player.initialPosX, _player.initialPosY,_player.health)
 }

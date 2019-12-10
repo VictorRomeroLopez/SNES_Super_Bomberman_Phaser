@@ -13,6 +13,7 @@ SuperBomberman.level1 = {
         this.hudeTimerInitY = -66;
         this.currentTime = this.game.time.time;
         this.timerCounter =-1;
+        
     },
     
     preload:function()
@@ -70,15 +71,6 @@ SuperBomberman.level1 = {
             this.load.spritesheet('hudNumbers', '/assets/HUD/numbers.png', 8, 12);
         }
         
-        //---region GAME OVER---//
-        {
-            this.load.image('gameOver', '/assets/HUD/Game_over_screen.png');
-            this.load.image('yesGO', '/assets/HUD/yes.png');
-            this.load.image('noGO', '/assets/HUD/no.png');
-            this.load.image('continueGO', '/assets/HUD/continue_questionmark.png');
-            this.load.image('arrowGO', '/assets/HUD/arrow.png');
-            this.load.image('backgroundGO', '/assets/HUD/tile_background.png');
-        }
         //---region AUDIO---//
         {
             this.load.audio('mainMenuMusic','/assets/Music/MainMenuMusic.mp3');
@@ -227,7 +219,7 @@ SuperBomberman.level1 = {
                     console.log(localStorage.getItem(score));
                 }
             
-            this.gameOverPrefab = new SuperBomberman.game_over(this.game, gameOptions.gameWidth/2, gameOptions.gameHeight - gameOptions.gameHeight/3, this);
+            SuperBomberman.game.state.start('gameOver');
             
             this.hudClock.animations.stop('tictac', this.hudClock.frame);
             
@@ -265,5 +257,5 @@ SuperBomberman.level1 = {
         this.graphics.drawRect(this.hudeTimerInitX + this.timerCounter * 8,this.hudeTimerInitY, 4, 3);
         this.graphics.endFill();
         this.currentTime = this.game.time.time;
-    }
+    }    
 }

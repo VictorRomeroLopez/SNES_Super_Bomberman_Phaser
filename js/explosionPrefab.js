@@ -64,7 +64,7 @@ SuperBomberman.explosionPrefab.prototype.enemyCollision = function(_explosion, _
     
     if(_enemy.health <=0) {
         SuperBomberman.level1.player.score += _enemy.score;
-        console.log(_enemy.score);
+        _enemy.deathSound.play();
         _enemy.kill();
     }
     else
@@ -80,6 +80,7 @@ SuperBomberman.explosionPrefab.prototype.playerCollision = function(_explosion, 
 {
     if(!_player.inmortal)
     {
+        _player.deathSound.play();
         _player.timeWhenKilled = _player.time;
         _player.health--;
         _player.body.position.x = _player.initialPosX;

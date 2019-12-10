@@ -1,44 +1,45 @@
 var SuperBomberman = SuperBomberman || {};
 
-SuperBomberman.enemy_prefab = function(_game, _x, _y, _type, _level)
+SuperBomberman.enemy_prefab = function(_x, _y, _type)
 {
-    this.posx = (_x * 16 - 8);
-    this.posy = (_y * 16 - 8);
+    this.posx = (3 * 16 + _x * 16 - 8);
+    this.posy = (4 * 16 + _y * 16 - 8);
+    this.deathSound = SuperBomberman.level1.game.add.audio('enemyDeath');
     
     if(_type == 1)
-        {
-            Phaser.Sprite.call(this, _game, this.posx, this.posy, 'tomatoe');
-            this.animations.add('walkLeft', [0,1,2,3], 10, true);
-            this.animations.add('walkDown', [4,5,6,7], 10, true);
-            this.animations.add('walkUp', [8,9,10,11], 10, true);
-            this.animations.play('walkLeft');
-            this.health = 1;
-            this.score = 100;
-        }
+    {
+        Phaser.Sprite.call(this, SuperBomberman.game, this.posx, this.posy, 'tomatoe');
+        this.animations.add('walkLeft', [0,1,2,3], 10, true);
+        this.animations.add('walkDown', [4,5,6,7], 10, true);
+        this.animations.add('walkUp', [8,9,10,11], 10, true);
+        this.animations.play('walkLeft');
+        this.health = 1;
+        this.score = 100;
+    }
     else if(_type == 2)
-        {
-            Phaser.Sprite.call(this, _game, this.posx, this.posy, 'nuez');
-            this.animations.add('walkLeft', [24,25,26,27,28,29,30], 10, true);
-            this.animations.add('walkDown', [0,1,2,3,4,5,6,7,8,9,10,11], 10, true);
-            this.animations.add('walkUp', [12,13,14,15,16,17,18,19,20], 10, true);
-            this.animations.play('walkUp');
-            this.health = 1;
-            this.score = 200;
-        }
+    {
+        Phaser.Sprite.call(this, SuperBomberman.game, this.posx, this.posy, 'nuez');
+        this.animations.add('walkLeft', [24,25,26,27,28,29,30], 10, true);
+        this.animations.add('walkDown', [0,1,2,3,4,5,6,7,8,9,10,11], 10, true);
+        this.animations.add('walkUp', [12,13,14,15,16,17,18,19,20], 10, true);
+        this.animations.play('walkUp');
+        this.health = 1;
+        this.score = 200;
+    }
     else 
-        {
-            Phaser.Sprite.call(this, _game, this.posx, this.posy, 'ufo');
-            this.animations.add('walk', [0,1,2,3,4,5,5,4,3,2,1,0], 10, true);
-            this.animations.play('walk')
-            this.health = 2;
-            this.score = 400;
-        }
+    {
+        Phaser.Sprite.call(this, SuperBomberman.game, this.posx, this.posy, 'ufo');
+        this.animations.add('walk', [0,1,2,3,4,5,5,4,3,2,1,0], 10, true);
+        this.animations.play('walk')
+        this.health = 2;
+        this.score = 400;
+    }
+    
     this.anchor.setTo(.5);
     this.speed = 30;
     this.goingY = false;
     this.direction = -1;
     this.invulnerability = false;
-    this.level = _level;
 };
 
 SuperBomberman.enemy_prefab.prototype = Object.create(Phaser.Sprite.prototype);
@@ -46,12 +47,12 @@ SuperBomberman.enemy_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 SuperBomberman.enemy_prefab.prototype.constructor = SuperBomberman.enemy_prefab;
 
 SuperBomberman.enemy_prefab.prototype.update = function(){
-    if(!this.level.gameOverBool)
+    if(!SuperBomberman.level1.gameOverBool)
     {
     
-        this.game.physics.arcade.collide(this,this.level.exteriorWalls);
-        this.game.physics.arcade.collide(this,this.level.interiorWalls);
-        this.game.physics.arcade.collide(this, this.level.destroyableWallsGroup);
+        this.game.physics.arcade.collide(this, SuperBomberman.level1.exteriorWalls);
+        this.game.physics.arcade.collide(this, SuperBomberman.level1.interiorWalls);
+        this.game.physics.arcade.collide(this, SuperBomberman.level1.destroyableWallsGroup);
 
 
         if(this.body.touching.left || this.body.touching.right || this.body.blocked.left || this.body.blocked.right) 

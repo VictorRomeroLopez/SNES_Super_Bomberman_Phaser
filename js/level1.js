@@ -36,6 +36,9 @@ SuperBomberman.level1 = {
                 case 2:
                     level = "Green_village"
                     break;
+                case 3:
+                    level = "Ice_town"
+                    break;
             }
             this.load.image('buildings', levelsFolder + level + ".png");
             this.load.spritesheet('destroyables', levelsFolder + level + "_destroyable.png",16,16);
@@ -79,6 +82,14 @@ SuperBomberman.level1 = {
         //---region AUDIO---//
         {
             this.load.audio('mainMenuMusic','/assets/Music/MainMenuMusic.mp3');
+            this.load.audio('level1Music', 'assets/Music/Level1Music.mp3');
+            this.load.audio('explosion', 'assets/Music/ExplosionSound.mp3');
+            this.load.audio('playerDeath', 'assets/Music/PlayerDeath.mp3');
+            this.load.audio('gameOver', 'assets/Music/GameOver.mp3');
+            this.load.audio('enemyDeath', 'assets/Music/EnemyDeath.wav');
+            this.load.audio('powerUp', 'assets/Music/PosiblePowerUp.wav');
+            this.load.audio('startLevel', 'assets/Music/Start.mp3');
+            this.load.audio('walk', 'assets/Music/Walk.wav');
         }
     },
     
@@ -125,11 +136,9 @@ SuperBomberman.level1 = {
             this.enemies.enableBody = true;
             this.game.physics.arcade.enable(this.enemies);
             
-            this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 10, 10, 1, this));
-            this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 6, 6, 2, this));
-            //this.enemies.add(new SuperBomberman.enemy_prefab(this.game, 3, 4, 3, this));
-            
-            for(var i =0; i<this.enemies.length;i++)
+            EnemiesGenerator.prototype.InstantiateEnemies()
+                        
+            for(var i =0; i < this.enemies.length; i++)
             {
                 this.enemies.getChildAt(i).body.setSize(16,16,0,8);
             }
@@ -167,12 +176,27 @@ SuperBomberman.level1 = {
         this.gameOverBool = false;
         this.gameOverCalled = false;
         this.playerScore = this.player.score;
-        for(var i =0; i<5; i++)
-            console.log(localStorage.getItem("score"+i));
+        
+        this.levelMusic = this.game.add.audio('level1Music');
+        this.levelMusic.loop = true;
+        this.startLevelMusic = this.game.add.audio('startLevel');
+        this.startLevelMusic.play();
+        this.gameOverSound = this.game.add.audio('gameOver');
+        this.playerDeathSound = this.game.add.audio('playerDeath');
+        this.levelStarted = false;
    },
     update:function()
     {
+        
+        if(!this.startLevelMusic.isPlaying && !this.levelStarted)
+            {
+                this.levelMusic.play()
+                this.levelStarted = true;
+            }
+        
         if(this.gameOverBool && !this.gameOverCalled) {
+            this.levelMusic.stop();
+            this.gameOverSound.play();
             var scoreSaved = false;
             for(var i =0; i<5 && !scoreSaved; i++)
                 {
@@ -213,11 +237,8 @@ SuperBomberman.level1 = {
         if(this.game.time.elapsedSecondsSince(this.currentTime) >=10) this.updateHUDTimer();
         
         this.game.physics.arcade.collide(this.enemies);
-        this.game.debug.body(this.player);
-        for(var i=0;i<this.enemies.length;i++)
-        {
-            this.game.debug.body(this.enemies.getChildAt(i));
-        }
+        
+        
         
         if(this.playerScore != this.player.score) this.updateHUDScore();
     },

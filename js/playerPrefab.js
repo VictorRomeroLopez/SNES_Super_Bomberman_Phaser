@@ -32,6 +32,8 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.bombsGroup = _level.add.group()
     this.bombsGroup.enableBody = true
     this.score = 0;
+    this.deathSound = _level.game.add.audio('playerDeath');
+    this.walkSound = _level.game.add.audio('walk');
     this.playerded = false;
     //INPUTS
     spaceK = _game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -53,7 +55,7 @@ SuperBomberman.player_setup.prototype.constructor = SuperBomberman.player_setup;
 
 SuperBomberman.player_setup.prototype.update = function()
 {
-
+    
     this.time = this.game.time.totalElapsedSeconds();
     if(this.time - this.timeWhenKilled > 5)
     {
@@ -123,22 +125,20 @@ SuperBomberman.player_setup.prototype.update = function()
 }
 
 SuperBomberman.player_setup.prototype.CheckGoNextLevel = function(){
-    /*console.log(
-        Math.sqrt(
-        (Math.pow(this.body.position.x - SuperBomberman.level1.goalPosition.x,2)) + (Math.pow(this.body.position.y - SuperBomberman.level1.goalPosition.y,2)))*/
-    //console.log(Math.sqrt(Math.pow((this.body.position.x - SuperBomberman.level1.goalPosition.x),2) + Math.pow((this.body.position.y - SuperBomberman.level1.goalPosition.y),2)))
-    //if((this.body.position))
+    if(Math.trunc(Math.sqrt(Math.pow((this.body.position.x - SuperBomberman.level1.goalPosition.x),2) + Math.pow((this.body.position.y - SuperBomberman.level1.goalPosition.y),2))) < 4 && Utils.prototype.CheckAllEnemiesDied()){
+        console.log("Entra a la sortida");
+    }
 }
 
 SuperBomberman.player_setup.prototype.ChangeTint = function()
 {
     if(this.inmortal)
-        {
-    if(this.tint == 0xffffff)
-        this.tint = 0x9c9c9c;
-    else
-        this.tint = 0xffffff;
-        }
+    {
+        if(this.tint == 0xffffff)
+            this.tint = 0x9c9c9c;
+        else
+            this.tint = 0xffffff;
+    }
 }
 
 SuperBomberman.player_setup.prototype.DropBomb = function()
@@ -175,6 +175,7 @@ SuperBomberman.player_setup.prototype.playerDied = function(_player)
 {
     if(!_player.inmortal)
     {
+         _player.deathSound.play();
         _player.body.velocity.x = 0;
         _player.body.velocity.y = 0;
         _player.timeWhenKilled = _player.time;

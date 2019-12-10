@@ -167,7 +167,7 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
 SuperBomberman.player_setup.prototype.AnimationDeath = function(_player)
 {
     _player.playerded = false;
-    _player.reset(_player.initialPosX, _player.initialPosY)
+    _player.reset(_player.initialPosX, _player.initialPosY,_player.health)
 }
 
 

@@ -3,6 +3,8 @@ var SuperBomberman = SuperBomberman || {};
 SuperBomberman.bombPrefab = function(_game, _x, _y, _power, _level){
     this.timeBombToExplode = 3;
     
+    this.sound = _level.game.add.audio('dropBomb');
+    this.sound.play();
     this.posRawX = gameOptions.gameOffsetLeft + _x;
     this.posRawY = gameOptions.gameOffsetTop + _y;
     
@@ -36,6 +38,7 @@ SuperBomberman.bombPrefab.prototype.update = function(){
     this.game.physics.arcade.collide(this,this.level.enemies, this.enemyCollision);
 }
 SuperBomberman.bombPrefab.prototype.UpdateBomb = function(newPosX, newPosY, newPower){
+    this.sound.play();
     this.posRawX = newPosX;
     this.posRawY = newPosY;
     this.power = newPower;

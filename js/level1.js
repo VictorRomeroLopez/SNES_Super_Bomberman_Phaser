@@ -82,6 +82,7 @@ SuperBomberman.level1 = {
             this.load.audio('powerUp', 'assets/Music/PosiblePowerUp.wav');
             this.load.audio('startLevel', 'assets/Music/Start.mp3');
             this.load.audio('walk', 'assets/Music/Walk.wav');
+            this.load.audio('dropBomb', 'assets/Music/SFX_drop_bomb.wav')
         }
     },
     

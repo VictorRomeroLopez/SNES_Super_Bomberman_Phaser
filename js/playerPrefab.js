@@ -4,10 +4,10 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
 {
     //SPRITE & ANIMATIONS
 	Phaser.Sprite.call(this, _game, _x, _y, 'bomberman');
-    this.animations.add('walkUp', [0,1,2], 7, true);
-    this.animations.add('walkDown', [6,7,8], 7, true);
-    this.animations.add('walkRight', [12,13,14], 7, true);
-	this.animations.add('death',[18,19,20,21,22,23],7,true);
+    this.animations.add('walkUp', [0,1,2], 10, true);
+    this.animations.add('walkDown', [6,7,8], 10, true);
+    this.animations.add('walkRight', [12,13,14], 10, true);
+	var deathAnimation = this.animations.add('death',[18,19,20,21,22,23],10,false);
 	this.anchor.setTo(1/2, 16/25);
     //TIME
     this.time = 0;
@@ -34,7 +34,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.score = 0;
     this.deathSound = _level.game.add.audio('playerDeath');
     this.walkSound = _level.game.add.audio('walk');
-    
+    this.playerded = false;
     //INPUTS
     spaceK = _game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	cursors = _game.input.keyboard.createCursorKeys();
@@ -43,6 +43,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     _game.physics.arcade.enable(this);
     _game.add.existing(this);
     
+    deathAnimation.onComplete.add(this.AnimationDeath,this); 
     this.body.setSize(10,10,3,13);
     
     this.timer.start();
@@ -60,7 +61,6 @@ SuperBomberman.player_setup.prototype.update = function()
     {
         this.inmortal = false;
         this.tint = 0xffffff;
-        
     }
     
     if(this.health > 0)
@@ -68,27 +68,26 @@ SuperBomberman.player_setup.prototype.update = function()
         //COLLISIONS
         this.game.physics.arcade.collide(this,this.level.exteriorWalls);  
         this.game.physics.arcade.collide(this,this.level.interiorWalls, this.truncPlayerPos, null, this.level);
-        this.game.physics.arcade.overlap(this, this.level.enemies, this.enemyCollision, null, this.level);
-        this.game.physics.arcade.overlap(this, this.level.explosion, this.enemyCollision, null, this.level);
+        this.game.physics.arcade.overlap(this, this.level.enemies, this.playerDied, null, this.level);
         this.game.physics.arcade.collide(this, this.level.destroyableWallsGroup);
         this.CheckGoNextLevel();
 
         //INPUTS , ANIMATIONS & MOVEMENT
-        if (cursors.up.isDown)
+        if (cursors.up.isDown && !this.playerded)
         {
             this.direction = -1;
             this.body.velocity.x = 0;
             this.animations.play('walkUp');
             this.body.velocity.y = this.speed*  this.direction;
         }
-        else if (cursors.down.isDown)
+        else if (cursors.down.isDown && !this.playerded)
         {
             this.direction = 1;
             this.body.velocity.x = 0;
             this.animations.play('walkDown');
             this.body.velocity.y = this.speed*  this.direction;
         }	
-        else if (cursors.left.isDown)
+        else if (cursors.left.isDown && !this.playerded)
         {
             if(this.scale.x > 0) this.scale.x *= -1;
             this.direction = -1;
@@ -96,7 +95,7 @@ SuperBomberman.player_setup.prototype.update = function()
             this.animations.play('walkRight');
             this.body.velocity.x = this.speed*  this.direction;
         } 
-        else if (cursors.right.isDown)
+        else if (cursors.right.isDown && !this.playerded)
         {
             if(this.scale.x < 0) this.scale.x *= -1;
             this.direction = 1;
@@ -104,7 +103,7 @@ SuperBomberman.player_setup.prototype.update = function()
             this.animations.play('walkRight');
             this.body.velocity.x = this.speed*  this.direction;
         }
-        else
+        else if (!this.playerded)
         {
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
@@ -164,16 +163,28 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
     }
 }
 
-SuperBomberman.player_setup.prototype.enemyCollision = function(_player, _enemy)
+
+SuperBomberman.player_setup.prototype.AnimationDeath = function(_player)
+{
+    _player.playerded = false;
+    _player.reset(_player.initialPosX, _player.initialPosY)
+}
+
+
+SuperBomberman.player_setup.prototype.playerDied = function(_player)
 {
     if(!_player.inmortal)
     {
          _player.deathSound.play();
+        _player.body.velocity.x = 0;
+        _player.body.velocity.y = 0;
         _player.timeWhenKilled = _player.time;
         _player.health--;
-        _player.body.position.x = _player.initialPosX;
-        _player.body.position.y = _player.initialPosY;
         _player.inmortal = true;
+        _player.playerded = true;
+        _player.animations.currentAnim.stop()
+        _player.animations.play('death')
+         
     }
 }
 
@@ -194,19 +205,4 @@ SuperBomberman.player_setup.prototype.manageUpgrades = function(type)
 
 SuperBomberman.player_setup.prototype.truncPlayerPos = function(_player, _wall)
 {
-{
-   /*if(_player.body.position.x != 0)
-    {
-        var positionPlayerY = Math.trunc((_player.position.y /16)-3)
-        var positionYworld = positionPlayerY * 16 + gameOptions.gameOffsetTop * 16
-        _player.body.position.y = positionYworld;
-        
-    }
-    else if(_player.body.velocity.y != 0)
-    {
-        var positionPlayerX = Math.trunc((_player.position.x /16)-2)
-        var positionXworld = positionPlayerX * 16 + gameOptions.gameOffsetLeft * 16
-        _player.body.position.x = positionXworld;
-    }*/
-}
 }

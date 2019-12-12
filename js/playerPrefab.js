@@ -35,6 +35,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.score = 0;
     this.deathSound = _level.game.add.audio('playerDeath');
     this.walkSound = _level.game.add.audio('walk', 1, true);
+    this.stageComplete = _level.game.add.audio('stageComplete');
     this.playerded = false;
     //INPUTS
     spaceK = _game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -136,7 +137,9 @@ SuperBomberman.player_setup.prototype.update = function()
 
 SuperBomberman.player_setup.prototype.CheckGoNextLevel = function(){
     if(Math.trunc(Math.sqrt(Math.pow((this.body.position.x - SuperBomberman.level1.goalPosition.x),2) + Math.pow((this.body.position.y - SuperBomberman.level1.goalPosition.y),2))) < 4 && Utils.prototype.CheckAllEnemiesDied()){
-        console.log("Entra a la sortida");
+        if(!this.stageComplete.isPlaying)
+            this.stageComplete.play();
+        SuperBomberman.level1.levelMusic.stop();
     }
 }
 
@@ -176,7 +179,6 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
 
 SuperBomberman.player_setup.prototype.AnimationDeath = function(_player)
 {
-    this.walkSound.stop()
     _player.playerded = false;
     _player.reset(_player.initialPosX, _player.initialPosY,_player.health)
 }
@@ -186,7 +188,8 @@ SuperBomberman.player_setup.prototype.playerDied = function(_player)
 {
     if(!_player.inmortal)
     {
-         _player.deathSound.play();
+        _player.walkSound.stop();
+        _player.deathSound.play();
         _player.body.velocity.x = 0;
         _player.body.velocity.y = 0;
         _player.timeWhenKilled = _player.time;

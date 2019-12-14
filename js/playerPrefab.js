@@ -35,6 +35,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     this.score = 0;
     this.deathSound = _level.game.add.audio('playerDeath');
     this.walkSound = _level.game.add.audio('walk', 1, true);
+    this.stageComplete = _level.game.add.audio('stageComplete');
     this.playerded = false;
     //INPUTS
     spaceK = _game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -46,6 +47,7 @@ SuperBomberman.player_setup = function(_game, _x, _y, _type, _level)
     
     deathAnimation.onComplete.add(this.AnimationDeath,this); 
     this.body.setSize(10,10,3,13);
+    this.rowOffset = 1;
     
     this.timer.start();
     //this.body.setSize(16,16,0,9);
@@ -56,7 +58,6 @@ SuperBomberman.player_setup.prototype.constructor = SuperBomberman.player_setup;
 
 SuperBomberman.player_setup.prototype.update = function()
 {
-    
     this.time = this.game.time.totalElapsedSeconds();
     if(this.time - this.timeWhenKilled > 5)
     {
@@ -74,50 +75,35 @@ SuperBomberman.player_setup.prototype.update = function()
         this.CheckGoNextLevel();
 
         //INPUTS , ANIMATIONS & MOVEMENT
-        if (cursors.up.isDown && !this.playerded)
-        {
-            if(!this.walkSound.isPlaying)
-                this.walkSound.play();
-            this.direction = -1;
-            this.body.velocity.x = 0;
-            this.animations.play('walkUp');
-            this.body.velocity.y = this.speed*  this.direction;
-        }
-        else if (cursors.down.isDown && !this.playerded)
-        {
-            if(!this.walkSound.isPlaying)
-                this.walkSound.play();
-            this.direction = 1;
-            this.body.velocity.x = 0;
-            this.animations.play('walkDown');
-            this.body.velocity.y = this.speed*  this.direction;
-        }	
-        else if (cursors.left.isDown && !this.playerded)
-        {
-            if(!this.walkSound.isPlaying)
-                this.walkSound.play();
-            if(this.scale.x > 0) this.scale.x *= -1;
-            this.direction = -1;
-            this.body.velocity.y = 0;
-            this.animations.play('walkRight');
-            this.body.velocity.x = this.speed*  this.direction;
-        } 
-        else if (cursors.right.isDown && !this.playerded)
-        {
-            if(!this.walkSound.isPlaying)
-                this.walkSound.play();
-            if(this.scale.x < 0) this.scale.x *= -1;
-            this.direction = 1;
-            this.body.velocity.y = 0;
-            this.animations.play('walkRight');
-            this.body.velocity.x = this.speed*  this.direction;
-        }
-        else if (!this.playerded)
-        {
-            this.walkSound.stop()
-            this.body.velocity.x = 0;
-            this.body.velocity.y = 0;
-            this.frame = 7;
+        if(!this.playerded){
+            
+            if (cursors.up.isDown)
+            {
+                if(!this.CheckPlayerRowVertical())
+                    this.UpMovePlayer();
+            }
+            else if (cursors.down.isDown)
+            {
+                if(!this.CheckPlayerRowVertical())
+                    this.DownMovePlayer();
+            }	
+            else if (cursors.left.isDown)
+            {
+                if(!this.CheckPlayerRowHorizontal())
+                    this.LeftMovePlayer();
+            } 
+            else if (cursors.right.isDown)
+            {
+                if(!this.CheckPlayerRowHorizontal())
+                    this.RightMovePlayer();
+            }
+            else
+            {
+                this.walkSound.stop()
+                this.body.velocity.x = 0;
+                this.body.velocity.y = 0;
+                this.frame = 7;
+            }
         }
 
         if(spaceK.isDown && this.bombs < this.maxBombs && spaceK.downDuration(1))
@@ -134,9 +120,85 @@ SuperBomberman.player_setup.prototype.update = function()
     }
 }
 
+SuperBomberman.player_setup.prototype.UpMovePlayer = function(){
+    
+    if(!this.walkSound.isPlaying)
+        this.walkSound.play();
+    
+    this.direction = -1;
+    this.body.velocity.x = 0;
+    this.animations.play('walkUp');
+    this.body.velocity.y = this.speed * this.direction;
+}
+
+SuperBomberman.player_setup.prototype.DownMovePlayer = function(){
+    
+    if(!this.walkSound.isPlaying)
+        this.walkSound.play();
+    
+    this.direction = 1;
+    this.body.velocity.x = 0;
+    this.animations.play('walkDown');
+    this.body.velocity.y = this.speed * this.direction;
+}
+
+SuperBomberman.player_setup.prototype.LeftMovePlayer = function(){
+    
+    if(!this.walkSound.isPlaying)
+        this.walkSound.play();
+    
+    this.scale.x = -1;
+    this.direction = -1;
+    this.body.velocity.y = 0;
+    this.animations.play('walkRight');
+    this.body.velocity.x = this.speed *  this.direction;
+}
+
+SuperBomberman.player_setup.prototype.RightMovePlayer = function(){
+    
+    if(!this.walkSound.isPlaying)
+        this.walkSound.play();
+    
+    this.scale.x = 1;
+    this.direction = 1;
+    this.body.velocity.y = 0;
+    this.animations.play('walkRight');
+    this.body.velocity.x = this.speed * this.direction;
+}
+
+SuperBomberman.player_setup.prototype.CheckPlayerRowVertical = function(){
+    if(((this.body.position.x + 5 + 8) % 16) <= 8 && ((this.body.position.x + 5 + 8) % 16) >= this.rowOffset)
+    {
+        this.LeftMovePlayer();
+        return true;
+    }
+    else if(((this.body.position.x + 5 + 8) % 16) > 8 && ((this.body.position.x + 5 + 8) % 16) <= (16 - this.rowOffset))
+    {
+        this.RightMovePlayer();
+        return true;
+    }
+    return false;
+}
+
+SuperBomberman.player_setup.prototype.CheckPlayerRowHorizontal = function(){
+    if(((this.body.position.y + 5 + 8) % 16) <= 8 && ((this.body.position.y + 5 + 8) % 16) >= this.rowOffset)
+    {
+        this.UpMovePlayer();
+        return true;
+    }
+    else if(((this.body.position.y + 5 + 8) % 16) > 8 && ((this.body.position.y + 5 + 8) % 16) <= (16 - this.rowOffset))
+    {
+        this.DownMovePlayer();
+        return true;
+    }
+    return false;
+}
+
 SuperBomberman.player_setup.prototype.CheckGoNextLevel = function(){
     if(Math.trunc(Math.sqrt(Math.pow((this.body.position.x - SuperBomberman.level1.goalPosition.x),2) + Math.pow((this.body.position.y - SuperBomberman.level1.goalPosition.y),2))) < 4 && Utils.prototype.CheckAllEnemiesDied()){
-        console.log("Entra a la sortida");
+        if(!this.stageComplete.isPlaying)
+            this.stageComplete.play();
+        SuperBomberman.level1.levelMusic.stop();
     }
 }
 
@@ -176,7 +238,6 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
 
 SuperBomberman.player_setup.prototype.AnimationDeath = function(_player)
 {
-    this.walkSound.stop()
     _player.playerded = false;
     _player.reset(_player.initialPosX, _player.initialPosY,_player.health)
 }
@@ -186,7 +247,8 @@ SuperBomberman.player_setup.prototype.playerDied = function(_player)
 {
     if(!_player.inmortal)
     {
-         _player.deathSound.play();
+        _player.walkSound.stop();
+        _player.deathSound.play();
         _player.body.velocity.x = 0;
         _player.body.velocity.y = 0;
         _player.timeWhenKilled = _player.time;
@@ -216,4 +278,5 @@ SuperBomberman.player_setup.prototype.manageUpgrades = function(type)
 
 SuperBomberman.player_setup.prototype.truncPlayerPos = function(_player, _wall)
 {
+    
 }

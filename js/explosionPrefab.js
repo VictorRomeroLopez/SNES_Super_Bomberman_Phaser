@@ -59,16 +59,14 @@ SuperBomberman.explosionPrefab.prototype.update = function()
 
 SuperBomberman.explosionPrefab.prototype.enemyCollision = function(_explosion, _enemy)
 {
-    if(!_enemy.invulnerability) 
-        _enemy.health--;
     
-    if(_enemy.health <=0) {
-        SuperBomberman.level1.player.score += _enemy.score;
-        _enemy.deathSound.play();
-        _enemy.kill();
-    }
-    else
-        _enemy.invulnerability = true;
+    if(!_enemy.invulnerability) 
+        {
+            _enemy.health--;
+            _enemy.invulnerability = true;
+            _enemy.damaged = true;
+            _enemy.timeWhenDamaged = _enemy.time;
+        }
 }
 
 SuperBomberman.explosionPrefab.prototype.bombCollision = function(_explosion, _bomb)

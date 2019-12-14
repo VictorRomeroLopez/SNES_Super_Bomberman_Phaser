@@ -69,6 +69,9 @@ SuperBomberman.level1 = {
             this.load.image('hudBG', 'assets/HUD/background.png');
             this.load.spritesheet('hudClock', '/assets/HUD/clock.png', 15, 22);
             this.load.spritesheet('hudNumbers', '/assets/HUD/numbers.png', 8, 12);
+            this.load.image('score100', 'assets/HUD/100Score.png', 24,16);
+            this.load.image('score200', 'assets/HUD/200Score.png', 27,16);
+            this.load.image('score400', 'assets/HUD/400Score.png', 27,16);
         }
         
         //---region AUDIO---//
@@ -81,8 +84,7 @@ SuperBomberman.level1 = {
             this.load.audio('enemyDeath', 'assets/Music/EnemyDeath.wav');
             this.load.audio('powerUp', 'assets/Music/PosiblePowerUp.wav');
             this.load.audio('startLevel', 'assets/Music/Start.mp3');
-            this.load.audio('dropBomb', 'assets/Music/SFX_drop_bomb.wav')
-            this.load.audio('walk', 'assets/Music/SFX_walk.wav')
+            this.load.audio('walk', 'assets/Music/Walk.wav');
         }
     },
     

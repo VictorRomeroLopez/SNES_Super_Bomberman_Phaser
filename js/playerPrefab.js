@@ -106,7 +106,7 @@ SuperBomberman.player_setup.prototype.update = function()
             }
         }
 
-        if(spaceK.isDown && this.bombs < this.maxBombs && spaceK.downDuration(1))
+        if(spaceK.isDown && this.bombs < this.maxBombs && spaceK.downDuration(1) && !this.playerded)
         {
             this.DropBomb();
             this.bombs++;

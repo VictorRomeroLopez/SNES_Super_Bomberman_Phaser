@@ -11,6 +11,7 @@ SuperBomberman.mainMenu =
             var ruta = 'assets/';
            this.load.audio('mainMenuMusic','/assets/Music/MainMenuMusic.mp3'); 
             this.load.audio('start','/assets/Music/ButtonStart.wav');
+            this.load.video('startAnim','/assets/Video/animStartMainMenu.mp4');
             this.load.image('bg1',ruta+'MainMenuNoButtons.png');
             this.load.image('btnSTRT',ruta+'ButtonStart.png');
             this.load.image('btnRanking', '/assets/HUD/rankingButton.png');
@@ -18,6 +19,8 @@ SuperBomberman.mainMenu =
         },
         create:function()
         {
+            this.animStart = this.game.add.video('startAnim');
+            
             this.backgroundMusic = this.game.add.audio('mainMenuMusic');
             this.startMusic = this.game.add.audio('start');
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -32,7 +35,8 @@ SuperBomberman.mainMenu =
             this.rankingButton.anchor.setTo(.5);
             this.rankingButton.scale.setTo(1.5);
             
-
+            this.animStart.play();
+            this.animStart.addToWorld();
         },
         update:function()
         {

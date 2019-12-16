@@ -25,11 +25,13 @@ SuperBomberman.mainMenu =
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.scale.pageAlignHorizontally = true;
             this.backgroundMusic.play();
-            this.backgroundMusic.loop = (true);
+            this.backgroundMusic.loop = true;
             this.animStart.addToWorld(this.game.world.centerX, this.game.world.centerY, 0.5, 0.5, 0.3, 0.3);
             this.animStart.play(true);
+            this.animStart.mute = true;
             this.animStart.loop = false;
             this.animStart.onComplete.add(this.animationComplete, this);
+            
             
         },
         update:function()
@@ -64,5 +66,7 @@ SuperBomberman.mainMenu =
             this.rankingButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY + 80, 'btnRanking', this.showRanking, this);
             this.rankingButton.anchor.setTo(.5);
             this.rankingButton.scale.setTo(1.5);
+            
+            
         }
 };

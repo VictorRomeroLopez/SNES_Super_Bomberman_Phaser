@@ -11,6 +11,7 @@ SuperBomberman.mainMenu =
             var ruta = 'assets/';
            this.load.audio('mainMenuMusic','/assets/Music/MainMenuMusic.mp3'); 
             this.load.audio('start','/assets/Music/ButtonStart.wav');
+            this.load.video('startAnim','/assets/Video/animStartMainMenu.webm');
             this.load.image('bg1',ruta+'MainMenuNoButtons.png');
             this.load.image('btnSTRT',ruta+'ButtonStart.png');
             this.load.image('btnRanking', '/assets/HUD/rankingButton.png');
@@ -18,25 +19,24 @@ SuperBomberman.mainMenu =
         },
         create:function()
         {
+            this.animStart = this.game.add.video('startAnim');
             this.backgroundMusic = this.game.add.audio('mainMenuMusic');
             this.startMusic = this.game.add.audio('start');
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.scale.pageAlignHorizontally = true;
-            this.bg1 =this.game.add.tileSprite(0,0,256,224,'bg1');
             this.backgroundMusic.play();
-            this.backgroundMusic.loop = (true);
-            this.button = this.game.add.button(this.game.world.centerX,this.game.world.centerY + 60,'btnSTRT',this.iniciaJuego,this);
-            this.button.anchor.setTo(.5);
-            this.button.scale.setTo(1.5);
-            this.rankingButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY + 80, 'btnRanking', this.showRanking, this);
-            this.rankingButton.anchor.setTo(.5);
-            this.rankingButton.scale.setTo(1.5);
+            this.backgroundMusic.loop = true;
+            this.animStart.addToWorld(this.game.world.centerX, this.game.world.centerY, 0.5, 0.5, 0.3, 0.3);
+            this.animStart.play(true);
+            this.animStart.mute = true;
+            this.animStart.loop = false;
+            this.animStart.onComplete.add(this.animationComplete, this);
             
-
+            
         },
         update:function()
         {
-
+            
         },
         iniciaJuego:function()
         {
@@ -54,5 +54,19 @@ SuperBomberman.mainMenu =
                 this.backgroundMusic.stop();
                 SuperBomberman.game.state.start('rankingMenu');
             }
+        },
+        animationComplete:function(_video)
+        {
+            _video.destroy();
+            this.game.camera.flash(0xffffff, 500);
+            this.bg1 =this.game.add.tileSprite(0,0,276,256,'bg1');
+            this.button = this.game.add.button(this.game.world.centerX,this.game.world.centerY + 60,'btnSTRT',this.iniciaJuego,this);
+            this.button.anchor.setTo(.5);
+            this.button.scale.setTo(1.5);
+            this.rankingButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY + 80, 'btnRanking', this.showRanking, this);
+            this.rankingButton.anchor.setTo(.5);
+            this.rankingButton.scale.setTo(1.5);
+            
+            
         }
 };

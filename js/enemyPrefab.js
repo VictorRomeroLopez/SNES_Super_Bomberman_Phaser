@@ -5,6 +5,13 @@ SuperBomberman.enemy_prefab = function(_x, _y, _type)
     this.posx = (3 * 16 + _x * 16 - 8);
     this.posy = (4 * 16 + _y * 16 - 8);
     this.deathSound = SuperBomberman.level1.game.add.audio('enemyDeath');
+    this.damaged = false;
+    this.time = 0;
+    this.timeWhenDamaged =0;
+    this.timer = SuperBomberman.level1.game.time.create(false);
+    this.timer.loop(50, this.ChangeTint, this, null)
+    
+    this.type = _type;
     
     if(_type == 1)
     {
@@ -40,6 +47,8 @@ SuperBomberman.enemy_prefab = function(_x, _y, _type)
     this.goingY = false;
     this.direction = -1;
     this.invulnerability = false;
+    
+    this.timer.start();
 };
 
 SuperBomberman.enemy_prefab.prototype = Object.create(Phaser.Sprite.prototype);
@@ -47,7 +56,20 @@ SuperBomberman.enemy_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 SuperBomberman.enemy_prefab.prototype.constructor = SuperBomberman.enemy_prefab;
 
 SuperBomberman.enemy_prefab.prototype.update = function(){
-    if(!SuperBomberman.level1.gameOverBool)
+    
+    this.time = this.game.time.totalElapsedSeconds();
+    if(this.time - this.timeWhenDamaged > 1 && this.damaged)
+    {
+        this.damaged = false;
+        this.tint = 0xffffff;
+        if(this.health <=0) {
+        SuperBomberman.level1.player.score += this.score;
+        this.deathSound.play();
+        new SuperBomberman.score_image_prefab(this.body.position.x, this.body.position.y, this.score, this.time)
+        this.kill();
+        }
+    }
+    if(!SuperBomberman.level1.gameOverBool && this.health > 0)
     {
     
         this.game.physics.arcade.collide(this, SuperBomberman.level1.exteriorWalls);
@@ -115,3 +137,14 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
         this.body.velocity.y = 0;
     }
 };
+
+SuperBomberman.enemy_prefab.prototype.ChangeTint = function()
+{
+    if(this.damaged)
+    {
+        if(this.tint == 0xffffff)
+            this.tint = 0x000000;
+        else
+            this.tint = 0xffffff;
+    }
+}

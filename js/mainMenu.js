@@ -28,7 +28,7 @@ SuperBomberman.mainMenu =
             this.backgroundMusic.play();
             this.backgroundMusic.loop = true;
             this.animStart.addToWorld(this.game.world.centerX, this.game.world.centerY, 0.5, 0.5, 0.3, 0.3);
-            this.animStart.onComplete.add(this.animationComplete, this);
+           this.animStart.mute = true; this.animStart.onComplete.add(this.animationComplete, this);
             
             
         },
@@ -37,7 +37,7 @@ SuperBomberman.mainMenu =
             if(this.animationNotEnded)
             {
                 this.animStart.play(true);
-                this.animStart.mute = true;
+                
                 this.animStart.loop = false;
             }
         },

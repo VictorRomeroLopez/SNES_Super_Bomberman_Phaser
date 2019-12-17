@@ -19,6 +19,7 @@ SuperBomberman.mainMenu =
         },
         create:function()
         {
+            this.animationNotEnded = true;
             this.animStart = this.game.add.video('startAnim');
             this.backgroundMusic = this.game.add.audio('mainMenuMusic');
             this.startMusic = this.game.add.audio('start');
@@ -27,16 +28,18 @@ SuperBomberman.mainMenu =
             this.backgroundMusic.play();
             this.backgroundMusic.loop = true;
             this.animStart.addToWorld(this.game.world.centerX, this.game.world.centerY, 0.5, 0.5, 0.3, 0.3);
-            this.animStart.play(true);
-            this.animStart.mute = true;
-            this.animStart.loop = false;
             this.animStart.onComplete.add(this.animationComplete, this);
             
             
         },
         update:function()
         {
-            
+            if(this.animationNotEnded)
+            {
+                this.animStart.play(true);
+                this.animStart.mute = true;
+                this.animStart.loop = false;
+            }
         },
         iniciaJuego:function()
         {
@@ -57,7 +60,7 @@ SuperBomberman.mainMenu =
         },
         animationComplete:function(_video)
         {
-            _video.destroy();
+            this.animationNotEnded = false;
             this.game.camera.flash(0xffffff, 500);
             this.bg1 =this.game.add.tileSprite(0,0,276,256,'bg1');
             this.button = this.game.add.button(this.game.world.centerX,this.game.world.centerY + 60,'btnSTRT',this.iniciaJuego,this);

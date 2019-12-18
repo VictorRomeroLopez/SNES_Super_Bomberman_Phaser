@@ -75,6 +75,7 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
         this.game.physics.arcade.collide(this, SuperBomberman.level1.exteriorWalls);
         this.game.physics.arcade.collide(this, SuperBomberman.level1.interiorWalls);
         this.game.physics.arcade.collide(this, SuperBomberman.level1.destroyableWallsGroup);
+        this.game.physics.arcade.collide(this, SuperBomberman.level1.player.bombsGroup);
 
 
         if(this.body.touching.left || this.body.touching.right || this.body.blocked.left || this.body.blocked.right) 
@@ -87,8 +88,6 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
                 else
                     {
                         this.direction *=-1;
-                        if(this.direction == -1) this.scale.x = 1;
-                        else this.scale.x = -1;
                         this.body.velocity.x = this.speed*  this.direction;
                     }
             }
@@ -97,8 +96,6 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
                 if(Phaser.Math.between(1, 10) >= 8)
                     {
                         this.goingY = false;
-                        if(this.direction == -1) this.scale.x = 1;
-                        else this.scale.x = -1;
                         this.body.velocity.x = this.speed*  this.direction;
                     }
                 else
@@ -112,6 +109,10 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
             {
                 this.body.velocity.x = this.speed*  this.direction;
                 this.body.velocity.y = 0;
+                if(this.body.velocity.x >0) 
+                    this.scale.x = -1;
+                else
+                    this.scale.x = 1;
             }
         else
             {
@@ -147,4 +148,4 @@ SuperBomberman.enemy_prefab.prototype.ChangeTint = function()
         else
             this.tint = 0xffffff;
     }
-}
+};

@@ -15,6 +15,7 @@ SuperBomberman.mainMenu =
             this.load.image('bg1',ruta+'MainMenuNoButtons.png');
             this.load.image('btnSTRT',ruta+'ButtonStart.png');
             this.load.image('btnRanking', '/assets/HUD/rankingButton.png');
+            this.load.image('arrow', '/assets/HUD/arrow.png');
             
         },
         create:function()
@@ -28,9 +29,14 @@ SuperBomberman.mainMenu =
             this.backgroundMusic.play();
             this.backgroundMusic.loop = true;
             this.animStart.addToWorld(this.game.world.centerX, this.game.world.centerY, 0.5, 0.5, 0.3, 0.3);
-           this.animStart.mute = true; this.animStart.onComplete.add(this.animationComplete, this);
-            
-            
+            this.animStart.mute = true; this.animStart.onComplete.add(this.animationComplete, this);
+           
+            cursors = this.game.input.keyboard.createCursorKeys();
+            enterK = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+
+            this.upPos = true;
+            this.downPos = false;
+                        
         },
         update:function()
         {
@@ -40,9 +46,46 @@ SuperBomberman.mainMenu =
                 
                 this.animStart.loop = false;
             }
+            else
+            {
+                if (cursors.up.isDown )
+                {
+                    console.log("UP");
+                    if(this.arrow.position.y > this.posY)
+                    {
+                        console.log("SI");
+                        this.arrow.position.x = this.game.world.centerX - 100;
+                        this.arrow.position.y = this.posY - 10;
+                        this.upPos = true;
+                        this.downPos = false;
+                    }
+                } 
+            else if (cursors.down.isDown )
+                {
+                    console.log("DOWN");
+                    if(this.arrow.position.y < this.posY){
+                        console.log("SI");
+                        this.arrow.position.x = this.game.world.centerX - 70;
+                        this.arrow.position.y = this.posY + 10;
+                        this.upPos = false;
+                        this.downPos = true;
+                    }
+                }
+            else if(enterK.isDown)
+                {
+                    if(this.upPos)
+                        {
+                            this.iniciaJuego();
+                        }
+                    else
+                        this.showRanking();
+                }
+            }
         },
         iniciaJuego:function()
         {
+            this.rankingButton.kill();
+            this.arrow.kill();
             this.gameStarted = true;
             this.backgroundMusic.stop();
             this.startMusic.play();
@@ -63,13 +106,18 @@ SuperBomberman.mainMenu =
             this.animationNotEnded = false;
             this.game.camera.flash(0xffffff, 500);
             this.bg1 =this.game.add.tileSprite(0,0,276,256,'bg1');
-            this.button = this.game.add.button(this.game.world.centerX,this.game.world.centerY + 60,'btnSTRT',this.iniciaJuego,this);
+            this.button = this.game.add.image(this.game.world.centerX,this.game.world.centerY + 60,'btnSTRT');
             this.button.anchor.setTo(.5);
             this.button.scale.setTo(1.5);
-            this.rankingButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY + 80, 'btnRanking', this.showRanking, this);
+            this.rankingButton = this.game.add.image(this.game.world.centerX, this.game.world.centerY + 80, 'btnRanking');
             this.rankingButton.anchor.setTo(.5);
             this.rankingButton.scale.setTo(1.5);
             
+            this.posX = gameOptions.gameWidth/2;
+            this.posY = this.game.world.centerY + 70;
+            
+            this.arrow = this.game.add.image(this.game.world.centerX - 100, this.game.world.centerY + 60, 'arrow');
+            this.arrow.anchor.setTo(.5);
             
         }
 };

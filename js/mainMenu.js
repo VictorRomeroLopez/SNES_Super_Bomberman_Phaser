@@ -89,16 +89,14 @@ SuperBomberman.mainMenu =
             this.gameStarted = true;
             this.backgroundMusic.stop();
             this.startMusic.play();
-            this.animacionStart =this.game.add.tween(this.button).to({y:this.game.world.centerY +80},2000,Phaser.Easing.Quadratic.Out,true);
-            this.animacionStart.onComplete.add(function(){  this.state.start('level1');},this);
-            //this.state.start('main');
+            this.state.start('level1');
         },
         showRanking:function()
         {
             if(!this.gameStarted)
             {
                 this.backgroundMusic.stop();
-                SuperBomberman.game.state.start('rankingMenu');
+                this.state.start('rankingMenu');
             }
         },
         animationComplete:function(_video)

@@ -73,6 +73,13 @@ SuperBomberman.level1 = {
             this.load.image('score200', 'assets/HUD/200Score.png', 27,16);
             this.load.image('score400', 'assets/HUD/400Score.png', 27,16);
         }
+        //---region ANIMATION START LEVEL---//
+        {
+            this.load.image('bg', 'assets/MainMenuNoButtons.png');
+            this.load.image('level1Start', levelsFolder + 'Level1-1START.png');
+            this.load.image('level2Start', levelsFolder + 'Level1-2START.png');
+            this.load.image('level3Start', levelsFolder + 'Level1-3START.png');
+        }
         
         //---region AUDIO---//
         {
@@ -94,6 +101,11 @@ SuperBomberman.level1 = {
     {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         console.log("create");
+
+        //this.animationSprite = this.game.add.image(this.game.world.centerX,this.game.world.centerY,'hudBG');
+
+       
+        
         //---region ADD_IMAGES_TO_TILEMAP---//
         {
             this.map = this.game.add.tilemap('level1')
@@ -124,23 +136,10 @@ SuperBomberman.level1 = {
         
         //--region CREATE_PLAYER--//
         {
-            this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*4-8, 1, this);
         }
         
         //--region ENEMIES--//
-        {
-            this.enemies = this.add.group();
-            this.enemies.enableBody = true;
-            this.game.physics.arcade.enable(this.enemies);
-            
-            EnemiesGenerator.prototype.InstantiateEnemies()
-                        
-            for(var i =0; i < this.enemies.length; i++)
-            {
-                this.enemies.getChildAt(i).body.setSize(16,16,0,8);
-            }
-                
-        }
+        
         
         //--refion HUD--//
         {
@@ -150,7 +149,6 @@ SuperBomberman.level1 = {
             this.hudClock.animations.add('tictac', [0,1,2,3,4,5,6,7], 10, true);
             this.hudClock.animations.play('tictac');
             this.hpNumber = this.game.add.sprite(32, 18, 'hudNumbers');
-            this.hpNumber.frame = this.player.health;
             this.hudScore = this.add.group();
             
             for(var i = 0; i < 8; i++)
@@ -161,18 +159,33 @@ SuperBomberman.level1 = {
             }
             
             this.hudScore.getChildAt(0).alpha = 1;
-            this.updateHUDScore();
             this.graphics = this.game.add.graphics(100, 100);
 
         }
         
+        this.bganimationSprite = this.game.add.tileSprite(0,0,276,256,'bg');
+         switch(actualLevel){
+                case 1:
+                    this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level1Start');
+                    
+                    break;
+                case 2:
+                    this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level2Start');
+                    break;
+                case 3:
+                    this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level3Start');
+                    break;
+            }
+        
+        
+        this.bganimationSprite.tint = 0x000000;
+            
         this.goalPosition = new Phaser.Point(0,0);
         Utils.prototype.PrintLayoutNumbers()
         
         this.powerUpsGroup = this.add.group();
         this.gameOverBool = false;
         this.gameOverCalled = false;
-        this.playerScore = this.player.score;
         
         this.levelMusic = this.game.add.audio('level1Music');
         this.levelMusic.loop = true;
@@ -181,15 +194,49 @@ SuperBomberman.level1 = {
         this.gameOverSound = this.game.add.audio('gameOver');
         this.playerDeathSound = this.game.add.audio('playerDeath');
         this.levelStarted = false;
+        this.levelMusic.play()
+        
+        
    },
     update:function()
     {
-        
-        if(!this.startLevelMusic.isPlaying && !this.levelStarted)
+        this.game.debug.body(this.animationSprite);
+        if(!this.levelStarted)
+        {
+            this.animationStart = this.game.add.tween(this.animationSprite).to({x:this.game.world.centerX - 125}, 1000, Phaser.Easing.Quadratic.Out,true);
+            this.animationStart.onComplete.add(
+            function()
             {
-                this.levelMusic.play()
-                this.levelStarted = true;
-            }
+                this.animationStart = this.game.add.tween(this.animationSprite).to({alpha:0}, 2500, 
+                Phaser.Easing.Quadratic.Out,true);
+                this.bganimationStart = this.game.add.tween(this.bganimationSprite).to({alpha:0}, 2500, Phaser.Easing.Quadratic.Out,true);
+                this.bganimationStart.onComplete.add(
+                    
+                function()
+                {
+                    this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*4-8, 1, this);
+                    this.hpNumber.frame = this.player.health;
+                    {
+                        this.enemies = this.add.group();
+                        this.enemies.enableBody = true;
+                        this.game.physics.arcade.enable(this.enemies);
+
+                        EnemiesGenerator.prototype.InstantiateEnemies()
+
+                        for(var i =0; i < this.enemies.length; i++)
+                        {
+                            this.enemies.getChildAt(i).body.setSize(16,16,0,8);
+                        }
+
+                    }
+                    this.playerScore = this.player.score;
+                    this.animationSprite.destroy();
+                    this.bganimationSprite.destroy();
+                    this.game.physics.arcade.collide(this.enemies);
+                    this.levelStarted = true;
+                },this);
+            },this);
+        }
         
         if(this.gameOverBool && !this.gameOverCalled) {
             this.levelMusic.stop();
@@ -231,13 +278,12 @@ SuperBomberman.level1 = {
             this.gameOverCalled = true;
         }
         
-        if(this.game.time.elapsedSecondsSince(this.currentTime) >=10) this.updateHUDTimer();
-        
-        this.game.physics.arcade.collide(this.enemies);
+        if(this.game.time.elapsedSecondsSince(this.currentTime) >=10 && this.levelStarted) this.updateHUDTimer();
         
         
         
-        if(this.playerScore != this.player.score) this.updateHUDScore();
+        if(this.levelStarted)
+            if(this.playerScore != this.player.score) this.updateHUDScore();
     },
 
     updateHUDScore:function()
@@ -262,5 +308,5 @@ SuperBomberman.level1 = {
         this.graphics.drawRect(this.hudeTimerInitX + this.timerCounter * 8,this.hudeTimerInitY, 4, 3);
         this.graphics.endFill();
         this.currentTime = this.game.time.time;
-    }    
+    }
 }

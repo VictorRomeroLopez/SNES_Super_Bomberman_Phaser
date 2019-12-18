@@ -16,6 +16,8 @@ SuperBomberman.rankingMenu =
     },
     create:function()
     {
+        enterK = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        
         this.initX = 30;
         this.initY = 50;
         this.scorePosX = 180;
@@ -26,7 +28,7 @@ SuperBomberman.rankingMenu =
         this.rankingPos = this.add.group();
         this.scores = this.add.group();
         
-        this.backButton = this.game.add.button(gameOptions.gameWidth-65, 180, 'back', this.back, this);
+        this.backButton = this.game.add.image(gameOptions.gameWidth-65, 180, 'back');
         
         for(var i = 0; i<5; i++)
             {
@@ -50,6 +52,13 @@ SuperBomberman.rankingMenu =
                     }
             }
        
+    },
+    update:function()
+    {
+        if(enterK.isDown)
+        {
+            this.back();
+        }
     },
     back:function()
     {

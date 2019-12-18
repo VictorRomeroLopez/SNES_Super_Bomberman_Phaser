@@ -232,7 +232,6 @@ SuperBomberman.level1 = {
                     this.playerScore = this.player.score;
                     this.animationSprite.destroy();
                     this.bganimationSprite.destroy();
-                    this.game.physics.arcade.collide(this.enemies);
                     this.levelStarted = true;
                 },this);
             },this);
@@ -283,7 +282,10 @@ SuperBomberman.level1 = {
         
         
         if(this.levelStarted)
+        {
+            this.game.physics.arcade.collide(this.enemies);
             if(this.playerScore != this.player.score) this.updateHUDScore();
+        }
     },
 
     updateHUDScore:function()

@@ -55,6 +55,7 @@ SuperBomberman.game.state.add('level1', SuperBomberman.level1);
 SuperBomberman.game.state.add('levelProba', SuperBomberman.levelProva);
 SuperBomberman.game.state.add('rankingMenu', SuperBomberman.rankingMenu);
 SuperBomberman.game.state.add('gameOver', SuperBomberman.game_over);
+SuperBomberman.game.state.add('credits', SuperBomberman.creditsScene);
 
 //Array de escenes per no tenir que anar posant en nom a l'escena que volem testejar
 //Posem el comentari al cosat per saber rapidament quin és l'id de l'escena volem carregar
@@ -62,7 +63,8 @@ var scenes = ['main'/*0*/,
               'level1'/*1*/, 
               'levelProba'/*2*/,
               'rankingMenu'/*3*/,
-              'gameOver'/*4*/
+              'gameOver'/*4*/,
+              'credits'/*5*/
              ]
 
 //Aquesta es la escena amb la que inicia el joc

@@ -8,6 +8,7 @@ SuperBomberman.powerUpPrefab = function(_game, _x, _y, _type)
     this.game = _game;
     this.score = 10;
     this.PUsound = SuperBomberman.level1.add.audio('powerUp');
+    this.isExploding = false;
     
     Phaser.Sprite.call(this, _game, this.posx, this.posy, 'bombPU');
     
@@ -36,7 +37,7 @@ SuperBomberman.powerUpPrefab.prototype.powerUpPickup = function(_powerUp, _playe
         _player.manageUpgrades(_powerUp.kind);
         _player.score += _powerUp.score;
         _powerUp.PUsound.play();
-        _powerUp.kill(); 
+        _powerUp.kill();
     }
 }
 
@@ -57,4 +58,14 @@ SuperBomberman.powerUpPrefab.prototype.setAnimationPowerUp = function(){
             break;
     }
     this.animations.play('animation')
+}
+
+SuperBomberman.powerUpPrefab.prototype.burnUpgrade = function(){
+    this.animations.add('burn', [48,49,50,51,52,53,54], 12, false);
+    this.animations.play('burn')
+    this.animations.currentAnim.onComplete.add(this.DestroyThis, this)
+}
+
+SuperBomberman.powerUpPrefab.prototype.DestroyThis = function() {
+    this.kill()
 }

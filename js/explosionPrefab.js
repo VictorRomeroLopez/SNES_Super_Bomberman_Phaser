@@ -104,5 +104,9 @@ SuperBomberman.explosionPrefab.prototype.enemyInvulnerability = function()
 
 SuperBomberman.explosionPrefab.prototype.powerUpCollision = function(_explosion, _powerUp)
 {
-    _powerUp.kill()
+    if(!_powerUp.isExploding){
+        _powerUp.isExploding = true;
+        _powerUp.burnUpgrade();
+        
+    }
 }

@@ -59,6 +59,7 @@ SuperBomberman.level1 = {
         }
         //---region ENEMIES---//
         {
+            this.load.spritesheet('boss','assets/Enemies/World_1/BOSS/boss1.png', 75, 152);
             this.load.spritesheet('tomatoe','assets/Enemies/World_1/Helicopter/helicopter.png', 16, 24);
             this.load.spritesheet('nuez', 'assets/Enemies/World_1/Bunny/bunny.png', 16, 24);
             this.load.spritesheet('ufo', 'assets/Enemies/World_1/UFO/UFO.png', 16, 24);
@@ -214,7 +215,16 @@ SuperBomberman.level1 = {
                     
                 function()
                 {
-                    this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*4-8, 1, this);
+                    if(actualLevel == 3)
+                        {
+                            this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*14-8, 1, this);
+                            this.boss = new SuperBomberman.boss_prefab(this.game, 16*8-8, 16*4-8, this.player);
+                        }
+                    else
+                        {
+                            this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*4-8, 1, this);
+                        }
+
                     this.hpNumber.frame = this.player.health;
                     {
                         this.enemies = this.add.group();

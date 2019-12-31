@@ -77,48 +77,50 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
         this.game.physics.arcade.collide(this, SuperBomberman.level1.destroyableWallsGroup);
         this.game.physics.arcade.collide(this, SuperBomberman.level1.player.bombsGroup);
 
+        if(!this.damaged)
+        {
+            if(this.body.touching.left || this.body.touching.right || this.body.blocked.left || this.body.blocked.right) 
+                {
+                    if(Phaser.Math.between(1, 10) >= 8)
+                        {
+                            this.goingY = true;
+                            this.body.velocity.y = this.speed*  this.direction;
+                        }
+                    else
+                        {
+                            this.direction *=-1;
+                            this.body.velocity.x = this.speed*  this.direction;
+                        }
+                }
+            else if(this.body.touching.up || this.body.touching.down || this.body.blocked.up || this.body.blocked.down) 
+                {
+                    if(Phaser.Math.between(1, 10) >= 8)
+                        {
+                            this.goingY = false;
+                            this.body.velocity.x = this.speed*  this.direction;
+                        }
+                    else
+                        {
+                            this.direction *=-1;
+                            this.body.velocity.y = this.speed*  this.direction;
+                        }
+                }
 
-        if(this.body.touching.left || this.body.touching.right || this.body.blocked.left || this.body.blocked.right) 
-            {
-                if(Phaser.Math.between(1, 10) >= 8)
-                    {
-                        this.goingY = true;
-                        this.body.velocity.y = this.speed*  this.direction;
-                    }
-                else
-                    {
-                        this.direction *=-1;
-                        this.body.velocity.x = this.speed*  this.direction;
-                    }
-            }
-        else if(this.body.touching.up || this.body.touching.down || this.body.blocked.up || this.body.blocked.down) 
-            {
-                if(Phaser.Math.between(1, 10) >= 8)
-                    {
-                        this.goingY = false;
-                        this.body.velocity.x = this.speed*  this.direction;
-                    }
-                else
-                    {
-                        this.direction *=-1;
-                        this.body.velocity.y = this.speed*  this.direction;
-                    }
-            }
-
-        if(!this.goingY)
-            {
-                this.body.velocity.x = this.speed*  this.direction;
-                this.body.velocity.y = 0;
-                if(this.body.velocity.x >0) 
-                    this.scale.x = -1;
-                else
-                    this.scale.x = 1;
-            }
-        else
-            {
-                this.body.velocity.x = 0;
-                this.body.velocity.y = this.speed*  this.direction;
-            }
+            if(!this.goingY)
+                {
+                    this.body.velocity.x = this.speed*  this.direction;
+                    this.body.velocity.y = 0;
+                    if(this.body.velocity.x >0) 
+                        this.scale.x = -1;
+                    else
+                        this.scale.x = 1;
+                }
+            else
+                {
+                    this.body.velocity.x = 0;
+                    this.body.velocity.y = this.speed*  this.direction;
+                }
+        
 
         if(this.body.velocity.x !=0) 
             {
@@ -132,6 +134,12 @@ SuperBomberman.enemy_prefab.prototype.update = function(){
             {
                 this.animations.play('walkDown');
             }
+        }
+        else
+        {
+            this.body.velocity.x =0;
+            this.body.velocity.y = 0;
+        }
     }
     else{
         this.body.velocity.x =0;

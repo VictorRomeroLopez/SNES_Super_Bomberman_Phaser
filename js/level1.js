@@ -215,8 +215,15 @@ SuperBomberman.level1 = {
                     
                 function()
                 {
-                    this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*4-8, 1, this);
-                    this.boss = new SuperBomberman.boss_prefab(this.game, 16*3-8, 16*4-8, this.player);
+                    if(actualLevel == 3)
+                        {
+                            this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*14-8, 1, this);
+                            this.boss = new SuperBomberman.boss_prefab(this.game, 16*8-8, 16*4-8, this.player);
+                        }
+                    else
+                        {
+                            this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*4-8, 1, this);
+                        }
 
                     this.hpNumber.frame = this.player.health;
                     {

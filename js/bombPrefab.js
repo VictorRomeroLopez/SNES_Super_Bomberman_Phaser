@@ -44,7 +44,8 @@ SuperBomberman.bombPrefab.prototype.UpdateBomb = function(newPosX, newPosY, newP
     this.power = newPower;
     this.hasExploded = false;
     
-    this.game.time.events.add(Phaser.Timer.SECOND * this.timeBombToExplode, this.explodeBomb, this);
+    this.game.time.events.remove(this.timerEvent);
+    this.timerEvent = this.game.time.events.add(Phaser.Timer.SECOND * this.timeBombToExplode, this.explodeBomb, this);
 }
 
 SuperBomberman.bombPrefab.prototype.explodeBomb = function(){

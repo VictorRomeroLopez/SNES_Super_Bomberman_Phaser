@@ -40,6 +40,9 @@ SuperBomberman.level1 = {
                 case 3:
                     level = "Ice_town"
                     break;
+                case 4:
+                    level = "Ice_town"
+                    break;
             }
             this.load.image('buildings', levelsFolder + level + ".png");
             this.load.spritesheet('destroyables', levelsFolder + level + "_destroyable.png",16,16);
@@ -105,8 +108,6 @@ SuperBomberman.level1 = {
 
         //this.animationSprite = this.game.add.image(this.game.world.centerX,this.game.world.centerY,'hudBG');
 
-       
-        
         //---region ADD_IMAGES_TO_TILEMAP---//
         {
             this.map = this.game.add.tilemap('level1')
@@ -128,20 +129,15 @@ SuperBomberman.level1 = {
         
         //--region DESTROYABLE_WALLS--//
         {
-            this.destroyableWallsGroup = this.add.group();
-            this.destroyableWallsGroup.enableBody = true;
-            
-            //Randomize destroyable walls positions and instantaite them
-            DestroyableWallsGenerator.prototype.InstantiateDestroyableWalls()            
+            if(actualLevel != 4){
+                this.destroyableWallsGroup = this.add.group();
+                this.destroyableWallsGroup.enableBody = true;
+
+                //Randomize destroyable walls positions and instantaite them
+                DestroyableWallsGenerator.prototype.InstantiateDestroyableWalls()
+            }
         }
-        
-        //--region CREATE_PLAYER--//
-        {
-        }
-        
-        //--region ENEMIES--//
-        
-        
+
         //--refion HUD--//
         {
             
@@ -168,12 +164,14 @@ SuperBomberman.level1 = {
          switch(actualLevel){
                 case 1:
                     this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level1Start');
-                    
                     break;
                 case 2:
                     this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level2Start');
                     break;
                 case 3:
+                    this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level3Start');
+                    break;
+                case 4:
                     this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level3Start');
                     break;
             }
@@ -215,15 +213,15 @@ SuperBomberman.level1 = {
                     
                 function()
                 {
-                    if(actualLevel == 3)
-                        {
-                            this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*14-8, 1, this);
-                            this.boss = new SuperBomberman.boss_prefab(this.game, 16*8-8, 16*4-8, this.player);
-                        }
+                    if(actualLevel == 4)
+                    {
+                        this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*14-8, 1, this);
+                        this.boss = new SuperBomberman.boss_prefab(this.game, 16*8-8, 16*4-8, this.player);
+                    }
                     else
-                        {
-                            this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*4-8, 1, this);
-                        }
+                    {
+                        this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*4-8, 1, this);
+                    }
 
                     this.hpNumber.frame = this.player.health;
                     {

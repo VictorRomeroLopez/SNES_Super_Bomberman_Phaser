@@ -42,6 +42,8 @@ EnemiesGenerator.prototype = {
                     case 3:
                         SuperBomberman.level1.enemies.add(new SuperBomberman.enemy_prefab(posX, posY, (Math.trunc(Math.random()*3)+1)))
                         break;
+                    default:
+                        break;
                 }
                 layoutMap[i] = 0;
             }

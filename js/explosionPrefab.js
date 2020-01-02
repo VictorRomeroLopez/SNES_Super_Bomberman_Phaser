@@ -80,7 +80,7 @@ SuperBomberman.explosionPrefab.prototype.playerCollision = function(_explosion, 
     {
         _player.deathSound.play();
         _player.timeWhenKilled = _player.time;
-        _player.health--;
+        playerStatistics.lifes--;
         _player.body.position.x = _player.initialPosX;
         _player.body.position.y = _player.initialPosY;
         _player.inmortal = true;

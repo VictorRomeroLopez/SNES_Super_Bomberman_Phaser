@@ -65,7 +65,7 @@ SuperBomberman.player_setup.prototype.update = function()
         this.tint = 0xffffff;
     }
     
-    if(this.health > 0)
+    if(playerStatistics.lifes > 0)
     {
         //COLLISIONS
         this.game.physics.arcade.collide(this,this.level.exteriorWalls);
@@ -107,12 +107,12 @@ SuperBomberman.player_setup.prototype.update = function()
             }
         }
 
-        if(spaceK.isDown && this.bombs < this.maxBombs && spaceK.downDuration(1) && !this.playerded)
+        if(spaceK.isDown && this.bombs < playerStatistics.maxBombs && spaceK.downDuration(1) && !this.playerded)
         {
             this.DropBomb();
             this.bombs++;
         }         
-        this.level.hpNumber.frame = this.health;
+        this.level.hpNumber.frame = playerStatistics.lifes;
     }
     else
     {
@@ -129,7 +129,7 @@ SuperBomberman.player_setup.prototype.UpMovePlayer = function(){
     this.direction = -1;
     this.body.velocity.x = 0;
     this.animations.play('walkUp');
-    this.body.velocity.y = this.speed * this.direction;
+    this.body.velocity.y = playerStatistics.speed * this.direction;
 }
 
 SuperBomberman.player_setup.prototype.DownMovePlayer = function(){
@@ -140,7 +140,7 @@ SuperBomberman.player_setup.prototype.DownMovePlayer = function(){
     this.direction = 1;
     this.body.velocity.x = 0;
     this.animations.play('walkDown');
-    this.body.velocity.y = this.speed * this.direction;
+    this.body.velocity.y = playerStatistics.speed * this.direction;
 }
 
 SuperBomberman.player_setup.prototype.LeftMovePlayer = function(){
@@ -152,7 +152,7 @@ SuperBomberman.player_setup.prototype.LeftMovePlayer = function(){
     this.direction = -1;
     this.body.velocity.y = 0;
     this.animations.play('walkRight');
-    this.body.velocity.x = this.speed *  this.direction;
+    this.body.velocity.x = playerStatistics.speed *  this.direction;
 }
 
 SuperBomberman.player_setup.prototype.RightMovePlayer = function(){
@@ -164,7 +164,7 @@ SuperBomberman.player_setup.prototype.RightMovePlayer = function(){
     this.direction = 1;
     this.body.velocity.y = 0;
     this.animations.play('walkRight');
-    this.body.velocity.x = this.speed * this.direction;
+    this.body.velocity.x = playerStatistics.speed * this.direction;
 }
 
 SuperBomberman.player_setup.prototype.CheckPlayerRowVertical = function(){
@@ -228,7 +228,7 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
     
     if(!recicleBomb)
     {
-        recicleBomb = new SuperBomberman.bombPrefab(this.game, positionBombX, positionBombY, this.power, this.level)
+        recicleBomb = new SuperBomberman.bombPrefab(this.game, positionBombX, positionBombY, playerStatistics.power, this.level)
         this.bombsGroup.add(recicleBomb)
     }
     else
@@ -237,7 +237,7 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
         var positionYworld = positionBombY * 16 + gameOptions.gameOffsetTop * 16 - 8
         
         recicleBomb.reset(positionXworld, positionYworld)
-        recicleBomb.UpdateBomb(positionBombX + gameOptions.gameOffsetLeft, positionBombY + gameOptions.gameOffsetTop, this.power);
+        recicleBomb.UpdateBomb(positionBombX + gameOptions.gameOffsetLeft, positionBombY + gameOptions.gameOffsetTop, playerStatistics.power);
     }
 }
 
@@ -245,7 +245,7 @@ SuperBomberman.player_setup.prototype.DropBomb = function()
 SuperBomberman.player_setup.prototype.AnimationDeath = function(_player)
 {
     _player.playerded = false;
-    _player.reset(_player.initialPosX, _player.initialPosY,_player.health)
+    _player.reset(_player.initialPosX, _player.initialPosY,playerStatistics.lifes)
 }
 
 
@@ -258,7 +258,7 @@ SuperBomberman.player_setup.prototype.playerDied = function(_player)
         _player.body.velocity.x = 0;
         _player.body.velocity.y = 0;
         _player.timeWhenKilled = _player.time;
-        _player.health--;
+        playerStatistics.lifes--;
         _player.inmortal = true;
         _player.playerded = true;
         _player.animations.currentAnim.stop()
@@ -271,13 +271,13 @@ SuperBomberman.player_setup.prototype.manageUpgrades = function(type)
 {
     switch(type){
         case gameUpgrades.bomb:
-            this.maxBombs++;
+            playerStatistics.maxBombs++;
             break;
         case gameUpgrades.speed:
-            this.speed += 15;
+            playerStatistics.speed += 15;
             break;
         case gameUpgrades.power:
-            this.power++;
+            playerStatistics.power++;
             break;
     }
 }

@@ -96,6 +96,11 @@ SuperBomberman.mainMenu =
                     if(this.middlePos)
                         {
                             this.iniciaJuego();
+                            actualLevel = 1;
+                            playerStatistics.maxBombs = 1;
+                            playerStatistics.power = 1;
+                            playerStatistics.speed = 50;
+                            playerStatistics.lifes = 5;
                         }
                     else if( this.downPos)
                         this.showRanking();

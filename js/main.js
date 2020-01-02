@@ -15,6 +15,13 @@ var gameUpgrades = {
     goal:3
 }
 
+var playerStatistics = {
+    maxBombs: 1,
+    power: 1,
+    speed: 50,
+    lifes: 5
+}
+
 var gameOptions = {
     //Add generic variables
     gameOffsetLeft:3,

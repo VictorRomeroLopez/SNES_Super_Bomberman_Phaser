@@ -55,6 +55,8 @@ SuperBomberman.explosionPrefab.prototype.update = function()
     this.game.physics.arcade.collide(this, this.level.player.bombsGroup, this.bombCollision);
     this.game.physics.arcade.collide(this, this.level.destroyableWallsGroup, this.destroyableCollisions,null, this);
     this.game.physics.arcade.collide(this, this.level.powerUpsGroup, this.powerUpCollision);
+    this.game.physics.arcade.collide(this, this.level.boss, this.enemyCollision);
+
 };
 
 SuperBomberman.explosionPrefab.prototype.enemyCollision = function(_explosion, _enemy)

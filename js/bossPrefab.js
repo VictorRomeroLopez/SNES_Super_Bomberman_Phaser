@@ -14,7 +14,7 @@ SuperBomberman.boss_prefab = function(_game, _x, _y, _player)
     this.time = 0;
     this.timeWhenDamaged =0;
     this.timer = SuperBomberman.level1.game.time.create(false);
-    this.speed = 30;
+    this.speed = 25;
     this.goingY = false;
     this.direction = -1;
     this.invulnerability = false;
@@ -22,6 +22,7 @@ SuperBomberman.boss_prefab = function(_game, _x, _y, _player)
     this.rowOffset = 1;
     this.timer.start();
     this.health = 5;
+    this.alignedVertical = false;
     this.score = 1000;
     spaceK = _game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.timer.loop(50, this.ChangeTint, this, null)
@@ -37,39 +38,49 @@ SuperBomberman.boss_prefab.prototype.constructor = SuperBomberman.boss_prefab;
 
 SuperBomberman.boss_prefab.prototype.update = function()
 {
-    
+     this.game.debug.body(this); 
     this.time = this.game.time.totalElapsedSeconds();
     if(this.time - this.timeWhenDamaged > 1 && this.damaged)
     {
         this.damaged = false;
+        this.invulnerability = false;
         this.tint = 0xffffff;
         if(this.health <=0) {
         SuperBomberman.level1.player.score += this.score;
-        //this.deathSound.play();
+        new SuperBomberman.score_image_prefab(this.body.position.x, this.body.position.y, this.score, this.time)
         this.BossDead();
         }
     }
     if(!SuperBomberman.level1.gameOverBool && this.health > 0)
     {
-    
+        console.log(this.position.y - this.player.body.y)
         this.game.physics.arcade.collide(this, SuperBomberman.level1.exteriorWalls);
-        this.game.physics.arcade.collide(this, SuperBomberman.level1.player.bombsGroup);
         this.game.physics.arcade.collide(this, this.player, this.KillPlayer,null, this);
 
         if(!this.damaged && !this.attacking)
         {
-            if(this.position.x - this.player.body.x<= 8 && this.position.x - this.player.body.x>= -8)
+            if((this.position.x - this.player.body.x<= 8 && this.position.x - this.player.body.x>= -8) || this.body.blocked.left || this.body.blocked.right)
                 {
                     this.body.velocity.x =0;
+                    if((this.position.y - this.player.body.y < -62) || (this.body.blocked.left && (this.position.y - this.player.body.y < -62)) || (this.body.blocked.right && (this.position.y - this.player.body.y < -62)))
+                        {
+                                this.MoveDown();
+                        }
+                    else if((this.position.y - this.player.body.y > 10) || (this.body.blocked.left && (this.position.y - this.player.body.y > 10)) || (this.body.blocked.right) && (this.position.y - this.player.body.y > 10)) 
+                        {
+                                this.MoveUp();
+                        }
+                    else
+                        {
+                            this.body.velocity.y = 0;
+                        }
                 }
             else if(this.position.x - this.player.body.x< 8) 
                 {
-                    if(!this.CheckRowHorizontal())
                         this.MoveRight();
                 }
             else if(this.position.x - this.player.body.x> 8 ) 
                 {
-                    if(!this.CheckRowHorizontal())
                         this.MoveLeft();
                 }
             if((this.position.x - this.player.body.x <8 && this.position.x - this.player.body.x >-8) && (this.player.body.y > this.position.y && this.player.body.y <= this.position.y + 62))
@@ -85,24 +96,12 @@ SuperBomberman.boss_prefab.prototype.update = function()
             this.body.velocity.x =0;
             this.body.velocity.y = 0;
         }
-        
     }
     else{
         this.body.velocity.x =0;
         this.body.velocity.y = 0;
     }
-    
-    if(spaceK.isDown && spaceK.downDuration(1))
-        {
-            console.log(this.health);
-            if(!this.damaged)
-            {
-                this.timeWhenDamaged = this.time;
-                this.score +=50;
-                this.damaged = true;
-                this.health--;
-            }
-        }   
+      
 }
 SuperBomberman.boss_prefab.prototype.ResetAttack = function(){
     
@@ -185,7 +184,6 @@ SuperBomberman.boss_prefab.prototype.ChangeTint = function()
 {
     if(this.damaged)
     {
-        console.log("CHANGETINT");
         if(this.tint == 0xffffff)
             this.tint = 0x000000;
         else

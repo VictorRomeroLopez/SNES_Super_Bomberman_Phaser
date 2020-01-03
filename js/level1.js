@@ -32,7 +32,7 @@ SuperBomberman.level1 = {
             var level = "";
             switch(actualLevel){
                 case 1:
-                    level = "Pace_town"
+                    level = "Ice_town"
                     break;
                 case 2:
                     level = "Green_village"
@@ -129,7 +129,7 @@ SuperBomberman.level1 = {
         
         //--region DESTROYABLE_WALLS--//
         {
-            if(actualLevel != 4){
+            if(actualLevel != 1){
                 this.destroyableWallsGroup = this.add.group();
                 this.destroyableWallsGroup.enableBody = true;
 
@@ -163,7 +163,7 @@ SuperBomberman.level1 = {
         this.bganimationSprite = this.game.add.tileSprite(0,0,276,256,'bg');
          switch(actualLevel){
                 case 1:
-                    this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level1Start');
+                    this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level3Start');
                     break;
                 case 2:
                     this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level2Start');
@@ -213,7 +213,7 @@ SuperBomberman.level1 = {
                     
                 function()
                 {
-                    if(actualLevel == 4)
+                    if(actualLevel == 1)
                     {
                         this.player = new SuperBomberman.player_setup(this.game, 16*3-8, 16*14-8, 1, this);
                         this.boss = new SuperBomberman.boss_prefab(this.game, 16*8-8, 16*4-8, this.player);

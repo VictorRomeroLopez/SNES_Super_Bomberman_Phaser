@@ -21,6 +21,10 @@ SuperBomberman.boss_prefab = function(_game, _x, _y, _player)
     this.player = _player;
     this.rowOffset = 1;
     this.timer.start();
+    this.health = 5;
+    this.score = 1000;
+    spaceK = _game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.timer.loop(50, this.ChangeTint, this, null)
 
     //GAME
     _game.physics.arcade.enable(this);
@@ -34,16 +38,15 @@ SuperBomberman.boss_prefab.prototype.constructor = SuperBomberman.boss_prefab;
 SuperBomberman.boss_prefab.prototype.update = function()
 {
     
-    this.game.debug.body(this);
     this.time = this.game.time.totalElapsedSeconds();
     if(this.time - this.timeWhenDamaged > 1 && this.damaged)
     {
         this.damaged = false;
+        this.tint = 0xffffff;
         if(this.health <=0) {
         SuperBomberman.level1.player.score += this.score;
-        this.deathSound.play();
-        new SuperBomberman.score_image_prefab(this.body.position.x, this.body.position.y, this.score, this.time)
-        this.kill();
+        //this.deathSound.play();
+        this.BossDead();
         }
     }
     if(!SuperBomberman.level1.gameOverBool && this.health > 0)
@@ -88,7 +91,18 @@ SuperBomberman.boss_prefab.prototype.update = function()
         this.body.velocity.x =0;
         this.body.velocity.y = 0;
     }
-    this.game.debug.body(this);
+    
+    if(spaceK.isDown && spaceK.downDuration(1))
+        {
+            console.log(this.health);
+            if(!this.damaged)
+            {
+                this.timeWhenDamaged = this.time;
+                this.score +=50;
+                this.damaged = true;
+                this.health--;
+            }
+        }   
 }
 SuperBomberman.boss_prefab.prototype.ResetAttack = function(){
     
@@ -124,7 +138,6 @@ SuperBomberman.boss_prefab.prototype.MoveLeft = function()
     this.scale.x = -1;
     this.direction = -1;
     this.body.velocity.y = 0;
-    console.log("WALKINGLEFT");
     this.animations.play('walkRight');
     this.body.velocity.x = this.speed *  this.direction;
 }
@@ -134,7 +147,6 @@ SuperBomberman.boss_prefab.prototype.MoveRight = function()
     this.scale.x = 1;
     this.direction = 1;
     this.body.velocity.y = 0;
-    console.log("WALKINGRIGHT");
     this.animations.play('walkRight');
     this.body.velocity.x = this.speed * this.direction;
 }
@@ -167,4 +179,45 @@ SuperBomberman.boss_prefab.prototype.CheckRowHorizontal = function()
         return true;
     }
     return false;
+};
+
+SuperBomberman.boss_prefab.prototype.ChangeTint = function()
+{
+    if(this.damaged)
+    {
+        console.log("CHANGETINT");
+        if(this.tint == 0xffffff)
+            this.tint = 0x000000;
+        else
+            this.tint = 0xffffff;
+    }
+};
+
+SuperBomberman.boss_prefab.prototype.BossDead = function()
+{
+    var scoreSaved = false;
+    for(var i =0; i<5 && !scoreSaved; i++)
+    {
+        var score = "score"+i;
+        var rankScore = localStorage.getItem(score);
+        if(rankScore != "null")
+        {
+
+            if( rankScore < this.player.score) {
+                for(var j = 4; j>i; j--)
+                {
+                    localStorage.setItem("score"+j, localStorage.getItem("score"+(j-1)))
+                }
+                localStorage.setItem(score, this.player.score);
+                scoreSaved = true;
+            }
+        }
+        else
+        {
+            localStorage.setItem(score, this.player.score);
+            scoreSaved = true;
+        }
+    }
+    
+    SuperBomberman.game.state.start('rankingMenu');
 };

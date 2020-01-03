@@ -36,13 +36,15 @@ SuperBomberman.rankingMenu =
                 this.rankingPos.getChildAt(i).frame = i+1;
                 
                 var actualScore = localStorage.getItem("score"+i);
+                console.log(actualScore);
                 if(actualScore != null && actualScore != "null")
                     {
                         for(var j=0; j<actualScore.length;j++)
                         {
 
                             this.scores.add(this.game.add.sprite(this.scorePosX+ 10 * j, this.scorePosY + 25 * i, 'numbers'));
-                            this.scores.getChildAt(j).frame = parseInt(actualScore[j]);
+                            this.scores.getChildAt(j+(4*i)).frame = parseInt(actualScore[j]);
+                            console.log(this.scores.getChildAt(j).frame);
 
                         }
                     }

@@ -23,7 +23,7 @@ SuperBomberman.boss_prefab = function(_game, _x, _y, _player)
     this.timer.start();
     this.health = 5;
     this.alignedVertical = false;
-    this.score = 1000;
+    this.score = 400;
     spaceK = _game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.timer.loop(50, this.ChangeTint, this, null)
 
@@ -44,9 +44,9 @@ SuperBomberman.boss_prefab.prototype.update = function()
         this.damaged = false;
         this.invulnerability = false;
         this.tint = 0xffffff;
-        if(this.health <=0) {
-        SuperBomberman.level1.player.score += this.score;
         new SuperBomberman.score_image_prefab(this.body.position.x, this.body.position.y, this.score, this.time)
+        SuperBomberman.level1.player.score += this.score;
+        if(this.health <=0) {
         this.BossDead();
         }
     }

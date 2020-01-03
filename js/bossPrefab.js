@@ -37,8 +37,7 @@ SuperBomberman.boss_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 SuperBomberman.boss_prefab.prototype.constructor = SuperBomberman.boss_prefab;
 
 SuperBomberman.boss_prefab.prototype.update = function()
-{
-     this.game.debug.body(this); 
+{ 
     this.time = this.game.time.totalElapsedSeconds();
     if(this.time - this.timeWhenDamaged > 1 && this.damaged)
     {
@@ -53,7 +52,6 @@ SuperBomberman.boss_prefab.prototype.update = function()
     }
     if(!SuperBomberman.level1.gameOverBool && this.health > 0)
     {
-        console.log(this.position.y - this.player.body.y)
         this.game.physics.arcade.collide(this, SuperBomberman.level1.exteriorWalls);
         this.game.physics.arcade.collide(this, this.player, this.KillPlayer,null, this);
 

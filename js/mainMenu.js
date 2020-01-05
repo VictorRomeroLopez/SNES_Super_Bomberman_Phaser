@@ -30,7 +30,8 @@ SuperBomberman.mainMenu =
             this.backgroundMusic.play();
             this.backgroundMusic.loop = true;
             this.animStart.addToWorld(this.game.world.centerX, this.game.world.centerY, 0.5, 0.5, 0.3, 0.3);
-            this.animStart.mute = true; this.animStart.onComplete.add(this.animationComplete, this);
+            this.animStart.onComplete.add(this.animationComplete, this);
+            this.animStart.mute = true; 
            
             cursors = this.game.input.keyboard.createCursorKeys();
             enterK = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);

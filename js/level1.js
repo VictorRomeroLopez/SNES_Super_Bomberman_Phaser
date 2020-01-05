@@ -83,6 +83,7 @@ SuperBomberman.level1 = {
             this.load.image('level1Start', levelsFolder + 'Level1-1START.png');
             this.load.image('level2Start', levelsFolder + 'Level1-2START.png');
             this.load.image('level3Start', levelsFolder + 'Level1-3START.png');
+            this.load.image('level4Start', levelsFolder + 'Level1-4START.png');
         }
         
         //---region AUDIO---//
@@ -172,7 +173,7 @@ SuperBomberman.level1 = {
                     this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level3Start');
                     break;
                 case 4:
-                    this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level3Start');
+                    this.animationSprite = this.game.add.image(0 - 125,this.game.world.centerY -125,'level4Start');
                     break;
             }
         
